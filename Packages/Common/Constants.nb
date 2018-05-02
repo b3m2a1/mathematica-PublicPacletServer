@@ -1,0 +1,148 @@
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["PublicPacletServer", "CodeSection",
+ CellChangeTimes->{{3.733695313464614*^9, 
+  3.733695317660263*^9}},ExpressionUUID->"6335eed0-9b17-4929-a372-\
+1feface45096"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"$Repository", "::", "usage"}], "=", "\n", "\t", 
+   "\"\<The GitHubPath to the server repo\>\""}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"$URL", "::", "usage"}], "=", "\n", "\t", 
+   "\"\<The URL for installing things from the repository\>\""}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"$Clone", "::", "usage"}], "=", "\n", "\t", 
+   "\"\<The local clone of the server\>\""}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"$Fork", "::", "usage"}], "=", "\n", "\t", 
+   "\"\<The current user's fork of the server\>\""}], ";"}]}], "CodeInput",
+ CellChangeTimes->{{3.733852032092121*^9, 3.733852038962039*^9}, {
+  3.733852382815723*^9, 3.73385239137735*^9}, {3.73385443689752*^9, 
+  3.733854441218293*^9}, {3.733942673927726*^9, 
+  3.7339427006366568`*^9}},ExpressionUUID->"0d27a0b7-db40-4430-a02a-\
+c7b0fc7296c4"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Begin", "[", "\"\<`Private`\>\"", "]"}], 
+  ";"}]], "InputSection",ExpressionUUID->"01a1c17c-d522-4532-84cc-\
+2b7764fd468b"],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]Repository\[RightFloor]", "CodeSubsubsubsection",
+ Evaluatable->True,
+ CellChangeTimes->{{3.733852062159116*^9, 3.73385207245683*^9}, 
+   3.733852104984133*^9},ExpressionUUID->"f65a17b5-0883-4d5c-98ff-\
+531830a92372"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"$Repository", ":=", "\n", "\t", 
+   RowBox[{"$Repository", "=", "\n", "\t\t", 
+    RowBox[{"GitHub", "[", 
+     RowBox[{"\"\<Path\>\"", ",", " ", "\"\<paclets/PacletServer\>\""}], 
+     "]"}]}]}], ";"}]], "CodeInput",
+ CellChangeTimes->{{3.733805189315287*^9, 3.733805211279644*^9}, {
+   3.733851956852549*^9, 3.733851958314591*^9}, 3.733852017101467*^9, {
+   3.7338531779412518`*^9, 3.733853182233944*^9}, {3.7338544481307383`*^9, 
+   3.733854450100689*^9}},ExpressionUUID->"5eff0cb3-ce9c-418d-ba7a-\
+14bccec69d63"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]URL\[RightFloor]", "CodeSubsubsubsection",
+ Evaluatable->True,
+ CellChangeTimes->{{3.733852068377116*^9, 3.733852069872821*^9}, 
+   3.7338521069102507`*^9},ExpressionUUID->"5cd549fe-8c23-4b64-99f4-\
+1170ccfe0f67"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+  "$URL", "=", "\n", "\t", 
+   "\"\<https://raw.githubusercontent.com/paclets/PacletServer/master\>\""}], 
+  ";"}]], "CodeInput",
+ CellChangeTimes->{{3.733805189315287*^9, 3.733805211279644*^9}, 
+   3.73385444571629*^9},ExpressionUUID->"27295495-a0a1-491b-b3c5-79ad1cf9dad6"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]Clone\[RightFloor]", "CodeSubsubsubsection",
+ Evaluatable->True,
+ CellChangeTimes->{{3.733852068377116*^9, 
+  3.733852097414089*^9}},ExpressionUUID->"e773acec-c6b0-4800-a165-\
+7eea0e1f3516"],
+
+Cell[BoxData[
+ RowBox[{"$Clone", ":=", "\n", "\t", 
+  RowBox[{"$Clone", "=", 
+   RowBox[{"FindClone", "[", "]"}]}]}]], "CodeInput",
+ CellChangeTimes->{{3.733852094212583*^9, 3.733852128718316*^9}, 
+   3.733854443607574*^9, {3.733930367350011*^9, 
+   3.733930385937351*^9}},ExpressionUUID->"a78aed30-4b38-4a10-a82b-\
+3a3a8e2636a2"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]$Fork\[RightFloor]", "CodeSubsubsubsection",
+ Evaluatable->True,
+ CellChangeTimes->{{3.733852068377116*^9, 3.733852097414089*^9}, 
+   3.7339407406654243`*^9},ExpressionUUID->"bc567932-367c-4791-b2b0-\
+f1f947e70710"],
+
+Cell[BoxData[
+ RowBox[{"$Fork", ":=", "\n", "\t", 
+  RowBox[{"FirstCase", "[", "\n", "\t\t", 
+   RowBox[{
+    RowBox[{"Lookup", "[", 
+     RowBox[{"$CurrentForks", ",", " ", "\"\<FullName\>\""}], "]"}], ",", 
+    "\n", "\t\t", 
+    RowBox[{"Alternatives", "@@", 
+     RowBox[{"Lookup", "[", 
+      RowBox[{"$CurrentRepos", ",", " ", "\"\<FullName\>\""}], "]"}]}], ",", 
+    " ", "\n", "\t\t", "None"}], "\n", "\t\t", "]"}]}]], "CodeInput",
+ CellChangeTimes->{{3.733856026952907*^9, 3.733856042613998*^9}, {
+  3.733936394699944*^9, 3.733936395538946*^9}, {3.733940286809423*^9, 
+  3.733940297425939*^9}, {3.733940560724172*^9, 
+  3.733940650299551*^9}},ExpressionUUID->"9bf0eb6b-d347-49cb-b802-\
+224d42950d9f"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"End", "[", "]"}], 
+  ";"}]], "InputSection",ExpressionUUID->"8c65acb2-a737-495d-a2a4-\
+c330f4f5c5fe"]
+}, Open  ]],
+
+Cell["", "SectionSeparator",ExpressionUUID->"7ae8f3ea-0d98-4fe8-b7be-\
+8fc9c5b0f030"]
+},
+WindowSize->{808, 755},
+WindowMargins->{{77, Automatic}, {Automatic, 0}},
+FrontEndVersion->"11.3 for Mac OS X x86 (32-bit, 64-bit Kernel) (March 5, \
+2018)",
+StyleDefinitions->Notebook[{
+   Cell[
+    StyleData[
+    StyleDefinitions -> 
+     FrontEnd`FileName[{"BTools"}, "CodePackagePlain.nb", CharacterEncoding -> 
+       "UTF-8"]]]}, Visible -> False, FrontEndVersion -> 
+  "11.3 for Mac OS X x86 (32-bit, 64-bit Kernel) (March 5, 2018)", 
+  StyleDefinitions -> "PrivateStylesheetFormatting.nb"]
+]
+

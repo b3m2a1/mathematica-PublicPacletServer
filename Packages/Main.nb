@@ -1,0 +1,593 @@
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["PublicPacletServer", "CodeSection",
+ CellChangeTimes->{{3.733695313464614*^9, 3.733695317660263*^9}, {
+  3.733867952941704*^9, 
+  3.73386795320114*^9}},ExpressionUUID->"6335eed0-9b17-4929-a372-\
+1feface45096"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"PublicPacletServer", "::", "usage"}], "=", "\n", "\t", 
+   "\"\<Represents the public paclet server at \
+https://github.com/paclets/PacletServer\>\""}], ";"}]], "CodeInput",
+ CellChangeTimes->{{3.73385334883631*^9, 
+  3.733853381581437*^9}},ExpressionUUID->"02862033-dd9b-47ae-bf9d-\
+ed27050f6aa5"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Begin", "[", "\"\<`Private`\>\"", "]"}], 
+  ";"}]], "InputSection",ExpressionUUID->"01a1c17c-d522-4532-84cc-\
+2b7764fd468b"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Unprotect", "[", "PublicPacletServer", "]"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"Clear", "[", "PublicPacletServer", "]"}], ";"}]}], "CodeInput",
+ CellChangeTimes->{{3.733853278905404*^9, 3.733853280161522*^9}, 
+   3.733853405704721*^9, {3.733935727264757*^9, 
+   3.733935732341609*^9}},ExpressionUUID->"15cd1266-4246-43a8-a35e-\
+49783b82f1d2"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]Load BTools\[RightFloor]", "CodeSubsection",
+ Evaluatable->True,
+ CellChangeTimes->{{3.733928804090145*^9, 
+  3.733928805760441*^9}},ExpressionUUID->"842e5510-0f76-4a68-9d6a-\
+22755a2f6f65"],
+
+Cell[BoxData[
+ RowBox[{"PackageLoadPacletDependency", "[", "\"\<BTools`\>\"", 
+  "]"}]], "CodeInput",
+ CellChangeTimes->{{3.733695621481332*^9, 3.733695627697706*^9}, 
+   3.73385318409159*^9, {3.733855743456921*^9, 3.733855746173312*^9}, {
+   3.733928819973312*^9, 3.733928820148624*^9}, {3.734137557362502*^9, 
+   3.73413755865501*^9}, {3.734137889361022*^9, 
+   3.7341378900917587`*^9}},ExpressionUUID->"1c2fd870-f37a-478c-8a49-\
+9bbd696eea43"],
+
+Cell[BoxData[
+ RowBox[{"PackageExtendContextPath", "[", "\n", "\t", 
+  RowBox[{"{", "\n", "\t\t", 
+   RowBox[{
+   "\"\<BTools`\>\"", ",", "\n", "\t\t", "\"\<BTools`External`\>\"", ",", 
+    "\n", "\t\t", "\"\<BTools`Paclets`\>\""}], "\n", "\t\t", "}"}], "\n", 
+  "\t", "]"}]], "CodeInput",
+ CellChangeTimes->{{3.733928801824563*^9, 
+  3.733928871307066*^9}},ExpressionUUID->"51edb6e2-129e-4942-badd-\
+1e1048a06f77"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]Interface\[RightFloor]", "CodeSubsection",
+ Evaluatable->True,
+ CellChangeTimes->{{3.733853066150236*^9, 
+  3.733853067404583*^9}},ExpressionUUID->"fc542fb0-d8bc-4068-85f8-\
+9047c63492eb"],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]Command List\[RightFloor]", "CodeSubsubsection",
+ Evaluatable->True,
+ CellChangeTimes->{{3.73385331701123*^9, 
+  3.733853319442979*^9}},ExpressionUUID->"4c1ee57e-bb81-4c02-b1d6-\
+3601631ab170"],
+
+Cell[BoxData[
+ RowBox[{"$ServerCommands", "=", "\n", "\t", 
+  RowBox[{"{", "\n", "\t\t", 
+   RowBox[{
+   "\"\<Repository\>\"", ",", "\n", "\t\t", "\"\<RepositoryShort\>\"", ",", 
+    "\n", "\t\t", "\"\<SiteURL\>\"", ",", "\n", "\t\t", "\"\<Fork\>\"", ",", 
+    "\n", "\t\t", "\"\<ForkedQ\>\"", ",", "\n", "\t\t", 
+    "\"\<SubmitPaclet\>\"", ",", "\n", "\t\t", "\"\<SubmitPullRequest\>\"", 
+    ",", "\n", "\t\t", "\"\<Clone\>\"", ",", "\n", "\t\t", 
+    "\"\<FindClone\>\"", ",", "\n", "\t\t", "\"\<RebuildServer\>\"", ",", 
+    "\n", "\t\t", "\"\<QueuedPaclets\>\"", ",", "\n", "\t\t", 
+    "\"\<QueuedPullRequests\>\""}], "\n", "\t\t", "}"}]}]], "CodeInput",
+ CellChangeTimes->{{3.73385331344584*^9, 3.733853334483242*^9}, {
+   3.733867679307274*^9, 3.7338676840514803`*^9}, 3.7338683846858463`*^9, {
+   3.733935623899495*^9, 3.7339356676792917`*^9}, {3.7339357009934807`*^9, 
+   3.733935707958557*^9}, {3.733935932710869*^9, 3.733935942451935*^9}, {
+   3.733935985149887*^9, 3.733935992210321*^9}, {3.73393613504703*^9, 
+   3.733936137055563*^9}},ExpressionUUID->"9a6e8f07-28b0-403d-b3b9-\
+643f583597da"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]Constants\[RightFloor]", "CodeSubsubsection",
+ Evaluatable->True,
+ CellChangeTimes->{{3.733935710869425*^9, 
+  3.733935713782098*^9}},ExpressionUUID->"ac1dffe7-3677-4c1a-a5f5-\
+61c7a4814d8d"],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]Repository\[RightFloor]", "CodeSubsubsubsection",
+ Evaluatable->True,
+ CellChangeTimes->{
+  3.73393576393003*^9},ExpressionUUID->"11efc809-dc3a-45fe-8b8d-3daef6be54de"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"PublicPacletServer", "[", "\"\<Repository\>\"", "]"}], ":=", "\n",
+    "\t", 
+   RowBox[{"URL", "@", "$Repository"}]}], ";"}]], "CodeInput",
+ CellChangeTimes->{
+  3.733935719771617*^9, {3.733935757161311*^9, 3.7339357595173063`*^9}, {
+   3.7339359749791517`*^9, 
+   3.733935975721799*^9}},ExpressionUUID->"4446d1f1-abaf-416d-a444-\
+92f482f781c4"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]RepositoryShort\[RightFloor]", "CodeSubsubsubsection",
+ Evaluatable->True,
+ CellChangeTimes->{
+  3.73393576393003*^9, {3.733935980218481*^9, 
+   3.733935980961495*^9}},ExpressionUUID->"23cf1b47-dcc6-4a1a-a12b-\
+39b86d9de2bc"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"PublicPacletServer", "[", "\"\<RepositoryShort\>\"", "]"}], ":=", 
+   "\n", "\t", 
+   RowBox[{"URLBuild", "@", 
+    RowBox[{"Normal", "@", "$Repository"}]}]}], ";"}]], "CodeInput",
+ CellChangeTimes->{
+  3.733935719771617*^9, {3.733935757161311*^9, 3.7339357595173063`*^9}, {
+   3.7339359749791517`*^9, 
+   3.733936001251267*^9}},ExpressionUUID->"83249afa-8bc3-4028-8632-\
+69dedfb64b1b"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]URL\[RightFloor]", "CodeSubsubsubsection",
+ Evaluatable->True,
+ CellChangeTimes->{{3.73393576393003*^9, 
+  3.7339357693166313`*^9}},ExpressionUUID->"594ff5b5-aa9f-4697-b6ba-\
+62869ef1e984"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"PublicPacletServer", "[", "\"\<SiteURL\>\"", "]"}], ":=", "\n", 
+   "\t", "$URL"}], ";"}]], "CodeInput",
+ CellChangeTimes->{
+  3.733935719771617*^9, {3.733935757161311*^9, 3.733935775772554*^9}, 
+   3.733935995486471*^9},ExpressionUUID->"65ed12e3-1008-441f-bb6b-\
+79ae299909ae"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]Fork\[RightFloor]", "CodeSubsubsection",
+ Evaluatable->True,
+ CellChangeTimes->{{3.733805227936379*^9, 
+  3.733805234686922*^9}},ExpressionUUID->"ea8cbd2e-8ef1-4e7d-9545-\
+b687992a009a"],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]ForkedQ\[RightFloor]", "CodeSubsubsubsection",
+ Evaluatable->True,
+ CellChangeTimes->{{3.733853421014289*^9, 3.73385342367999*^9}, {
+  3.733935595912994*^9, 
+  3.733935596503785*^9}},ExpressionUUID->"3a08a36e-5e5b-4b49-acc4-\
+8f14b2907419"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"PublicPacletServer", "[", "\"\<ForkedQ\>\"", "]"}], ":=", "\n", 
+   "\t", 
+   RowBox[{"ForkedQ", "[", "]"}]}], ";"}]], "CodeInput",
+ CellChangeTimes->{{3.733852420553318*^9, 3.733852427616694*^9}, {
+  3.733853217618709*^9, 
+  3.733853217756315*^9}},ExpressionUUID->"aa1a7d6c-86aa-4228-8279-\
+93e5fe1b3380"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]Fork\[RightFloor]", "CodeSubsubsubsection",
+ Evaluatable->True,
+ CellChangeTimes->{{3.733853421014289*^9, 
+  3.73385342367999*^9}},ExpressionUUID->"964dc402-44b5-445b-8f77-\
+bd7779c2238f"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"PublicPacletServer", "[", "\"\<Fork\>\"", "]"}], ":=", "\n", "\t", 
+  
+  RowBox[{"Fork", "[", "]"}]}]], "CodeInput",
+ CellChangeTimes->{{3.733853029686859*^9, 3.733853055319022*^9}, {
+  3.7338532193811274`*^9, 
+  3.733853220252699*^9}},ExpressionUUID->"a66ca2fe-5fc9-4a00-95be-\
+3dd0f8aa0196"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]Clone\[RightFloor]", "CodeSubsubsection",
+ Evaluatable->True,
+ CellChangeTimes->{{3.733935655287724*^9, 
+  3.73393565907065*^9}},ExpressionUUID->"d3f9ede5-3d0d-46b2-99c5-\
+d4fb8390dbb5"],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]Clone\[RightFloor]", "CodeSubsubsubsection",
+ Evaluatable->True,
+ CellChangeTimes->{{3.733853421014289*^9, 3.73385342367999*^9}, 
+   3.733935676516019*^9},ExpressionUUID->"bf75443a-11f4-4575-8bb2-\
+afcff0527604"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"PublicPacletServer", "[", "\"\<Clone\>\"", "]"}], ":=", "\n", "\t", 
+  RowBox[{"Clone", "[", "]"}]}]], "CodeInput",
+ CellChangeTimes->{{3.733853029686859*^9, 3.733853055319022*^9}, {
+  3.7338532193811274`*^9, 3.733853220252699*^9}, {3.733935674393355*^9, 
+  3.733935677259119*^9}},ExpressionUUID->"42117d56-a004-4a82-bcbf-\
+15ce467f656c"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]FindClone\[RightFloor]", "CodeSubsubsubsection",
+ Evaluatable->True,
+ CellChangeTimes->{{3.733853421014289*^9, 3.73385342367999*^9}, 
+   3.733935676516019*^9, 
+   3.733936144844153*^9},ExpressionUUID->"3ffceccd-0213-44bd-85a3-\
+0e9b9f868138"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"PublicPacletServer", "[", "\"\<FindClone\>\"", "]"}], ":=", "\n", 
+  "\t", 
+  RowBox[{"FindClone", "[", "]"}]}]], "CodeInput",
+ CellChangeTimes->{{3.733853029686859*^9, 3.733853055319022*^9}, {
+  3.7338532193811274`*^9, 3.733853220252699*^9}, {3.733935674393355*^9, 
+  3.733935677259119*^9}, {3.733936141656395*^9, 
+  3.733936144029809*^9}},ExpressionUUID->"14db8669-2ec1-458e-8a31-\
+7f17a4b2429c"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]Submit\[RightFloor]", "CodeSubsubsection",
+ Evaluatable->True,
+ CellChangeTimes->{{3.733935599719384*^9, 
+  3.733935600871706*^9}},ExpressionUUID->"a8c30694-6964-4787-b771-\
+de6ebac7aa38"],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]SubmitPaclet\[RightFloor]", "CodeSubsubsubsection",
+ Evaluatable->True,
+ CellChangeTimes->{{3.73385322806181*^9, 3.733853229220358*^9}, {
+  3.73385402384044*^9, 
+  3.7338540244724817`*^9}},ExpressionUUID->"19c63c3e-7260-4f6e-bfe2-\
+d5f83e2a860d"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"PublicPacletServer", "[", 
+   RowBox[{"\"\<SubmitPaclet\>\"", ",", " ", "pacSpec_", ",", " ", 
+    RowBox[{"ops", ":", 
+     RowBox[{"OptionsPattern", "[", "]"}]}]}], "]"}], ":=", "\n", "\t", 
+  RowBox[{"With", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"res", "=", 
+      RowBox[{"SubmitPaclet", "[", 
+       RowBox[{"pacSpec", ",", " ", "ops"}], "]"}]}], "}"}], ",", "\n", 
+    "\t\t", 
+    RowBox[{"res", "/;", 
+     RowBox[{
+      RowBox[{"Head", "[", "res", "]"}], "=!=", "SubmitPaclet"}]}]}], "\n", 
+   "\t\t", "]"}]}]], "CodeInput",
+ CellChangeTimes->{{3.733853029686859*^9, 3.733853055319022*^9}, {
+   3.7338532193811274`*^9, 3.73385327719481*^9}, 
+   3.7338677089268913`*^9},ExpressionUUID->"346e9461-e343-477d-a720-\
+d173d5c8095e"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]SubmitPullRequest\[RightFloor]", "CodeSubsubsubsection",
+ Evaluatable->True,
+ CellChangeTimes->{{3.73385322806181*^9, 3.733853229220358*^9}, {
+  3.733854018745884*^9, 
+  3.7338540215846167`*^9}},ExpressionUUID->"d71836a0-9d1f-441c-89dc-\
+073003ea7cab"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"PublicPacletServer", "[", 
+   RowBox[{"\"\<SubmitPullRequest\>\"", ",", " ", "\n", "\t", 
+    RowBox[{"desc", ":", 
+     RowBox[{"_String", "|", "Automatic"}], ":", "Automatic"}], ",", " ", 
+    RowBox[{"ops", ":", 
+     RowBox[{"OptionsPattern", "[", "]"}]}]}], "]"}], ":=", "\n", "\t", 
+  RowBox[{"With", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"res", "=", 
+      RowBox[{"SubmitPullRequest", "[", 
+       RowBox[{"desc", ",", " ", "ops"}], "]"}]}], "}"}], ",", "\n", "\t\t", 
+    RowBox[{"res", "/;", 
+     RowBox[{
+      RowBox[{"Head", "[", "res", "]"}], "=!=", "SubmitPullRequest"}]}]}], 
+   "\n", "\t\t", "]"}]}]], "CodeInput",
+ CellChangeTimes->{{3.733853029686859*^9, 3.733853055319022*^9}, {
+  3.7338532193811274`*^9, 3.73385327719481*^9}, {3.733854046728242*^9, 
+  3.7338540481414757`*^9}, {3.733867691742062*^9, 
+  3.733867706669862*^9}},ExpressionUUID->"11de9005-85db-4fcf-96d0-\
+dc06ce14cffe"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]Queue\[RightFloor]", "CodeSubsubsection",
+ Evaluatable->True,
+ CellChangeTimes->{{3.733935613808782*^9, 
+  3.733935614279373*^9}},ExpressionUUID->"c338b6b1-0495-4946-a3dd-\
+dd4b3e7f797a"],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]QueuedPaclets\[RightFloor]", "CodeSubsubsubsection",
+ Evaluatable->True,
+ CellChangeTimes->{{3.73385322806181*^9, 3.733853229220358*^9}, {
+  3.73385402384044*^9, 3.7338540244724817`*^9}, {3.7339356191049747`*^9, 
+  3.733935620837575*^9}},ExpressionUUID->"bc5a1266-c288-450a-99f3-\
+5ecf0b547ef7"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"PublicPacletServer", "[", 
+    RowBox[{"\"\<QueuedPaclets\>\"", ",", " ", 
+     RowBox[{"which", ":", 
+      RowBox[{"_String", "|", "Automatic"}], ":", "Automatic"}]}], "]"}], ":=",
+    "\n", "\t", 
+   RowBox[{"QueuedPaclets", "[", "which", "]"}]}], ";"}]], "CodeInput",
+ CellChangeTimes->{{3.733853029686859*^9, 3.733853055319022*^9}, {
+  3.7338532193811274`*^9, 3.73385327719481*^9}, {3.733854046728242*^9, 
+  3.7338540481414757`*^9}, {3.733867691742062*^9, 3.733867706669862*^9}, {
+  3.733935644655896*^9, 3.73393564942358*^9}, {3.733935682118297*^9, 
+  3.733935683014657*^9}, {3.733943844306902*^9, 
+  3.733943850893447*^9}},ExpressionUUID->"9e800993-3d25-424c-8303-\
+a6e7d17733ff"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]QueuedPullRequests\[RightFloor]", "CodeSubsubsubsection",
+ Evaluatable->True,
+ CellChangeTimes->{{3.73385322806181*^9, 3.733853229220358*^9}, {
+   3.73385402384044*^9, 3.7338540244724817`*^9}, {3.7339356191049747`*^9, 
+   3.733935620837575*^9}, 
+   3.7339357898577633`*^9},ExpressionUUID->"26ed54e9-50ed-42f5-866f-\
+a2a837b06bed"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"PublicPacletServer", "[", 
+    RowBox[{"\"\<QueuedPullRequests\>\"", ",", " ", 
+     RowBox[{"which", ":", 
+      RowBox[{"_String", "|", "Automatic"}], ":", "Automatic"}]}], "]"}], ":=",
+    "\n", "\t", 
+   RowBox[{"QueuedPullRequests", "[", "which", "]"}]}], ";"}]], "CodeInput",
+ CellChangeTimes->{{3.733853029686859*^9, 3.733853055319022*^9}, {
+  3.7338532193811274`*^9, 3.73385327719481*^9}, {3.733854046728242*^9, 
+  3.7338540481414757`*^9}, {3.733867691742062*^9, 3.733867706669862*^9}, {
+  3.733935644655896*^9, 3.73393564942358*^9}, {3.733935682118297*^9, 
+  3.733935691618236*^9}, {3.733943852866723*^9, 
+  3.733943854905308*^9}},ExpressionUUID->"018bd4ba-2c38-4f0d-b41b-\
+1f410fb5eb9c"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]Build\[RightFloor]", "CodeSubsubsection",
+ Evaluatable->True,
+ CellChangeTimes->{{3.733935810924952*^9, 
+  3.733935811508176*^9}},ExpressionUUID->"35e43af9-359f-46b6-bf64-\
+520d173d194f"],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]Rebuild\[RightFloor]", "CodeSubsubsubsection",
+ Evaluatable->True,
+ CellChangeTimes->{{3.733935856376445*^9, 
+  3.7339358588347816`*^9}},ExpressionUUID->"e7e9feb3-89b8-4c90-81d8-\
+56e0074a5262"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"PublicPacletServer", "[", 
+   RowBox[{"\"\<Rebuild\>\"", ",", " ", 
+    RowBox[{"arg", ":", 
+     RowBox[{"_String", "|", 
+      RowBox[{"{", "__String", "}"}]}]}], ",", " ", 
+    RowBox[{"ops", ":", 
+     RowBox[{"OptionsPattern", "[", "]"}]}]}], "]"}], ":=", "\n", "\t", 
+  RowBox[{"With", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"res", "=", 
+      RowBox[{"RebuildServer", "[", 
+       RowBox[{"arg", ",", " ", "ops"}], "]"}]}], "}"}], ",", "\n", "\t\t", 
+    RowBox[{"Null", "/;", 
+     RowBox[{
+      RowBox[{"Head", "[", "res", "]"}], "=!=", "RebuildServer"}]}]}], "\n", 
+   "\t\t", "]"}]}]], "CodeInput",
+ CellChangeTimes->{{3.733853029686859*^9, 3.733853055319022*^9}, {
+  3.7338532193811274`*^9, 3.73385327719481*^9}, {3.733854046728242*^9, 
+  3.7338540481414757`*^9}, {3.733867691742062*^9, 3.733867706669862*^9}, {
+  3.733935644655896*^9, 3.73393564942358*^9}, {3.733935682118297*^9, 
+  3.733935691618236*^9}, {3.733935815869753*^9, 3.733935845824326*^9}, {
+  3.733935889092897*^9, 
+  3.73393589541971*^9}},ExpressionUUID->"f9e02ba5-92c8-490b-903d-897fab81e570"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]AddPaclets\[RightFloor]", "CodeSubsubsubsection",
+ Evaluatable->True,
+ CellChangeTimes->{{3.733935856376445*^9, 3.733935865705923*^9}, {
+  3.733935906180297*^9, 
+  3.733935907610393*^9}},ExpressionUUID->"882d30c8-3cfc-4564-a7b6-\
+1265bbab32e6"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"PublicPacletServer", "[", 
+   RowBox[{"\"\<AddPaclets\>\"", ",", " ", 
+    RowBox[{"ops", ":", 
+     RowBox[{"OptionsPattern", "[", "]"}]}]}], "]"}], ":=", "\n", "\t", 
+  RowBox[{"With", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"res", "=", 
+      RowBox[{"RebuildServer", "[", 
+       RowBox[{
+        RowBox[{"{", "\"\<Add\>\"", "}"}], ",", " ", "ops"}], "]"}]}], "}"}], 
+    ",", "\n", "\t\t", 
+    RowBox[{"Null", "/;", 
+     RowBox[{
+      RowBox[{"Head", "[", "res", "]"}], "=!=", "RebuildServer"}]}]}], "\n", 
+   "\t\t", "]"}]}]], "CodeInput",
+ CellChangeTimes->{{3.733853029686859*^9, 3.733853055319022*^9}, {
+  3.7338532193811274`*^9, 3.73385327719481*^9}, {3.733854046728242*^9, 
+  3.7338540481414757`*^9}, {3.733867691742062*^9, 3.733867706669862*^9}, {
+  3.733935644655896*^9, 3.73393564942358*^9}, {3.733935682118297*^9, 
+  3.733935691618236*^9}, {3.733935815869753*^9, 
+  3.733935911436742*^9}},ExpressionUUID->"2de0cbc5-73f1-4b23-ac98-\
+3301e5ee7a2d"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]BuildPages\[RightFloor]", "CodeSubsubsubsection",
+ Evaluatable->True,
+ CellChangeTimes->{{3.733935856376445*^9, 3.733935865705923*^9}, 
+   3.733935920623493*^9},ExpressionUUID->"23d3b2d5-c11a-42ab-b393-\
+e1010474ecca"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"PublicPacletServer", "[", 
+   RowBox[{"\"\<BuildPages\>\"", ",", " ", 
+    RowBox[{"ops", ":", 
+     RowBox[{"OptionsPattern", "[", "]"}]}]}], "]"}], ":=", "\n", "\t", 
+  RowBox[{"With", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"res", "=", 
+      RowBox[{"RebuildServer", "[", 
+       RowBox[{
+        RowBox[{"{", "\"\<Build\>\"", "}"}], ",", " ", "ops"}], "]"}]}], 
+     "}"}], ",", "\n", "\t\t", 
+    RowBox[{"Null", "/;", 
+     RowBox[{
+      RowBox[{"Head", "[", "res", "]"}], "=!=", "RebuildServer"}]}]}], "\n", 
+   "\t\t", "]"}]}]], "CodeInput",
+ CellChangeTimes->{{3.733853029686859*^9, 3.733853055319022*^9}, {
+  3.7338532193811274`*^9, 3.73385327719481*^9}, {3.733854046728242*^9, 
+  3.7338540481414757`*^9}, {3.733867691742062*^9, 3.733867706669862*^9}, {
+  3.733935644655896*^9, 3.73393564942358*^9}, {3.733935682118297*^9, 
+  3.733935691618236*^9}, {3.733935815869753*^9, 
+  3.733935917939026*^9}},ExpressionUUID->"d68b48ba-178e-425c-86eb-\
+f7a528b99c0b"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]Clean Up\[RightFloor]", "CodeSubsection",
+ Evaluatable->True,
+ CellChangeTimes->{{3.7338532936434917`*^9, 3.733853295443551*^9}, {
+  3.733935740398941*^9, 
+  3.7339357415493107`*^9}},ExpressionUUID->"0250d52c-139b-4327-bbcc-\
+76b4e7d8ace3"],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]Autocomplete\[RightFloor]", "CodeSubsubsection",
+ Evaluatable->True,
+ CellChangeTimes->{{3.733935742772801*^9, 3.733935744565256*^9}, 
+   3.733936190737705*^9},ExpressionUUID->"0e51b7c3-d5bb-47f8-a556-\
+f3d4fb0cc4f7"],
+
+Cell[BoxData[
+ RowBox[{"PackageAddAutocompletions", "[", "\n", "\t", 
+  RowBox[{"PublicPacletServer", ",", "\n", "\t", 
+   RowBox[{"{", "\n", "\t\t", "$ServerCommands", "\n", "\t\t", "}"}]}], "\n", 
+  "\t", "]"}]], "CodeInput",
+ CellChangeTimes->{{3.73385329692826*^9, 3.733853306307497*^9}, {
+  3.733853337514717*^9, 3.733853339147037*^9}, {3.733868387796574*^9, 
+  3.733868415385762*^9}, {3.733868628056563*^9, 3.733868652914797*^9}, {
+  3.733868717632307*^9, 
+  3.733868718740963*^9}},ExpressionUUID->"4b4d7dca-cd49-4dfe-b14a-\
+5b8244daf142"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]Protections\[RightFloor]", "CodeSubsubsection",
+ Evaluatable->True,
+ CellChangeTimes->{{3.73393574645443*^9, 
+  3.7339357480773067`*^9}},ExpressionUUID->"6c85962e-ea02-4823-b319-\
+8a015b5d77bf"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Protect", "[", "PublicPacletServer", "]"}], ";"}]], "CodeInput",
+ CellChangeTimes->{{3.733935749265518*^9, 
+  3.73393575094242*^9}},ExpressionUUID->"c0b3628b-642f-418c-9655-2761264f268e"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"End", "[", "]"}], 
+  ";"}]], "InputSection",ExpressionUUID->"8c65acb2-a737-495d-a2a4-\
+c330f4f5c5fe"]
+}, Open  ]],
+
+Cell["", "SectionSeparator",ExpressionUUID->"7ae8f3ea-0d98-4fe8-b7be-\
+8fc9c5b0f030"]
+},
+WindowSize->{808, 755},
+WindowMargins->{{101, Automatic}, {Automatic, 1}},
+FrontEndVersion->"11.3 for Mac OS X x86 (32-bit, 64-bit Kernel) (March 5, \
+2018)",
+StyleDefinitions->FrontEnd`FileName[{"BTools"}, "CodePackage.nb", 
+  CharacterEncoding -> "UTF-8"]
+]
+

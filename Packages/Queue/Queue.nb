@@ -1,0 +1,99 @@
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Queue", "CodeSection",
+ CellChangeTimes->{{3.733695313464614*^9, 3.733695317660263*^9}, {
+  3.733853135651423*^9, 3.73385313665944*^9}, {3.7338681860510263`*^9, 
+  3.733868186510269*^9}},ExpressionUUID->"6335eed0-9b17-4929-a372-\
+1feface45096"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"QueuedPaclets", "::", "usage"}], "=", 
+   "\"\<Lists the paclets currently in the review queue on the main \
+repo\>\""}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"QueuedPullRequests", "::", "usage"}], "=", 
+   "\"\<Lists the review pull requests on the main repo\>\""}], 
+  ";"}]}], "CodeInput",
+ CellChangeTimes->{{3.733868255967132*^9, 3.733868303972569*^9}, {
+  3.733934356316161*^9, 3.7339343583912992`*^9}, {3.733935276457046*^9, 
+  3.7339352779931717`*^9}, {3.733935351841648*^9, 
+  3.733935353656425*^9}},ExpressionUUID->"35f26f49-c1c9-4553-b068-\
+dfedc5ca1dcd"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Begin", "[", "\"\<`Private`\>\"", "]"}], 
+  ";"}]], "InputSection",ExpressionUUID->"01a1c17c-d522-4532-84cc-\
+2b7764fd468b"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"QueuedPaclets", "[", 
+   RowBox[{"which", ":", 
+    RowBox[{"_String", "|", "Automatic"}], ":", "Automatic"}], "]"}], ":=", 
+  "\n", "\t", 
+  RowBox[{"Select", "[", "\n", "\t\t", 
+   RowBox[{
+    RowBox[{"Lookup", "[", "\n", "\t\t\t", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"GitHub", "[", 
+        RowBox[{"\"\<GetDirectory\>\"", ",", " ", "\n", "\t\t\t\t", 
+         RowBox[{"Replace", "[", 
+          RowBox[{"which", ",", " ", 
+           RowBox[{"Automatic", ":>", "$Repository"}]}], "]"}], ",", " ", 
+         "\n", "\t\t\t\t", "\"\<ReviewQueue\>\""}], "\n", "\t\t\t\t", "]"}], 
+       "[", "\"\<Content\>\"", "]"}], ",", "\n", "\t\t\t", "\"\<Name\>\""}], 
+     "\n", "\t\t\t", "]"}], ",", "\n", "\t\t", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"FileExtension", "[", "#", "]"}], "==", "\"\<paclet\>\""}], 
+     "&"}]}], "\n", "\t\t", "]"}]}]], "CodeInput",
+ CellChangeTimes->{{3.733935280144055*^9, 3.7339353432994633`*^9}, {
+  3.733935401480452*^9, 3.7339354032478857`*^9}, {3.733943775337846*^9, 
+  3.733943803107892*^9}},ExpressionUUID->"b825d340-0823-479d-a8d4-\
+6bc93edc9601"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"QueuedPullRequests", "[", 
+   RowBox[{"which", ":", 
+    RowBox[{"_String", "|", "Automatic"}], ":", "Automatic"}], "]"}], ":=", 
+  "\n", "\t", 
+  RowBox[{
+   RowBox[{"GitHub", "[", 
+    RowBox[{"\"\<ListPullRequests\>\"", ",", " ", 
+     RowBox[{"Replace", "[", 
+      RowBox[{"which", ",", " ", 
+       RowBox[{"Automatic", ":>", "$Repository"}]}], "]"}]}], "]"}], "[", 
+   "\"\<Content\>\"", "]"}]}]], "CodeInput",
+ CellChangeTimes->{{3.733935280144055*^9, 3.733935358475659*^9}, {
+  3.733935395194718*^9, 3.7339354048195972`*^9}, {3.733943805517282*^9, 
+  3.733943808156884*^9}},ExpressionUUID->"e9fdbd98-f5cc-4483-a8d6-\
+84bf12db6f99"]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"End", "[", "]"}], 
+  ";"}]], "InputSection",ExpressionUUID->"8c65acb2-a737-495d-a2a4-\
+c330f4f5c5fe"]
+}, Open  ]],
+
+Cell["", "SectionSeparator",ExpressionUUID->"7ae8f3ea-0d98-4fe8-b7be-\
+8fc9c5b0f030"]
+},
+WindowSize->{808, 755},
+WindowMargins->{{Automatic, 187}, {Automatic, 0}},
+FrontEndVersion->"11.3 for Mac OS X x86 (32-bit, 64-bit Kernel) (March 5, \
+2018)",
+StyleDefinitions->FrontEnd`FileName[{"BTools"}, "CodePackage.nb", 
+  CharacterEncoding -> "UTF-8"]
+]
+

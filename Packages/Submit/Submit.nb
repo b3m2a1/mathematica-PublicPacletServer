@@ -1,0 +1,506 @@
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Submit", "CodeSection",
+ CellChangeTimes->{{3.733695313464614*^9, 3.733695317660263*^9}, {
+  3.733853135651423*^9, 3.73385313665944*^9}, {3.733936243601136*^9, 
+  3.733936244695552*^9}},ExpressionUUID->"6335eed0-9b17-4929-a372-\
+1feface45096"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"SubmitPaclet", "::", "usage"}], "=", "\n", "\t", 
+   "\"\<Submits a paclet the review queue in the user's repo\>\""}], 
+  ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"SubmitPullRequest", "::", "usage"}], "=", "\n", "\t", 
+   "\"\<Submits a pull request to the main repo\>\""}], ";"}]}], "CodeInput",
+ CellChangeTimes->{{3.733868198592568*^9, 
+  3.7338682366778183`*^9}},ExpressionUUID->"bf1e75c7-42bf-4385-ae4e-\
+2ae3d57bff2f"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Begin", "[", "\"\<`Private`\>\"", "]"}], 
+  ";"}]], "InputSection",ExpressionUUID->"01a1c17c-d522-4532-84cc-\
+2b7764fd468b"],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]Submit\[RightFloor]", "CodeSubsubsection",
+ Evaluatable->True,
+ CellChangeTimes->{{3.733805227936379*^9, 3.73380525915499*^9}, {
+  3.733855735095896*^9, 
+  3.733855763411722*^9}},ExpressionUUID->"6aa54ab8-c42c-4956-97f3-\
+9741543b8880"],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]SubmitPaclet\[RightFloor]", "CodeSubsubsubsection",
+ Evaluatable->True,
+ CellChangeTimes->{{3.733855766220604*^9, 
+  3.7338557690768642`*^9}},ExpressionUUID->"cc8377aa-808c-4589-ad6e-\
+2265e7b00f9e"],
+
+Cell["\<\
+\[LeftCeiling]
+\t
+\tShould autodetect whether something is a paclet or not, package it up, then \
+push it into the review queue via a clone and pull request.
+\t
+\tRequires GitHub authentication.
+\[RightFloor]\
+\>", "Text",
+ Evaluatable->True,
+ CellChangeTimes->{{3.733695720255416*^9, 
+  3.733695787232171*^9}},ExpressionUUID->"58d39504-7f61-43b3-bff7-\
+2b8a086c2b95"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"PublicPacletServer", "::", "badpac"}], "=", "\n", "\t", 
+   "\"\<Couldn't generate paclet for ``. \\\nCheck formatting or contact \
+b3m2a1@gmail.com for details.\>\""}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"PublicPacletServer", "::", "noclfk"}], "=", "\n", "\t", 
+   "\"\<No clone or fork repositories found. One or the other is required to \
+submit paclets.\nRun PublicPacletServer[\\\"Fork\\\"] to generate the fork.\>\
+\""}], ";"}]}], "CodeInput",
+ CellChangeTimes->{{3.7338558209729633`*^9, 3.733855859770224*^9}, {
+  3.733937422709907*^9, 3.733937423770288*^9}, {3.734146745326057*^9, 
+  3.734146830222033*^9}},ExpressionUUID->"e03c64f7-bb7b-43be-8eac-\
+28d60c771fcd"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"Options", "[", "SubmitPaclet", "]"}], ":=", "\n", "\t", 
+   RowBox[{"GitHub", "[", 
+    RowBox[{"\"\<AddFile\>\"", ",", " ", "\"\<Options\>\""}], "]"}]}], 
+  ";"}], "\n", 
+ RowBox[{
+  RowBox[{"SubmitPaclet", "[", 
+   RowBox[{"paclet_", ",", " ", 
+    RowBox[{"ops", ":", 
+     RowBox[{"OptionsPattern", "[", "]"}]}]}], "]"}], ":=", "\n", "\t", 
+  RowBox[{"Module", "[", "\n", "\t\t", 
+   RowBox[{
+    RowBox[{"{", "\n", "\t\t\t", "pacFile", "\n", "\t\t\t", "}"}], ",", "\n", 
+    "\t\t", 
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"!", 
+        RowBox[{"StringQ", "@", "$Clone"}]}], "&&", 
+       RowBox[{"!", 
+        RowBox[{"StringQ", "@", "$Fork"}]}]}], ",", " ", "\n", "\t\t\t", 
+      RowBox[{
+       RowBox[{"Message", "[", 
+        RowBox[{"PublicPacletServer", "::", "noclfk"}], "]"}], ";", "\n", 
+       "\t\t\t", "$Failed"}], ",", "\n", "\t\t\t", 
+      RowBox[{
+       RowBox[{"pacFile", "=", "\n", "\t\t\t\t", 
+        RowBox[{"Which", "[", "\n", "\t\t\t\t\t", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"StringQ", "@", "paclet"}], "&&", 
+           RowBox[{"FileExistsQ", "[", "paclet", "]"}], "&&", 
+           RowBox[{
+            RowBox[{"FileExtension", "[", "paclet", "]"}], "\[Equal]", 
+            "\"\<paclet\>\""}]}], ",", "\n", "\t\t\t\t\t\t", "paclet", ",", 
+          "\n", "\t\t\t\t\t", 
+          RowBox[{"MatchQ", "[", 
+           RowBox[{"paclet", ",", " ", 
+            RowBox[{"_PacletManager`Paclet", "?", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"DirectoryQ", "[", 
+                RowBox[{"#", "[", "\"\<Location\>\"", "]"}], "]"}], "&"}], 
+              ")"}]}]}], "]"}], ",", "\n", "\t\t\t\t\t\t", 
+          RowBox[{"Replace", "[", 
+           RowBox[{
+            RowBox[{"PacletExecute", "[", 
+             RowBox[{"\"\<Bundle\>\"", ",", " ", 
+              RowBox[{"paclet", "[", "\"\<Location\>\"", "]"}]}], "]"}], ",", 
+            "\n", "\t\t\t\t\t\t\t", 
+            RowBox[{
+             RowBox[{"e", ":", 
+              RowBox[{"Except", "[", 
+               RowBox[{"_String", "?", "FileExistsQ"}], "]"}]}], ":>", "\n", 
+             "\t\t\t\t\t\t\t\t", 
+             RowBox[{"(", "\n", "\t\t\t\t\t\t\t\t\t", 
+              RowBox[{
+               RowBox[{"Message", "[", 
+                RowBox[{
+                 RowBox[{"PublicPacletServer", "::", "badpac"}], ",", " ", 
+                 "paclet"}], "]"}], ";", "\n", "\t", "\t\t\t\t\t\t\t\t", 
+               "$Failed"}], "\n", "\t\t\t\t\t\t\t\t\t", ")"}]}]}], "\n", 
+           "\t\t\t\t\t\t\t", "]"}], ",", "\n", "\t\t\t\t\t", 
+          RowBox[{
+           RowBox[{"StringQ", "@", "paclet"}], "&&", 
+           RowBox[{
+            RowBox[{"Length", "@", 
+             RowBox[{"PacletManager`PacletFind", "[", "paclet", "]"}]}], ">", 
+            "0"}]}], ",", "\n", "\t\t\t\t\t\t", 
+          RowBox[{"With", "[", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"pf", "=", 
+              RowBox[{
+               RowBox[{"PacletManager`PacletFind", "[", "paclet", "]"}], "[", 
+               
+               RowBox[{"[", "1", "]"}], "]"}]}], "}"}], ",", "\n", 
+            "\t\t\t\t\t\t\t", 
+            RowBox[{"If", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"StringQ", "@", 
+                RowBox[{"pf", "[", "\"\<Location\>\"", "]"}]}], "&&", 
+               RowBox[{"DirectoryQ", "@", 
+                RowBox[{"pf", "[", "\"\<Location\>\"", "]"}]}]}], ",", "\n", 
+              "\t\t\t\t\t\t\t\t", 
+              RowBox[{"Replace", "[", 
+               RowBox[{
+                RowBox[{"PacletExecute", "[", 
+                 RowBox[{"\"\<Bundle\>\"", ",", " ", 
+                  RowBox[{"pf", "[", "\"\<Location\>\"", "]"}]}], "]"}], ",", 
+                "\n", "\t\t\t\t\t\t\t\t\t", 
+                RowBox[{
+                 RowBox[{"e", ":", 
+                  RowBox[{"Except", "[", 
+                   RowBox[{"_String", "?", "FileExistsQ"}], "]"}]}], ":>", 
+                 "\n", "\t\t\t\t\t\t\t\t\t\t", 
+                 RowBox[{"(", "\n", "\t\t\t\t\t\t\t\t\t\t\t", 
+                  RowBox[{
+                   RowBox[{"Message", "[", 
+                    RowBox[{
+                    RowBox[{"PublicPacletServer", "::", "badpac"}], ",", " ", 
+                    "paclet"}], "]"}], ";", "\n", "\t", "\t", "\t", 
+                   "\t\t\t\t\t\t\t\t", "$Failed"}], "\n", 
+                  "\t\t\t\t\t\t\t\t\t\t\t", ")"}]}]}], "\n", 
+               "\t\t\t\t\t\t\t\t\t", "]"}], ",", "\n", "\t\t\t\t\t\t\t\t", 
+              RowBox[{
+               RowBox[{"Message", "[", 
+                RowBox[{
+                 RowBox[{"PublicPacletServer", "::", "badpac"}], ",", " ", 
+                 "paclet"}], "]"}], ";", "\n", "\t\t\t\t\t\t\t\t", 
+               "$Failed"}]}], "\n", "\t\t\t\t\t\t\t\t", "]"}]}], "\n", 
+           "\t\t\t\t\t\t\t", "]"}], ",", "\n", "\t\t\t\t\t", "True", ",", 
+          "\n", "\t\t\t\t\t\t", 
+          RowBox[{"Replace", "[", 
+           RowBox[{
+            RowBox[{"PacletExecute", "[", 
+             RowBox[{"\"\<AutoGeneratePaclet\>\"", ",", " ", "paclet"}], 
+             "]"}], ",", "\n", "\t", "\t", "\t\t\t\t\t", 
+            RowBox[{
+             RowBox[{"Except", "[", 
+              RowBox[{"_String", "?", "FileExistsQ"}], "]"}], ":>", "\n", 
+             "\t", "\t", "\t\t\t\t\t\t", 
+             RowBox[{"(", "\n", "\t", "\t", "\t\t\t\t\t\t\t", 
+              RowBox[{
+               RowBox[{"Message", "[", 
+                RowBox[{
+                 RowBox[{"PublicPacletServer", "::", "badpac"}], ",", " ", 
+                 "paclet"}], "]"}], ";", "\n", "\t", "\t\t\t\t\t\t\t\t", 
+               "$Failed"}], "\n", "\t", "\t\t\t\t\t\t\t\t", ")"}]}]}], "\n", 
+           "\t\t\t\t\t\t\t", "]"}]}], "\n", "\t\t\t\t\t", "]"}]}], ";", "\n", 
+       "\t\t\t", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"StringQ", "@", "pacFile"}], "&&", 
+          RowBox[{"FileExistsQ", "[", "pacFile", "]"}], "&&", 
+          RowBox[{
+           RowBox[{"FileExtension", "[", "pacFile", "]"}], "\[Equal]", 
+           "\"\<paclet\>\""}]}], ",", "\n", "\t", "\t\t\t", 
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{"StringQ", "@", "$Clone"}], ",", "\n", "\t", "\t\t\t\t", 
+           RowBox[{
+            RowBox[{"CopyFile", "[", "\n", "\t", "\t\t\t\t\t", 
+             RowBox[{"pacFile", ",", "\n", "\t", "\t\t\t\t\t", 
+              RowBox[{"FileNameJoin", "@", 
+               RowBox[{"{", 
+                RowBox[{"$Clone", ",", " ", "\"\<ReviewQueue\>\"", ",", " ", 
+                 RowBox[{"FileNameTake", "[", "pacFile", "]"}]}], "}"}]}], 
+              ",", "\n", "\t", "\t\t\t\t\t", 
+              RowBox[{"OverwriteTarget", "\[Rule]", "True"}]}], "\n", "\t", 
+             "\t\t\t\t\t", "]"}], ";", "\n", "\t", "\t\t\t\t", 
+            RowBox[{"Git", "[", 
+             RowBox[{"\"\<Add\>\"", ",", " ", "$Clone", ",", " ", 
+              RowBox[{"\"\<All\>\"", "\[Rule]", "True"}]}], "]"}], ";", "\n", 
+            "\t", "\t\t\t\t", 
+            RowBox[{"Git", "[", 
+             RowBox[{
+             "\"\<Commit\>\"", ",", " ", "$Clone", ",", " ", "\n", "\t", 
+              "\t\t\t\t\t", 
+              RowBox[{"\"\<All\>\"", "\[Rule]", "True"}], ",", " ", "\n", 
+              "\t", "\t\t\t\t\t", 
+              RowBox[{"\"\<Message\>\"", "\[Rule]", 
+               RowBox[{"\"\<Added paclet \>\"", "<>", 
+                RowBox[{"FileNameTake", "[", "pacFile", "]"}], "<>", 
+                "\"\< to queue\>\""}]}]}], "\n", "\t", "\t\t\t\t\t", "]"}], 
+            ";", "\n", "\t", "\t\t\t\t", 
+            RowBox[{"GitHub", "[", 
+             RowBox[{"\"\<Push\>\"", ",", " ", "$Clone"}], "]"}]}], ",", "\n",
+            "\t\t\t\t\t", 
+           RowBox[{"With", "[", "\n", "\t\t\t\t\t\t", 
+            RowBox[{
+             RowBox[{"{", "\n", "\t", "\t\t\t\t\t\t", 
+              RowBox[{"currentForkQueue", "=", "\n", "\t", "\t\t\t\t\t\t\t", 
+               RowBox[{"PPSGitHubCheck", "@", 
+                RowBox[{"GitHub", "[", 
+                 RowBox[{
+                 "\"\<GetDirectory\>\"", ",", " ", "$Fork", ",", " ", 
+                  "\"\<ReviewQueue\>\""}], "]"}]}]}], "\n", "\t", 
+              "\t\t\t\t\t\t", "}"}], ",", "\n", "\t", "\t\t\t\t\t", 
+             RowBox[{"If", "[", 
+              RowBox[{
+               RowBox[{"ListQ", "@", "currentForkQueue"}], ",", "\n", "\t", 
+               "\t\t\t\t\t\t", 
+               RowBox[{"Replace", "[", "\n", "\t", "\t\t\t\t\t\t\t", 
+                RowBox[{
+                 RowBox[{
+                 "PPSGitHubCheck", "@", "\n", "\t", "\t\t\t\t\t\t\t\t", 
+                  RowBox[{"GitHub", "[", "\n", "\t", "\t\t\t\t\t\t\t\t\t", 
+                   RowBox[{
+                    RowBox[{"If", "[", 
+                    RowBox[{
+                    RowBox[{"MemberQ", "[", 
+                    RowBox[{
+                    RowBox[{"Lookup", "[", 
+                    RowBox[{"currentForkQueue", ",", " ", "\"\<Name\>\""}], 
+                    "]"}], ",", " ", 
+                    RowBox[{"FileNameTake", "[", "pacFile", "]"}]}], "]"}], 
+                    ",", "\n", "\t", "\t", "\t\t\t\t\t\t\t\t\t", 
+                    "\"\<EditFile\>\"", ",", "\n", "\t", "\t", "\t", "\t", 
+                    "\t\t\t\t\t\t\t", "\"\<AddFile\>\""}], "\n", "\t", "\t", 
+                    "\t", "\t", "\t\t\t\t\t\t\t", "]"}], ",", " ", "\n", "\t",
+                     "\t", "\t", "\t", "\t\t\t\t\t\t", "$Fork", ",", " ", 
+                    "\n", "\t", "\t", "\t", "\t", "\t\t\t\t\t\t", "pacFile", 
+                    ",", " ", "\n", "\t", "\t", "\t", "\t", "\t\t\t\t\t\t", 
+                    RowBox[{"\"\<ReviewQueue/\>\"", "<>", 
+                    RowBox[{"FileNameTake", "[", "pacFile", "]"}]}], ",", 
+                    "\n", "\t", "\t\t\t\t\t\t\t\t\t", "ops", ",", "\n", "\t", 
+                    "\t\t\t\t\t\t\t\t\t", 
+                    RowBox[{
+                    "\"\<Message\>\"", "\[Rule]", "\n", "\t", 
+                    "\t\t\t\t\t\t\t\t\t\t", 
+                    RowBox[{"If", "[", 
+                    RowBox[{
+                    RowBox[{"MemberQ", "[", 
+                    RowBox[{
+                    RowBox[{"Lookup", "[", 
+                    RowBox[{"currentForkQueue", ",", " ", "\"\<Name\>\""}], 
+                    "]"}], ",", " ", 
+                    RowBox[{"FileNameTake", "[", "pacFile", "]"}]}], "]"}], 
+                    ",", "\n", "\t", "\t\t\t\t\t\t\t\t\t\t\t", 
+                    RowBox[{"\"\<Updated paclet \>\"", "<>", 
+                    RowBox[{"FileNameTake", "[", "pacFile", "]"}], "<>", 
+                    "\"\< in queue\>\""}], ",", "\n", "\t", 
+                    "\t\t\t\t\t\t\t\t\t\t\t", 
+                    RowBox[{"\"\<Added paclet \>\"", "<>", 
+                    RowBox[{"FileNameTake", "[", "pacFile", "]"}], "<>", 
+                    "\"\< to queue\>\""}]}], "\n", "\t", 
+                    "\t\t\t\t\t\t\t\t\t\t\t", "]"}]}]}], "\n", "\t", 
+                   "\t\t\t\t\t\t\t\t\t", "]"}]}], ",", "\n", "\t", 
+                 "\t\t\t\t\t\t\t", 
+                 RowBox[{
+                 "a_Association", ":>", "\n", "\t", "\t\t\t\t\t\t\t\t", 
+                  RowBox[{"URLBuild", "@", "\n", "\t", "\t\t\t\t\t\t\t\t\t", 
+                   RowBox[{"<|", "\n", "\t", "\t\t\t\t\t\t\t\t\t\t", 
+                    RowBox[{
+                    RowBox[{"\"\<Scheme\>\"", "\[Rule]", "\"\<https\>\""}], 
+                    ",", "\n", "\t", "\t\t\t\t\t\t\t\t\t\t", 
+                    RowBox[{
+                    "\"\<Domain\>\"", "\[Rule]", "\"\<github.com\>\""}], ",", 
+                    "\n", "\t", "\t\t\t\t\t\t\t\t\t\t", 
+                    RowBox[{
+                    "\"\<Path\>\"", "\[Rule]", "\n", "\t", 
+                    "\t\t\t\t\t\t\t\t\t\t\t", 
+                    RowBox[{
+                    RowBox[{"DeleteCases", "[", "\"\<\>\"", "]"}], "@", "\n", 
+                    "\t", "\t", "\t\t\t\t\t\t\t\t\t\t\t", 
+                    RowBox[{"Flatten", "@", 
+                    RowBox[{"{", "\n", "\t", "\t", "\t\t\t\t\t\t\t\t\t\t\t\t", 
+                    RowBox[{
+                    RowBox[{"URLParse", "[", 
+                    RowBox[{"$Fork", ",", " ", "\"\<Path\>\""}], "]"}], ",", 
+                    " ", "\"\<tree\>\"", ",", " ", "\"\<master\>\"", ",", " ",
+                     "\n", "\t", "\t", "\t\t\t\t\t\t\t\t\t\t\t\t", 
+                    RowBox[{"URLParse", "[", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"a", "[", "\"\<Content\>\"", "]"}], "[", 
+                    "\"\<Path\>\"", "]"}], ",", " ", "\"\<Path\>\""}], 
+                    "]"}]}], "\n", "\t", "\t", "\t\t\t\t\t\t\t\t\t\t\t\t", 
+                    "}"}]}]}]}]}], "\n", "\t", "\t\t\t\t\t\t\t\t\t\t", 
+                    "|>"}]}]}]}], "\n", "\t", "\t\t\t\t\t\t\t", "]"}], ",", 
+               "\n", "\t", "\t\t\t\t\t\t", "$Failed"}], "\n", "\t", 
+              "\t\t\t\t\t\t", "]"}]}], "\n", "\t\t\t\t\t\t", "]"}]}], "\n", 
+          "\t\t\t\t\t", "]"}], ",", "\n", "\t\t\t\t", "$Failed"}], "\n", 
+        "\t\t\t\t", "]"}]}]}], "\n", "\t\t\t", "]"}]}], "\n", "\t\t", 
+   "]"}]}]}], "CodeInput",
+ CellChangeTimes->{{3.733695770397727*^9, 3.733695775264596*^9}, {
+   3.73369581861005*^9, 3.733695901927829*^9}, {3.7338557375956306`*^9, 
+   3.733855738802547*^9}, {3.733855789097671*^9, 3.7338558077094393`*^9}, {
+   3.733855862312222*^9, 3.733855984570057*^9}, {3.733856068938613*^9, 
+   3.733856104880587*^9}, {3.73385630776086*^9, 3.733856450010565*^9}, {
+   3.733867329910718*^9, 3.7338673481543427`*^9}, {3.733867461672674*^9, 
+   3.733867466264455*^9}, {3.7339362802998238`*^9, 3.733936340613052*^9}, 
+   3.73393637415165*^9, {3.733936446801262*^9, 3.7339364683611507`*^9}, {
+   3.733937081116723*^9, 3.7339370821745777`*^9}, {3.73393713230241*^9, 
+   3.733937259203682*^9}, {3.733937373683959*^9, 3.733937386097321*^9}, 
+   3.7339374172246447`*^9, {3.733941167830784*^9, 3.733941180054412*^9}, {
+   3.7339412137612247`*^9, 3.733941298191607*^9}, {3.733941405901143*^9, 
+   3.733941412166507*^9}, {3.7339415597060127`*^9, 3.733941560205778*^9}, {
+   3.733941760078093*^9, 3.733941766334391*^9}, {3.733941845552698*^9, 
+   3.7339418465430727`*^9}, 3.7339418820931273`*^9, 3.7339430172909517`*^9, {
+   3.733943667767002*^9, 3.733943675909527*^9}, {3.7339438797358513`*^9, 
+   3.73394391677133*^9}, {3.733944145368485*^9, 3.733944239150299*^9}, {
+   3.733944644910055*^9, 3.7339446541660643`*^9}, {3.7339448093310137`*^9, 
+   3.733944817345778*^9}, {3.733945055928521*^9, 3.733945127635008*^9}, {
+   3.733945253621016*^9, 3.7339452760222387`*^9}, {3.7339453693036757`*^9, 
+   3.733945380347699*^9}, {3.733945413397378*^9, 3.733945487936248*^9}, {
+   3.733945546104957*^9, 3.733945571424909*^9}, {3.7339456056572638`*^9, 
+   3.733945640293886*^9}, {3.7339457584254436`*^9, 3.73394576079119*^9}, {
+   3.734140664416266*^9, 3.734140671365361*^9}, {3.734140880484943*^9, 
+   3.734140926730279*^9}, {3.734146639532607*^9, 3.7341467259444447`*^9}, {
+   3.734146839042473*^9, 
+   3.734146918052703*^9}},ExpressionUUID->"d6c35e36-3eb2-492d-b7f1-\
+ea7624587971"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]SubmitPullRequest\[RightFloor]", "CodeSubsubsubsection",
+ Evaluatable->True,
+ CellChangeTimes->{{3.733855766220604*^9, 3.7338557690768642`*^9}, {
+  3.733856465743127*^9, 
+  3.7338564688473988`*^9}},ExpressionUUID->"8c82f66d-8a91-46ef-8721-\
+d465183f83c7"],
+
+Cell["\<\
+\[LeftCeiling]
+\tSimply set up a PR to the main server
+\[RightFloor]\
+\>", "Text",
+ Evaluatable->True,
+ CellChangeTimes->{{3.733695720255416*^9, 3.733695787232171*^9}, {
+  3.733867270294724*^9, 
+  3.733867289809395*^9}},ExpressionUUID->"a7b791c1-8bda-4cc0-bdc7-\
+42d734e5d65b"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"PublicPacletServer", "::", "nomrg"}], "=", "\n", "\t", 
+   "\"\<Couldn't perform requisite merge request before sending pull request. \
+\\\nVisit GitHub for more details.\>\""}], ";"}]], "CodeInput",
+ CellChangeTimes->{{3.734144431073201*^9, 
+  3.7341444899246902`*^9}},ExpressionUUID->"1a56a5bf-7ebb-496d-9ea7-\
+052c014ccfd4"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"Options", "[", "SubmitPullRequest", "]"}], ":=", "\n", "\t", 
+   RowBox[{"GitHub", "[", 
+    RowBox[{"\"\<CreatePullRequest\>\"", ",", " ", "\"\<Options\>\""}], 
+    "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"SubmitPullRequest", "[", 
+   RowBox[{
+    RowBox[{"desc", ":", 
+     RowBox[{"_String", "|", "Automatic"}], ":", "Automatic"}], ",", " ", 
+    RowBox[{"ops", ":", 
+     RowBox[{"OptionsPattern", "[", "]"}]}]}], "]"}], ":=", "\n", "\t", 
+  RowBox[{"Module", "[", "\n", "\t\t", 
+   RowBox[{
+    RowBox[{"{", "\n", "\t\t\t", 
+     RowBox[{"merge", ",", "\n", "\t\t\t", "pull"}], "\n", "\t\t\t", "}"}], 
+    ",", "\n", "\t\t", 
+    RowBox[{
+     RowBox[{"merge", "=", "\n", "\t\t\t", 
+      RowBox[{"PPSGitHubCheck", "@", "\n", "\t\t\t\t", 
+       RowBox[{"GitHub", "[", 
+        RowBox[{"\"\<Merge\>\"", ",", " ", "$Fork", ",", " ", "$Repository"}],
+         "]"}]}]}], ";", "\n", "\t\t", 
+     RowBox[{"pull", "=", "\n", "\t\t\t", 
+      RowBox[{"Replace", "[", "\n", "\t\t\t\t", 
+       RowBox[{
+        RowBox[{"PPSGitHubCheck", "@", "\n", "\t\t\t\t\t", 
+         RowBox[{"GitHub", "[", "\n", "\t", "\t", "\t\t\t\t", 
+          RowBox[{
+          "\"\<CreatePullRequest\>\"", ",", " ", "\n", "\t", "\t", "\t\t\t\t",
+            "$Repository", ",", "\n", "\t", "\t", "\t\t\t\t", "ops", ",", 
+           "\n", "\t", "\t", "\t\t\t\t", 
+           RowBox[{
+           "\"\<Title\>\"", "->", "\n", "\t", "\t", "\t\t\t\t\t", 
+            "\"\<Update Review Queue\>\""}], ",", "\n", "\t", "\t", 
+           "\t\t\t\t", 
+           RowBox[{
+           "\"\<Description\>\"", "->", "\n", "\t", "\t", "\t\t\t\t\t", 
+            "\"\<Pull request on review queue changes\>\""}]}], "\n", "\t", 
+          "\t", "\t\t\t\t", "]"}]}], ",", "\n", "\t\t\t\t", 
+        RowBox[{"{", "\n", "\t\t\t\t\t", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"a_Association", "?", 
+            RowBox[{"(", "AssociationQ", ")"}]}], "\[RuleDelayed]", 
+           RowBox[{"a", "[", "\"\<HTMLURL\>\"", "]"}]}], ",", "\n", 
+          "\t\t\t\t\t", 
+          RowBox[{"e_", "\[RuleDelayed]", 
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{"!", 
+              RowBox[{"AssociationQ", "@", "merge"}]}], ",", " ", 
+             RowBox[{
+              RowBox[{"Message", "[", 
+               RowBox[{"PublicPacletServer", "::", "nomrg"}], "]"}], ";", 
+              "$Failed"}], ",", " ", "e"}], "]"}]}]}], "\n", "\t\t\t\t\t", 
+         "}"}]}], "\n", "\t\t\t\t", "]"}]}]}]}], "\n", "\t\t", 
+   "]"}]}]}], "CodeInput",
+ CellChangeTimes->{{3.733695770397727*^9, 3.733695775264596*^9}, {
+   3.73369581861005*^9, 3.733695901927829*^9}, {3.7338557375956306`*^9, 
+   3.733855738802547*^9}, {3.733855789097671*^9, 3.7338558077094393`*^9}, {
+   3.733855862312222*^9, 3.733855984570057*^9}, {3.733856068938613*^9, 
+   3.733856104880587*^9}, {3.73385630776086*^9, 3.73385647235997*^9}, {
+   3.733867431233562*^9, 3.73386747060818*^9}, {3.733867509722508*^9, 
+   3.733867664210127*^9}, {3.7339364952665253`*^9, 3.733936523859774*^9}, {
+   3.733937592199356*^9, 3.733937598011117*^9}, {3.733941047003461*^9, 
+   3.733941103887023*^9}, 3.733941184436854*^9, {3.73394629275723*^9, 
+   3.733946309637802*^9}, {3.733946340746954*^9, 3.7339463522492723`*^9}, {
+   3.7341409847685623`*^9, 3.734141005486178*^9}, 3.734141039467914*^9, {
+   3.734144327041891*^9, 3.734144427218594*^9}, {3.7341444971234007`*^9, 
+   3.7341445001662893`*^9}, {3.7341471387149353`*^9, 
+   3.734147182884899*^9}},ExpressionUUID->"9a9e7372-3f51-457c-ba9b-\
+91b95e21068b"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"End", "[", "]"}], 
+  ";"}]], "InputSection",ExpressionUUID->"8c65acb2-a737-495d-a2a4-\
+c330f4f5c5fe"]
+}, Open  ]],
+
+Cell["", "SectionSeparator",ExpressionUUID->"7ae8f3ea-0d98-4fe8-b7be-\
+8fc9c5b0f030"]
+},
+WindowSize->{808, 755},
+WindowMargins->{{180, Automatic}, {18, Automatic}},
+FrontEndVersion->"11.3 for Mac OS X x86 (32-bit, 64-bit Kernel) (March 5, \
+2018)",
+StyleDefinitions->FrontEnd`FileName[{"BTools"}, "CodePackage.nb", 
+  CharacterEncoding -> "UTF-8"]
+]
+
