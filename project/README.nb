@@ -1,0 +1,255 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.2' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      9448,        247]
+NotebookOptionsPosition[      7207,        191]
+NotebookOutlinePosition[      8952,        240]
+CellTagsIndexPosition[      8909,        237]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{"<|", "\[IndentingNewLine]", 
+  RowBox[{"\"\<ExportOptions\>\"", "\[Rule]", "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{"\"\<Directory\>\"", "\[Rule]", "\"\<..\>\""}], "}"}]}], 
+  "\[IndentingNewLine]", "|>"}]], "Metadata",
+ CellChangeTimes->{{3.732830406695567*^9, 3.732830432925774*^9}, {
+  3.7328323350873213`*^9, 
+  3.7328323409624166`*^9}},ExpressionUUID->"665a938d-fd14-40c4-84c9-\
+5d3a47338b5e"],
+
+Cell[CellGroupData[{
+
+Cell["Helpers", "HiddenSection",
+ CellChangeTimes->{{3.712937864356105*^9, 3.712937877188964*^9}, {
+  3.712937963780888*^9, 
+  3.712937964483138*^9}},ExpressionUUID->"a7091b20-076c-4341-b8e9-\
+ea10514c4469"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Begin", "[", "\"\<READMETools`\>\"", "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"$projimgs", ":=", "\[IndentingNewLine]", 
+   RowBox[{"FileBaseName", "/@", "\[IndentingNewLine]", 
+    RowBox[{"FileNames", "[", "\[IndentingNewLine]", 
+     RowBox[{"\"\<*.png\>\"", ",", "\[IndentingNewLine]", 
+      RowBox[{"FileNameJoin", "@", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"ParentDirectory", "@", 
+          RowBox[{"NotebookDirectory", "[", "]"}]}], ",", "\"\<project\>\"", 
+         ",", "\"\<img\>\""}], "}"}]}]}], "\[IndentingNewLine]", "]"}]}]}], 
+  ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"projimg", "[", "name_", "]"}], ":=", 
+   RowBox[{"FileNameJoin", "@", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"ParentDirectory", "@", 
+       RowBox[{"NotebookDirectory", "[", "]"}]}], ",", "\"\<project\>\"", 
+      ",", "\"\<img\>\"", ",", 
+      RowBox[{"name", "<>", "\"\<.png\>\""}]}], "}"}]}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"backupimg", "[", "name_", "]"}], ":=", "\[IndentingNewLine]", 
+   RowBox[{"(", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"Quiet", "[", 
+      RowBox[{"CreateDirectory", "[", 
+       RowBox[{"FileNameJoin", "@", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"NotebookDirectory", "[", "]"}], ",", "\"\<backups\>\"", 
+          ",", "\"\<img\>\""}], "}"}]}], "]"}], "]"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"FileNameJoin", "@", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"NotebookDirectory", "[", "]"}], ",", "\"\<backups\>\"", ",", 
+        "\"\<img\>\"", ",", "\[IndentingNewLine]", 
+        RowBox[{"name", "<>", "\"\<_\>\"", "<>", 
+         RowBox[{"DateString", "[", "\"\<ISODateTime\>\"", "]"}], "<>", 
+         "\"\<.png\>\""}]}], "}"}]}]}], "\[IndentingNewLine]", ")"}]}], 
+  ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"projimgPad", "[", 
+    RowBox[{"img_", "?", "ImageQ"}], "]"}], ":=", "\[IndentingNewLine]", 
+   RowBox[{"ImagePad", "[", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"ImageCrop", "[", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"ImageResize", "[", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"ImagePad", "[", "\[IndentingNewLine]", 
+          RowBox[{"img", ",", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{"1", ",", "1"}], "}"}], ",", 
+             RowBox[{"{", 
+              RowBox[{"0", ",", "0"}], "}"}]}], "}"}], ",", 
+           RowBox[{"GrayLevel", "[", ".8", "]"}]}], "]"}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{"{", 
+          RowBox[{"Automatic", ",", "200"}], "}"}]}], "\[IndentingNewLine]", 
+        "]"}], ",", "\[IndentingNewLine]", 
+       RowBox[{"{", 
+        RowBox[{"800", ",", "Full"}], "}"}], ",", "\[IndentingNewLine]", 
+       RowBox[{"Padding", "\[Rule]", 
+        RowBox[{"GrayLevel", "[", ".99", "]"}]}]}], "\[IndentingNewLine]", 
+      "]"}], ",", "\[IndentingNewLine]", "1", ",", "\[IndentingNewLine]", 
+     RowBox[{"GrayLevel", "[", ".8", "]"}]}], "\[IndentingNewLine]", "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"projimgPad", "[", "name_String", "]"}], ":=", 
+   "\[IndentingNewLine]", 
+   RowBox[{"projimgPad", "@", 
+    RowBox[{"Import", "@", 
+     RowBox[{"projimg", "[", "name", "]"}]}]}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"projimgExport", "[", "name_", "]"}], ":=", "\[IndentingNewLine]", 
+   
+   RowBox[{"(", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"CopyFile", "[", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"projimg", "[", "name", "]"}], ",", "\[IndentingNewLine]", 
+       RowBox[{"backupimg", "[", "name", "]"}]}], "\[IndentingNewLine]", 
+      "]"}], ";", "\[IndentingNewLine]", 
+     RowBox[{"Export", "[", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"projimg", "[", "name", "]"}], ",", "\[IndentingNewLine]", 
+       RowBox[{"projimgPad", "[", "name", "]"}]}], "\[IndentingNewLine]", 
+      "]"}]}], "\[IndentingNewLine]", ")"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"End", "[", "]"}], ";"}]}], "Input",
+ CellChangeTimes->{{3.707050131058566*^9, 3.707050186265019*^9}, {
+  3.712941505189674*^9, 
+  3.712941563232438*^9}},ExpressionUUID->"7518600e-680e-4b66-a25b-\
+ceebd4bd784e"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["PublicPacletServer", "Section",
+ CellChangeTimes->{{3.71293841054522*^9, 3.712938421466749*^9}, {
+  3.712938914585651*^9, 3.712938915534898*^9}, {3.734233273374061*^9, 
+  3.734233276468343*^9}},ExpressionUUID->"e6488658-bf42-450e-9bdc-\
+737b56968a02"],
+
+Cell[TextData[{
+ "  ",
+ Cell[BoxData[
+  TemplateBox[{
+   "license","http://img.shields.io/badge/license-MIT-blue.svg",
+    "https://opensource.org/licenses/MIT"},
+   "MarkdownLinkedImageLink"]],ExpressionUUID->
+  "13c1f386-a6f9-44be-88fc-fa40cd8274d5"]
+}], "Text",
+ CellChangeTimes->{
+  3.732843180303953*^9, {3.732843319602983*^9, 3.732843353258875*^9}, {
+   3.732843412794588*^9, 3.732843412794701*^9}, {3.7328442368519287`*^9, 
+   3.732844236852051*^9}, {3.732846682467456*^9, 3.732846685849126*^9}, {
+   3.732846977968954*^9, 3.7328469779692*^9}, {3.7328475500110483`*^9, 
+   3.732847550011239*^9}, {3.7328476122538357`*^9, 3.732847638675231*^9}, {
+   3.734233279102833*^9, 
+   3.734233281941889*^9}},ExpressionUUID->"c3457365-cfb7-486e-8fe6-\
+bfb6298d55f7"],
+
+Cell[TextData[{
+ "This is the interface paclet to the ",
+ ButtonBox["Mathematica paclet server",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["https://paclets.github.io/PacletServer/"], None},
+  ButtonNote->"https://paclets.github.io/PacletServer/"]
+}], "Text",
+ CellChangeTimes->{{3.712938427698472*^9, 3.712938432754331*^9}, 
+   3.7129389313072557`*^9, {3.7129406941654243`*^9, 3.7129407586081657`*^9}, {
+   3.712940795481729*^9, 3.7129407992712727`*^9}, {3.734233284414138*^9, 
+   3.734233316120805*^9}},ExpressionUUID->"fe7ec65c-b79b-432f-92a9-\
+9945b4ca437c"]
+}, Open  ]]
+},
+WindowSize->{808, 755},
+WindowMargins->{{188, Automatic}, {11, Automatic}},
+FrontEndVersion->"11.3 for Mac OS X x86 (32-bit, 64-bit Kernel) (March 5, \
+2018)",
+StyleDefinitions->Notebook[{
+   Cell[
+    StyleData[
+    StyleDefinitions -> 
+     FrontEnd`FileName[{"BTools"}, "MarkdownNotebook.nb", CharacterEncoding -> 
+       "UTF-8"]]], 
+   Cell[
+    BoxData[
+     RowBox[{"SSNew", "[", 
+       RowBox[{"\"HiddenSection\"", ",", "\"Section\""}], "]"}]], "Input", 
+    CellChangeTimes -> {{3.712937945363078*^9, 3.712937960253202*^9}}], 
+   Cell[
+    CellGroupData[{
+      Cell[
+       StyleData["HiddenSection", StyleDefinitions -> StyleData["Section"]], 
+       CellBracketOptions -> {"Color" -> GrayLevel[0.5]}, FontColor -> 
+       GrayLevel[0.5]], 
+      Cell[
+       BoxData[
+        RowBox[{"SSEdit", "[", 
+          RowBox[{"\"HiddenSection\"", ",", 
+            RowBox[{"{", "\[IndentingNewLine]", 
+              RowBox[{
+                RowBox[{"FontColor", "\[Rule]", "Gray"}], ",", 
+                "\[IndentingNewLine]", 
+                RowBox[{"CellBracketOptions", "\[Rule]", 
+                  RowBox[{"{", "\[IndentingNewLine]", 
+                    RowBox[{"\"Color\"", "\[Rule]", "Gray"}], 
+                    "\[IndentingNewLine]", "}"}]}]}], "\[IndentingNewLine]", 
+              "}"}]}], "]"}]], "Input", 
+       CellChangeTimes -> {{3.71293797195337*^9, 3.712938000386712*^9}}]}, 
+     Open]]}, Visible -> False, FrontEndVersion -> 
+  "11.3 for Mac OS X x86 (32-bit, 64-bit Kernel) (March 5, 2018)", 
+  StyleDefinitions -> "PrivateStylesheetFormatting.nb"]
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 434, 9, 112, "Metadata",ExpressionUUID->"665a938d-fd14-40c4-84c9-5d3a47338b5e"],
+Cell[CellGroupData[{
+Cell[1017, 33, 207, 4, 51, "HiddenSection",ExpressionUUID->"a7091b20-076c-4341-b8e9-ea10514c4469"],
+Cell[1227, 39, 4333, 107, 70, "Input",ExpressionUUID->"7518600e-680e-4b66-a25b-ceebd4bd784e"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[5597, 151, 257, 4, 47, "Section",ExpressionUUID->"e6488658-bf42-450e-9bdc-737b56968a02"],
+Cell[5857, 157, 762, 17, 39, "Text",ExpressionUUID->"c3457365-cfb7-486e-8fe6-bfb6298d55f7"],
+Cell[6622, 176, 569, 12, 35, "Text",ExpressionUUID->"fe7ec65c-b79b-432f-92a9-9945b4ca437c"]
+}, Open  ]]
+}
+]
+*)
+
