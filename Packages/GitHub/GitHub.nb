@@ -42,7 +42,7 @@ Cell[BoxData[{
   3.733855433058668*^9, 3.733855451103272*^9}, {3.733855999879916*^9, 
   3.733856009180184*^9}, {3.733942697089006*^9, 
   3.73394269738479*^9}},ExpressionUUID->"456dfafd-74c6-4bb6-b036-eac71e4f0b2f"]
-}, Open  ]],
+}, Closed]],
 
 Cell[CellGroupData[{
 
@@ -75,11 +75,85 @@ f3e5e4534a51"]
 
 Cell[CellGroupData[{
 
+Cell["\[LeftCeiling]Issues\[RightFloor]", "CodeSubsubsection",
+ Evaluatable->True,ExpressionUUID->"d1bb3af2-a87b-4da3-aa51-379f72ae3215"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"$CurrentIssues", "::", "usage"}], "=", "\n", "\t", 
+   "\"\<List of current issues of the head repo\>\""}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"LoadIssues", "::", "usage"}], "=", "\n", "\t", 
+   "\"\<Loads the issues for the head repo\>\""}], 
+  ";"}]}], "CodeInput",ExpressionUUID->"f0dd1b52-ce4d-43ac-b33e-976aac6746cf"]\
+
+}, Closed]],
+
+Cell[CellGroupData[{
+
 Cell[BoxData[
  RowBox[{
   RowBox[{"Begin", "[", "\"\<`Private`\>\"", "]"}], 
   ";"}]], "InputSection",ExpressionUUID->"01a1c17c-d522-4532-84cc-\
 2b7764fd468b"],
+
+Cell[BoxData[
+ RowBox[{"PublicPacletServer", ";", " ", 
+  RowBox[{"(*", " ", 
+   RowBox[{"invoke", " ", "the", " ", "autoloader"}], " ", 
+   "*)"}]}]], \
+"CodeInput",ExpressionUUID->"852b5b51-f7a5-40e8-96f9-bf79b5a5ea01"],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]Issues\[RightFloor]", "CodeSubsubsection",
+ Evaluatable->True,ExpressionUUID->"3053cb06-c82a-4689-bc8b-1e1e1c8e19cf"],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]LoadIssues\[RightFloor]", "CodeSubsubsubsection",
+ Evaluatable->True,ExpressionUUID->"d0fb2990-efe0-4357-9ef7-96a905c934e2"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"LoadIssues", "[", "]"}], ":=", "\n", "\t", 
+  RowBox[{"With", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"res", "=", 
+      RowBox[{"PPSGitHubCheck", "@", 
+       RowBox[{"GitHub", "[", 
+        RowBox[{
+        "\"\<ListIssues\>\"", ",", " ", "\"\<paclets/PacletServer\>\""}], 
+        "]"}]}]}], "}"}], ",", "\n", "\t\t", 
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{"res", "=!=", "$Failed"}], ",", "\n", "\t\t\t", 
+      RowBox[{"$CurrentIssues", "=", "res"}], ",", "\n", "\t\t\t", "res"}], 
+     "\n", "\t\t\t", "]"}]}], "\n", "\t\t", 
+   "]"}]}]], \
+"CodeInput",ExpressionUUID->"3e7e0b3c-db35-40f6-ad4b-cc8b906c8249"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]$CurrentIssues\[RightFloor]", "CodeSubsubsubsection",
+ Evaluatable->True,ExpressionUUID->"dc3ea25d-ec90-467b-8cf3-98cdc3c07a8e"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"If", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Length", "@", 
+      RowBox[{"OwnValues", "[", "$CurrentIssues", "]"}]}], "\[Equal]", "0"}], 
+    ",", "\n", "\t", 
+    RowBox[{"LoadIssues", "[", "]"}]}], "\n", "\t", "]"}], 
+  ";"}]], "CodeInput",ExpressionUUID->"7af68e95-a2c9-4e04-935d-02057721292b"]
+}, Closed]]
+}, Open  ]],
 
 Cell[CellGroupData[{
 
@@ -523,7 +597,7 @@ Cell[BoxData[
   3.733940804116048*^9, 3.73394094106911*^9}, {3.733940992835232*^9, 
   3.733940995599207*^9}},ExpressionUUID->"6e9b53c9-cc17-4438-a357-\
 e1de198465e2"]
-}, Open  ]]
+}, Closed]]
 }, Open  ]]
 }, Open  ]],
 

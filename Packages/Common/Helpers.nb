@@ -1,0 +1,129 @@
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["PublicPacletServer", "CodeSection",
+ CellChangeTimes->{{3.733695313464614*^9, 
+  3.733695317660263*^9}},ExpressionUUID->"6335eed0-9b17-4929-a372-\
+1feface45096"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"PrettyString", "::", "usage"}], "=", "\n", "\t", 
+   "\"\<Makes a pretty string form for an expression\>\""}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"PrettyExport", "::", "usage"}], "=", "\n", "\t", 
+   "\"\<Exports an expression in prettier form\>\""}], 
+  ";"}]}], "CodeInput",ExpressionUUID->"0d27a0b7-db40-4430-a02a-c7b0fc7296c4"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Begin", "[", "\"\<`Private`\>\"", "]"}], 
+  ";"}]], "InputSection",ExpressionUUID->"01a1c17c-d522-4532-84cc-\
+2b7764fd468b"],
+
+Cell[BoxData[
+ RowBox[{"PublicPacletServer", ";", " ", 
+  RowBox[{"(*", " ", 
+   RowBox[{"invoke", " ", "the", " ", "autoloader"}], " ", 
+   "*)"}]}]], \
+"CodeInput",ExpressionUUID->"26d054b2-3d83-4398-accc-1a9cf02ca5e6"],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]PrettyString\[RightFloor]", "CodeSubsubsection",
+ Evaluatable->True,ExpressionUUID->"174d08f4-b0d0-48ff-bf69-b19d1947c2d6"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"PrettyString", "[", "\n", "\t", 
+   RowBox[{"expr_", ",", "\n", "\t", 
+    RowBox[{"elementsPerLine", ":", 
+     RowBox[{"_", "?", "IntegerQ"}], ":", "1"}], ",", "\n", "\t", 
+    RowBox[{"dataType", ":", 
+     RowBox[{"TextData", "|", "BoxData"}], ":", "BoxData"}], ",", "\n", "\t", 
+    
+    RowBox[{"cellStyle_String:", "\"\<Input\>\""}], ",", "\n", "\t", 
+    RowBox[{"ops", ":", 
+     RowBox[{"OptionsPattern", "[", "Cell", "]"}]}]}], "\n", "\t", "]"}], ":=",
+   "\n", "\t", 
+  RowBox[{"StringDelete", "[", "\n", "\t\t", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"FrontEndExecute", "[", "\n", "\t", "\t\t", 
+      RowBox[{"FrontEnd`ExportPacket", "[", "\n", "\t\t\t\t", 
+       RowBox[{
+        RowBox[{"Cell", "[", "\n", "\t\t\t\t\t", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"dataType", "@", "\n", "\t\t\t\t\t\t", 
+            RowBox[{"GeneralUtilities`PrettyFormBoxes", "[", 
+             RowBox[{"expr", ",", " ", "1"}], "]"}]}], "/.", "\n", "\t", 
+           "\t\t\t\t\t\t", 
+           RowBox[{
+            RowBox[{"TemplateBox", "[", "\n", "\t\t\t\t\t\t\t\t", 
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{"sym_", ",", " ", "___"}], "}"}], ",", "\n", "\t", 
+              "\t", "\t\t\t\t\t\t", "\"\<DefinitionSymbol\>\"", ",", " ", 
+              "\n", "\t", "\t", "\t\t\t\t\t\t", "___"}], "\n", "\t", "\t", 
+             "\t\t\t\t\t\t", "]"}], "\[RuleDelayed]", "sym"}]}], ",", " ", 
+          "\n", "\t\t\t\t\t", "cellStyle", ",", "\n", "\t\t\t\t\t", "ops", 
+          ",", "\n", "\t\t\t\t\t", 
+          RowBox[{"PageWidth", "\[Rule]", "Infinity"}]}], "\n", "\t\t\t\t\t", 
+         "]"}], ",", " ", "\n", "\t\t\t\t", "\"\<PlainText\>\""}], "\n", 
+       "\t\t\t\t", "]"}], "\n", "\t\t\t", "]"}], "[", 
+     RowBox[{"[", "1", "]"}], "]"}], ",", "\n", "\t", "\t", 
+    RowBox[{"\"\<\\\\\>\"", "~~", "\"\<\\n\>\""}]}], "\n", "\t", "\t", 
+   "]"}]}]], \
+"CodeInput",ExpressionUUID->"d7549633-f9f6-4632-b460-1b2dc7dede43"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]PrettyExport\[RightFloor]", "CodeSubsubsection",
+ Evaluatable->True,ExpressionUUID->"63578f16-194d-48eb-ac1f-d57d0fce758e"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"PrettyExport", "[", "\n", "\t", 
+    RowBox[{"file_", ",", "\n", "\t", "expr_", ",", "\n", "\t", "args___"}], 
+    "\n", "\t", "]"}], ":=", "\n", "\t", 
+   RowBox[{"With", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"tt", "=", 
+       RowBox[{"PrettyString", "[", 
+        RowBox[{"expr", ",", " ", "args"}], "]"}]}], "}"}], ",", "\n", "\t\t", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"StringQ", "@", "tt"}], ",", " ", 
+       RowBox[{"Export", "[", 
+        RowBox[{"file", ",", " ", "tt", ",", " ", "\"\<Text\>\""}], "]"}], 
+       ",", " ", "$Failed"}], "]"}]}], "\n", "\t\t", "]"}]}], 
+  ";"}]], "CodeInput",ExpressionUUID->"832581e7-5717-4622-b3e6-f337612dde16"]
+}, Closed]]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"End", "[", "]"}], 
+  ";"}]], "InputSection",ExpressionUUID->"8c65acb2-a737-495d-a2a4-\
+c330f4f5c5fe"]
+}, Open  ]],
+
+Cell["", "SectionSeparator",ExpressionUUID->"7ae8f3ea-0d98-4fe8-b7be-\
+8fc9c5b0f030"]
+},
+WindowSize->{808, 755},
+WindowMargins->{{77, Automatic}, {Automatic, 0}},
+FrontEndVersion->"11.3 for Mac OS X x86 (32-bit, 64-bit Kernel) (March 5, \
+2018)",
+StyleDefinitions->FrontEnd`FileName[{"BTools"}, "CodePackage.nb", 
+  CharacterEncoding -> "UTF-8"]
+]
+

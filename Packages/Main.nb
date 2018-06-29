@@ -60,10 +60,8 @@ Cell[BoxData[
    RowBox[{
    "\"\<BTools`\>\"", ",", "\n", "\t\t", "\"\<BTools`External`\>\"", ",", 
     "\n", "\t\t", "\"\<BTools`Paclets`\>\""}], "\n", "\t\t", "}"}], "\n", 
-  "\t", "]"}]], "CodeInput",
- CellChangeTimes->{{3.733928801824563*^9, 
-  3.733928871307066*^9}},ExpressionUUID->"51edb6e2-129e-4942-badd-\
-1e1048a06f77"]
+  "\t", "]"}]], \
+"CodeInput",ExpressionUUID->"51edb6e2-129e-4942-badd-1e1048a06f77"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -86,21 +84,17 @@ Cell[BoxData[
  RowBox[{"$ServerCommands", "=", "\n", "\t", 
   RowBox[{"{", "\n", "\t\t", 
    RowBox[{
-   "\"\<Repository\>\"", ",", "\n", "\t\t", "\"\<RepositoryShort\>\"", ",", 
-    "\n", "\t\t", "\"\<SiteURL\>\"", ",", "\n", "\t\t", "\"\<Fork\>\"", ",", 
-    "\n", "\t\t", "\"\<ForkedQ\>\"", ",", "\n", "\t\t", 
-    "\"\<SubmitPaclet\>\"", ",", "\n", "\t\t", "\"\<SubmitPullRequest\>\"", 
-    ",", "\n", "\t\t", "\"\<Clone\>\"", ",", "\n", "\t\t", 
-    "\"\<FindClone\>\"", ",", "\n", "\t\t", "\"\<RebuildServer\>\"", ",", 
-    "\n", "\t\t", "\"\<QueuedPaclets\>\"", ",", "\n", "\t\t", 
-    "\"\<QueuedPullRequests\>\""}], "\n", "\t\t", "}"}]}]], "CodeInput",
- CellChangeTimes->{{3.73385331344584*^9, 3.733853334483242*^9}, {
-   3.733867679307274*^9, 3.7338676840514803`*^9}, 3.7338683846858463`*^9, {
-   3.733935623899495*^9, 3.7339356676792917`*^9}, {3.7339357009934807`*^9, 
-   3.733935707958557*^9}, {3.733935932710869*^9, 3.733935942451935*^9}, {
-   3.733935985149887*^9, 3.733935992210321*^9}, {3.73393613504703*^9, 
-   3.733936137055563*^9}},ExpressionUUID->"9a6e8f07-28b0-403d-b3b9-\
-643f583597da"]
+   "\"\<RegisterPaclet\>\"", ",", "\n", "\t\t", "\"\<RequestPacletUpdate\>\"",
+     ",", "\n", "\t\t", "\"\<Repository\>\"", ",", "\n", "\t\t", 
+    "\"\<RepositoryShort\>\"", ",", "\n", "\t\t", "\"\<SiteURL\>\"", ",", 
+    "\n", "\t\t", "\"\<Fork\>\"", ",", "\n", "\t\t", "\"\<ForkedQ\>\"", ",", 
+    "\n", "\t\t", "\"\<SubmitPacletToFork\>\"", ",", "\n", "\t\t", 
+    "\"\<SubmitPullRequest\>\"", ",", "\n", "\t\t", "\"\<Clone\>\"", ",", 
+    "\n", "\t\t", "\"\<FindClone\>\"", ",", "\n", "\t\t", 
+    "\"\<RebuildServer\>\"", ",", "\n", "\t\t", "\"\<QueuedPaclets\>\"", ",", 
+    "\n", "\t\t", "\"\<QueuedPullRequests\>\""}], "\n", "\t\t", 
+   "}"}]}]], \
+"CodeInput",ExpressionUUID->"9a6e8f07-28b0-403d-b3b9-643f583597da"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -172,6 +166,59 @@ Cell[BoxData[
    3.733935995486471*^9},ExpressionUUID->"65ed12e3-1008-441f-bb6b-\
 79ae299909ae"]
 }, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]Register\[RightFloor]", "CodeSubsubsection",
+ Evaluatable->True,ExpressionUUID->"d9a0690b-06bf-4f48-a952-9b16eed09e8c"],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]Register\[RightFloor]", "CodeSubsubsubsection",
+ Evaluatable->True,ExpressionUUID->"68772c2e-6794-4309-860c-7e221222fd3e"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"PublicPacletServer", "[", 
+   RowBox[{"\"\<RegisterPaclet\>\"", ",", " ", "p_"}], "]"}], ":=", "\n", 
+  "\t", 
+  RowBox[{"With", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"res", "=", 
+      RowBox[{"RegisterPaclet", "[", "p", "]"}]}], "}"}], ",", "\n", "\t\t", 
+    RowBox[{"res", "/;", 
+     RowBox[{
+      RowBox[{"Head", "[", "res", "]"}], "=!=", "RegisterPaclet"}]}]}], "\n", 
+   "\t\t", "]"}]}]], \
+"CodeInput",ExpressionUUID->"9614a779-9732-4f46-a224-71807d1eaebb"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]RequestPacletUpdate\[RightFloor]", "CodeSubsubsubsection",
+ 
+ Evaluatable->True,ExpressionUUID->"6c306eef-9632-4240-bbb4-38b31195fd0b"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"PublicPacletServer", "[", 
+   RowBox[{"\"\<RequestPacletUpdate\>\"", ",", " ", "p_"}], "]"}], ":=", "\n",
+   "\t", 
+  RowBox[{"With", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"res", "=", 
+      RowBox[{"RequestPacletUpdate", "[", "p", "]"}]}], "}"}], ",", "\n", 
+    "\t\t", 
+    RowBox[{"res", "/;", 
+     RowBox[{
+      RowBox[{"Head", "[", "res", "]"}], "=!=", "RequestPacletUpdate"}]}]}], 
+   "\n", "\t\t", 
+   "]"}]}]], \
+"CodeInput",ExpressionUUID->"70ac88c9-4998-4aa4-9f4b-de394bc7c074"]
+}, Open  ]]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -221,7 +268,7 @@ Cell[BoxData[
   3.733853220252699*^9}},ExpressionUUID->"a66ca2fe-5fc9-4a00-95be-\
 3dd0f8aa0196"]
 }, Open  ]]
-}, Open  ]],
+}, Closed]],
 
 Cell[CellGroupData[{
 
@@ -269,7 +316,7 @@ Cell[BoxData[
   3.733936144029809*^9}},ExpressionUUID->"14db8669-2ec1-458e-8a31-\
 7f17a4b2429c"]
 }, Open  ]]
-}, Open  ]],
+}, Closed]],
 
 Cell[CellGroupData[{
 
@@ -344,7 +391,7 @@ Cell[BoxData[
   3.733867706669862*^9}},ExpressionUUID->"11de9005-85db-4fcf-96d0-\
 dc06ce14cffe"]
 }, Open  ]]
-}, Open  ]],
+}, Closed]],
 
 Cell[CellGroupData[{
 
@@ -408,7 +455,7 @@ Cell[BoxData[
   3.733943854905308*^9}},ExpressionUUID->"018bd4ba-2c38-4f0d-b41b-\
 1f410fb5eb9c"]
 }, Open  ]]
-}, Open  ]],
+}, Closed]],
 
 Cell[CellGroupData[{
 
@@ -452,6 +499,61 @@ Cell[BoxData[
   3.733935691618236*^9}, {3.733935815869753*^9, 3.733935845824326*^9}, {
   3.733935889092897*^9, 
   3.73393589541971*^9}},ExpressionUUID->"f9e02ba5-92c8-490b-903d-897fab81e570"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]DownloadPaclets\[RightFloor]", "CodeSubsubsubsection",
+ Evaluatable->True,ExpressionUUID->"a356780a-5fc6-4a09-8c01-661982bd3549"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"PublicPacletServer", "[", 
+   RowBox[{"\"\<UpdateQueue\>\"", ",", " ", 
+    RowBox[{"ops", ":", 
+     RowBox[{"OptionsPattern", "[", "]"}]}]}], "]"}], ":=", "\n", "\t", 
+  RowBox[{"With", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"res", "=", 
+      RowBox[{"RebuildServer", "[", 
+       RowBox[{
+        RowBox[{"{", "\"\<UpdateQueue\>\"", "}"}], ",", " ", "ops"}], "]"}]}],
+      "}"}], ",", "\n", "\t\t", 
+    RowBox[{"Null", "/;", 
+     RowBox[{
+      RowBox[{"Head", "[", "res", "]"}], "=!=", "RebuildServer"}]}]}], "\n", 
+   "\t\t", "]"}]}]], \
+"CodeInput",ExpressionUUID->"10431bad-160d-4dbf-9dc0-14e48019b83f"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]BuildPages\[RightFloor]", "CodeSubsubsubsection",
+ Evaluatable->True,
+ CellChangeTimes->{{3.733935856376445*^9, 3.733935865705923*^9}, 
+   3.733935920623493*^9},ExpressionUUID->"b55c8c0e-07d0-4eca-aef8-\
+b2c7e78cf577"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"PublicPacletServer", "[", 
+   RowBox[{"\"\<BuildLog\>\"", ",", " ", 
+    RowBox[{"ops", ":", 
+     RowBox[{"OptionsPattern", "[", "]"}]}]}], "]"}], ":=", "\n", "\t", 
+  RowBox[{"With", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"res", "=", 
+      RowBox[{"RebuildServer", "[", 
+       RowBox[{
+        RowBox[{"{", "\"\<Log\>\"", "}"}], ",", " ", "ops"}], "]"}]}], "}"}], 
+    ",", "\n", "\t\t", 
+    RowBox[{"Null", "/;", 
+     RowBox[{
+      RowBox[{"Head", "[", "res", "]"}], "=!=", "RebuildServer"}]}]}], "\n", 
+   "\t\t", "]"}]}]], \
+"CodeInput",ExpressionUUID->"6f875fdc-19e1-418b-b13c-808ffb4da7d2"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -523,6 +625,58 @@ Cell[BoxData[
   3.733935691618236*^9}, {3.733935815869753*^9, 
   3.733935917939026*^9}},ExpressionUUID->"d68b48ba-178e-425c-86eb-\
 f7a528b99c0b"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]TestServer\[RightFloor]", "CodeSubsubsubsection",
+ Evaluatable->True,ExpressionUUID->"a83be726-38e0-4faa-a9a1-653f0fbd9ddc"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"PublicPacletServer", "[", 
+   RowBox[{"\"\<TestServer\>\"", ",", " ", 
+    RowBox[{"ops", ":", 
+     RowBox[{"OptionsPattern", "[", "]"}]}]}], "]"}], ":=", "\n", "\t", 
+  RowBox[{"With", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"res", "=", 
+      RowBox[{"RebuildServer", "[", 
+       RowBox[{
+        RowBox[{"{", "\"\<Test\>\"", "}"}], ",", " ", "ops"}], "]"}]}], "}"}],
+     ",", "\n", "\t\t", 
+    RowBox[{"Null", "/;", 
+     RowBox[{
+      RowBox[{"Head", "[", "res", "]"}], "=!=", "RebuildServer"}]}]}], "\n", 
+   "\t\t", "]"}]}]], \
+"CodeInput",ExpressionUUID->"bd3369f1-5b34-4bf8-8fd6-672cf3de9398"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]PushServer\[RightFloor]", "CodeSubsubsubsection",
+ Evaluatable->True,ExpressionUUID->"647f6178-5e88-406f-8e2e-87f4523639b6"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"PublicPacletServer", "[", 
+   RowBox[{"\"\<PushServer\>\"", ",", " ", 
+    RowBox[{"ops", ":", 
+     RowBox[{"OptionsPattern", "[", "]"}]}]}], "]"}], ":=", "\n", "\t", 
+  RowBox[{"With", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"res", "=", 
+      RowBox[{"RebuildServer", "[", 
+       RowBox[{
+        RowBox[{"{", "\"\<Push\>\"", "}"}], ",", " ", "ops"}], "]"}]}], "}"}],
+     ",", "\n", "\t\t", 
+    RowBox[{"Null", "/;", 
+     RowBox[{
+      RowBox[{"Head", "[", "res", "]"}], "=!=", "RebuildServer"}]}]}], "\n", 
+   "\t\t", "]"}]}]], \
+"CodeInput",ExpressionUUID->"ca0e2c30-8746-4a06-9ad1-948237d20ec5"]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]],
@@ -584,7 +738,7 @@ Cell["", "SectionSeparator",ExpressionUUID->"7ae8f3ea-0d98-4fe8-b7be-\
 8fc9c5b0f030"]
 },
 WindowSize->{808, 755},
-WindowMargins->{{101, Automatic}, {Automatic, 1}},
+WindowMargins->{{143, Automatic}, {34, Automatic}},
 FrontEndVersion->"11.3 for Mac OS X x86 (32-bit, 64-bit Kernel) (March 5, \
 2018)",
 StyleDefinitions->FrontEnd`FileName[{"BTools"}, "CodePackage.nb", 

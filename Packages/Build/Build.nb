@@ -29,6 +29,13 @@ Cell[BoxData[
 2b7764fd468b"],
 
 Cell[BoxData[
+ RowBox[{"PublicPacletServer", ";", " ", 
+  RowBox[{"(*", " ", 
+   RowBox[{"invoke", " ", "the", " ", "autoloader"}], " ", 
+   "*)"}]}]], \
+"CodeInput",ExpressionUUID->"1f3a95dd-b77a-48db-9c8e-678bbfc6e328"],
+
+Cell[BoxData[
  RowBox[{
   RowBox[{
    RowBox[{"PublicPacletServer", "::", "badbld"}], "=", "\n", "\t", 
@@ -42,12 +49,9 @@ Cell[BoxData[
  RowBox[{
   RowBox[{"$ServerRebuildKeys", "=", "\n", "\t", 
    RowBox[{
-   "\"\<Add\>\"", "|", "\"\<Build\>\"", "|", "\"\<Push\>\"", "|", 
-    "\"\<Test\>\""}]}], ";"}]], "CodeInput",
- CellChangeTimes->{{3.7331114256502132`*^9, 3.7331114476806183`*^9}, {
-  3.733151948273045*^9, 3.7331519504386883`*^9}},
- CellLabel->
-  "In[469]:=",ExpressionUUID->"69801bec-f6d7-47b1-8614-33375850c080"],
+   "\"\<UpdateQueue\>\"", "|", "\"\<Log\>\"", "|", "\"\<Add\>\"", "|", 
+    "\"\<Build\>\"", "|", "\"\<Push\>\"", "|", "\"\<Test\>\""}]}], 
+  ";"}]], "CodeInput",ExpressionUUID->"69801bec-f6d7-47b1-8614-33375850c080"],
 
 Cell[BoxData[{
  RowBox[{
@@ -56,11 +60,12 @@ Cell[BoxData[{
     RowBox[{
      RowBox[{"do", ":", 
       RowBox[{"{", 
-       RowBox[{"$ServerRebuildKeys", ".."}], "}"}], ":", 
-      RowBox[{"{", 
+       RowBox[{"$ServerRebuildKeys", ".."}], "}"}], ":", "\n", "\t", 
+      RowBox[{"{", "\n", "\t\t", 
        RowBox[{
-       "\"\<Add\>\"", ",", " ", "\"\<Build\>\"", ",", " ", "\"\<Push\>\""}], 
-       "}"}]}], ",", "\n", "\t", 
+       "\"\<UpdateQueue\>\"", ",", " ", "\"\<Add\>\"", ",", " ", "\n", 
+        "\t\t", "\"\<Log\>\"", ",", " ", "\"\<Build\>\"", ",", "\n", "\t\t", 
+        "\"\<Push\>\""}], "\n", "\t\t", "}"}]}], ",", "\n", "\t", 
      RowBox[{"ops", ":", 
       RowBox[{"OptionsPattern", "[", "]"}]}]}], "\n", "\t", "]"}], ":=", "\n",
     "\t", 
@@ -73,14 +78,33 @@ Cell[BoxData[{
       RowBox[{
        RowBox[{"{", "\n", "\t\t\t\t", 
         RowBox[{"res", "=", 
-         RowBox[{"<|", "|>"}]}], "\n", "\t", "\t\t\t", "}"}], ",", "\n", "\t",
-        "\t\t", 
-       RowBox[{"If", "[", 
-        RowBox[{
-         RowBox[{"MemberQ", "[", 
-          RowBox[{"do", ",", " ", "\"\<Add\>\""}], "]"}], ",", "\n", "\t", 
-         "\t\t\t", 
+         RowBox[{"<|", "|>"}]}], "\n", "\t\t\t\t", "}"}], ",", "\n", "\t\t\t", 
+       RowBox[{
+        RowBox[{"If", "[", 
          RowBox[{
+          RowBox[{"MemberQ", "[", 
+           RowBox[{"do", ",", " ", "\"\<UpdateQueue\>\""}], "]"}], ",", "\n", 
+          "\t", "\t\t\t", 
+          RowBox[{"Monitor", "[", "\n", "\t", "\t\t\t\t", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"res", "[", "\"\<UpdateQueue\>\"", "]"}], "=", "\n", 
+             "\t\t\t\t\t\t", 
+             RowBox[{"UpdateQueue", "[", "\n", "\t\t\t\t\t\t\t", 
+              RowBox[{"FilterRules", "[", 
+               RowBox[{
+                RowBox[{"{", "ops", "}"}], ",", " ", 
+                RowBox[{"Options", "[", "UpdateQueue", "]"}]}], "]"}], "\n", 
+              "\t\t\t\t\t\t\t", "]"}]}], ",", "\n", "\t\t\t\t\t", 
+            RowBox[{
+            "Internal`LoadingPanel", "[", "\"\<Updating review queue...\>\"", 
+             "]"}]}], "\n", "\t\t\t\t\t", "]"}]}], "\n", "\t\t\t\t", "]"}], 
+        ";", "\n", "\t\t\t", 
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{"MemberQ", "[", 
+           RowBox[{"do", ",", " ", "\"\<Add\>\""}], "]"}], ",", "\n", "\t", 
+          "\t\t\t", 
           RowBox[{"Monitor", "[", "\n", "\t", "\t\t\t\t", 
            RowBox[{
             RowBox[{
@@ -94,62 +118,80 @@ Cell[BoxData[{
               "\t", "\t\t\t\t\t\t", "]"}]}], ",", "\n", "\t", "\t\t\t\t", 
             RowBox[{
             "Internal`LoadingPanel", "[", "\"\<Adding paclets...\>\"", 
-             "]"}]}], "\n", "\t", "\t\t\t", "]"}], ";", "\n", "\t", "\t\t", 
-          RowBox[{"If", "[", 
+             "]"}]}], "\n", "\t\t\t\t\t", "]"}]}], "\n", "\t\t\t\t", "]"}], 
+        ";", "\n", "\t\t\t", 
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{"MemberQ", "[", 
+           RowBox[{"do", ",", " ", "\"\<Log\>\""}], "]"}], ",", "\n", "\t", 
+          "\t\t\t", 
+          RowBox[{"Monitor", "[", "\n", "\t", "\t\t\t\t", 
            RowBox[{
-            RowBox[{"MemberQ", "[", 
-             RowBox[{"do", ",", " ", "\"\<Build\>\""}], "]"}], ",", "\n", 
-            "\t\t\t\t", 
-            RowBox[{"Monitor", "[", "\n", "\t\t\t\t\t", 
-             RowBox[{
-              RowBox[{
-               RowBox[{"res", "[", "\"\<Build\>\"", "]"}], "=", "\n", "\t", 
-               "\t\t\t\t\t", 
-               RowBox[{"BuildPages", "[", "\n", "\t", "\t\t\t\t\t\t", 
-                RowBox[{"FilterRules", "[", 
-                 RowBox[{
-                  RowBox[{"{", "ops", "}"}], ",", " ", 
-                  RowBox[{"Options", "[", "BuildPages", "]"}]}], "]"}], "\n", 
-                "\t", "\t\t\t\t\t\t", "]"}]}], ",", "\n", "\t", "\t\t\t\t", 
-              RowBox[{
-              "Internal`LoadingPanel", "[", "\"\<Building pages...\>\"", 
-               "]"}]}], "\n", "\t\t\t\t\t", "]"}]}], "\n", "\t\t\t\t", "]"}], 
-          ";", "\n", "\t\t\t", 
-          RowBox[{"If", "[", 
-           RowBox[{
-            RowBox[{"MemberQ", "[", 
-             RowBox[{"do", ",", " ", "\"\<Test\>\""}], "]"}], ",", "\n", 
-            "\t\t\t\t", 
-            RowBox[{"TestServer", "[", "]"}]}], "\n", "\t\t\t\t", "]"}], ";", 
-          "\n", "\t\t\t", 
-          RowBox[{"If", "[", 
-           RowBox[{
-            RowBox[{"MemberQ", "[", 
-             RowBox[{"do", ",", " ", "\"\<Push\>\""}], "]"}], ",", "\n", 
-            "\t\t\t\t", 
-            RowBox[{"Monitor", "[", "\n", "\t\t\t\t\t", 
-             RowBox[{
-              RowBox[{
-               RowBox[{"res", "[", "\"\<Push\>\"", "]"}], "=", "\n", "\t", 
-               "\t", "\t\t\t\t", 
+            RowBox[{
+             RowBox[{"res", "[", "\"\<Log\>\"", "]"}], "=", "\n", 
+             "\t\t\t\t\t\t", 
+             RowBox[{"BuildLog", "[", "\n", "\t\t\t\t\t\t\t", 
+              RowBox[{"FilterRules", "[", 
                RowBox[{
-               "PublicPacletServerPush", "[", "\n", "\t", "\t", "\t\t\t\t\t", 
-                
-                RowBox[{"FilterRules", "[", 
-                 RowBox[{
-                  RowBox[{"{", "ops", "}"}], ",", " ", 
-                  RowBox[{"Options", "[", "PublicPacletServerPush", "]"}]}], 
-                 "]"}], "\n", "\t\t\t\t\t\t\t", "]"}]}], ",", "\n", 
-              "\t\t\t\t\t", 
-              RowBox[{
-              "Internal`LoadingPanel", "[", "\"\<Pushing to GitHub...\>\"", 
-               "]"}]}], "\n", "\t", "\t\t\t\t", "]"}]}], "\n", "\t\t\t\t", 
-           "]"}], ";", "\n", "\t\t\t", "res"}]}], "\n", "\t\t\t", "]"}]}], 
-      "\n", "\t\t", "]"}], ",", "\n", "\t", 
+                RowBox[{"{", "ops", "}"}], ",", " ", 
+                RowBox[{"Options", "[", "BuildLog", "]"}]}], "]"}], "\n", 
+              "\t\t\t\t\t\t\t", "]"}]}], ",", "\n", "\t\t\t\t\t", 
+            RowBox[{
+            "Internal`LoadingPanel", "[", "\"\<Building server log...\>\"", 
+             "]"}]}], "\n", "\t\t\t\t\t", "]"}]}], "\n", "\t\t\t\t", "]"}], 
+        ";", "\n", "\t\t\t", 
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{"MemberQ", "[", 
+           RowBox[{"do", ",", " ", "\"\<Build\>\""}], "]"}], ",", "\n", 
+          "\t\t\t\t", 
+          RowBox[{"Monitor", "[", "\n", "\t\t\t\t\t", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"res", "[", "\"\<Build\>\"", "]"}], "=", "\n", "\t", 
+             "\t\t\t\t\t", 
+             RowBox[{"BuildPages", "[", "\n", "\t", "\t\t\t\t\t\t", 
+              RowBox[{"FilterRules", "[", 
+               RowBox[{
+                RowBox[{"{", "ops", "}"}], ",", " ", 
+                RowBox[{"Options", "[", "BuildPages", "]"}]}], "]"}], "\n", 
+              "\t", "\t\t\t\t\t\t", "]"}]}], ",", "\n", "\t", "\t\t\t\t", 
+            RowBox[{
+            "Internal`LoadingPanel", "[", "\"\<Building pages...\>\"", 
+             "]"}]}], "\n", "\t\t\t\t\t", "]"}]}], "\n", "\t\t\t\t", "]"}], 
+        ";", "\n", "\t\t\t", 
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{"MemberQ", "[", 
+           RowBox[{"do", ",", " ", "\"\<Test\>\""}], "]"}], ",", "\n", 
+          "\t\t\t\t", 
+          RowBox[{"TestServer", "[", "]"}]}], "\n", "\t\t\t\t", "]"}], ";", 
+        "\n", "\t\t\t", 
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{"MemberQ", "[", 
+           RowBox[{"do", ",", " ", "\"\<Push\>\""}], "]"}], ",", "\n", 
+          "\t\t\t\t", 
+          RowBox[{"Monitor", "[", "\n", "\t\t\t\t\t", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"res", "[", "\"\<Push\>\"", "]"}], "=", "\n", 
+             "\t\t\t\t\t\t", 
+             RowBox[{"PushServer", "[", "\n", "\t\t\t\t\t\t\t", 
+              RowBox[{"FilterRules", "[", 
+               RowBox[{
+                RowBox[{"{", "ops", "}"}], ",", " ", 
+                RowBox[{"Options", "[", "PushServer", "]"}]}], "]"}], "\n", 
+              "\t\t\t\t\t\t\t", "]"}]}], ",", "\n", "\t\t\t\t\t", 
+            RowBox[{
+            "Internal`LoadingPanel", "[", "\"\<Pushing to GitHub...\>\"", 
+             "]"}]}], "\n", "\t", "\t\t\t\t", "]"}]}], "\n", "\t\t\t\t", 
+         "]"}], ";", "\n", "\t\t\t", "res"}]}], "\n", "\t\t\t", "]"}], ",", 
+     "\n", "\t\t", 
      RowBox[{
       RowBox[{"Message", "[", 
        RowBox[{"PublicPacletServer", "::", "badbld"}], "]"}], ";", "\n", "\t",
-       "$Failed"}]}], "\n", "\t", "]"}]}], ";"}], "\n", 
+       "\t", "$Failed"}]}], "\n", "\t", "\t", "]"}]}], ";"}], "\n", 
  RowBox[{
   RowBox[{"RebuildServer", "[", "\n", "\t", 
    RowBox[{
@@ -159,18 +201,9 @@ Cell[BoxData[{
   "\t", 
   RowBox[{"RebuildServer", "[", 
    RowBox[{
-    RowBox[{"{", "do", "}"}], ",", " ", "ops"}], "]"}]}]}], "CodeInput",
- CellChangeTimes->{{3.733110808699691*^9, 3.73311082228156*^9}, {
-   3.733111261249153*^9, 3.733111328925194*^9}, {3.733111417222076*^9, 
-   3.733111537280999*^9}, {3.733150620887581*^9, 3.733150621972888*^9}, {
-   3.7331507151208773`*^9, 3.733150738944315*^9}, {3.733151953041648*^9, 
-   3.733151972034153*^9}, 3.733152031162676*^9, {3.733152086074839*^9, 
-   3.7331520879741583`*^9}, {3.7335349489630136`*^9, 3.73353498451447*^9}, {
-   3.733705733856894*^9, 3.733705733912888*^9}, {3.733719632161419*^9, 
-   3.733719641551482*^9}, {3.733933917051659*^9, 3.733934116712737*^9}, {
-   3.733934187608889*^9, 
-   3.733934191042416*^9}},ExpressionUUID->"48919809-3aab-4c13-ae23-\
-9566d9a05655"]
+    RowBox[{"{", "do", "}"}], ",", " ", "ops"}], 
+   "]"}]}]}], \
+"CodeInput",ExpressionUUID->"48919809-3aab-4c13-ae23-9566d9a05655"]
 }, Open  ]],
 
 Cell[BoxData[

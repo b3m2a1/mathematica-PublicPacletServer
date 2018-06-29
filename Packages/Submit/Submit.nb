@@ -10,6 +10,16 @@ Cell["Submit", "CodeSection",
 Cell[BoxData[{
  RowBox[{
   RowBox[{
+   RowBox[{"RegisterPaclet", "::", "usage"}], "=", "\n", "\t", 
+   "\"\<Registers a paclet via an Issues request\>\""}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"RequestPacletUpdate", "::", "usage"}], "=", "\n", "\t", 
+  "\"\<Request a update \>\""}]}], \
+"CodeInput",ExpressionUUID->"8513cb16-6133-49c4-91d8-3b61fa55b59c"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
    RowBox[{"SubmitPaclet", "::", "usage"}], "=", "\n", "\t", 
    "\"\<Submits a paclet the review queue in the user's repo\>\""}], 
   ";"}], "\n", 
@@ -28,6 +38,178 @@ Cell[BoxData[
   RowBox[{"Begin", "[", "\"\<`Private`\>\"", "]"}], 
   ";"}]], "InputSection",ExpressionUUID->"01a1c17c-d522-4532-84cc-\
 2b7764fd468b"],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]Register\[RightFloor]", "CodeSubsubsection",
+ Evaluatable->True,ExpressionUUID->"35488bba-4f1c-41e7-b129-175576b42046"],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]$registerPacletTemplate\[RightFloor]", \
+"CodeSubsubsubsection",
+ Evaluatable->True,ExpressionUUID->"42042218-32b4-43c8-b6d8-49a79a795c56"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+  "$registerPacletTemplate", "=", "\n", 
+   "\"\<Request for addition of new paclet to server\n\n\tName:   `Name`\n\t\
+Author: `Author`\n URL:     `URL`\n Update:  `Update`\n\n\>\""}], 
+  ";"}]], "CodeInput",ExpressionUUID->"2241fcd6-5907-471b-a4e8-3c3eb30a68cf"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]RegisterPaclet\[RightFloor]", "CodeSubsubsubsection",
+ Evaluatable->True,ExpressionUUID->"29f2a77d-da7f-47b9-a106-a0c66b3f6385"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"RegisterPaclet", "[", 
+   RowBox[{"pacletData_", "?", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"AssociationQ", "[", "#", "]"}], "&&", 
+       RowBox[{"KeyExistsQ", "[", 
+        RowBox[{"#", ",", " ", "\"\<Name\>\""}], "]"}]}], "&"}], ")"}]}], 
+   "]"}], ":=", "\n", "\t", 
+  RowBox[{"With", "[", "\n", "\t\t", 
+   RowBox[{
+    RowBox[{"{", "\n", "\t\t\t", 
+     RowBox[{"text", "=", "\n", "\t\t\t\t", 
+      RowBox[{"TemplateApply", "[", "\n", "\t\t\t\t\t", 
+       RowBox[{"$registerPacletTemplate", ",", "\n", "\t\t\t\t\t", 
+        RowBox[{"Join", "[", "\n", "\t\t\t\t\t\t", 
+         RowBox[{
+          RowBox[{"<|", "\n", "\t\t\t\t\t\t\t", 
+           RowBox[{
+            RowBox[{"\"\<Author\>\"", "\[Rule]", "\n", "\t", "\t\t\t\t\t\t\t", 
+             RowBox[{
+              RowBox[{"Function", "[", 
+               RowBox[{"If", "[", 
+                RowBox[{
+                 RowBox[{"!", 
+                  RowBox[{"StringQ", "@", "#"}]}], ",", " ", "\"\<usr\>\"", 
+                 ",", " ", "#"}], "]"}], "]"}], "@", 
+              RowBox[{"GitHub", "[", "\"\<CurrentUser\>\"", "]"}]}]}], ",", 
+            " ", "\n", "\t", "\t\t\t\t\t\t", 
+            RowBox[{"\"\<URL\>\"", "->", "\n", "\t", "\t\t\t\t\t\t\t", 
+             RowBox[{
+             "\"\<https://github.com/\>\"", "<>", "\n", "\t", 
+              "\t\t\t\t\t\t\t\t", 
+              RowBox[{
+               RowBox[{"Function", "[", 
+                RowBox[{"If", "[", 
+                 RowBox[{
+                  RowBox[{"!", 
+                   RowBox[{"StringQ", "@", "#"}]}], ",", " ", "\"\<usr\>\"", 
+                  ",", " ", "#"}], "]"}], "]"}], "@", 
+               RowBox[{"GitHub", "[", "\"\<CurrentUser\>\"", "]"}]}], "<>", 
+              "\n", "\t", "\t\t\t\t\t\t\t\t", 
+              RowBox[{"pacletData", "[", "\"\<Name\>\"", "]"}]}]}], ",", "\n",
+             "\t", "\t\t\t\t\t\t", 
+            RowBox[{"\"\<Update\>\"", "\[Rule]", "\"\<DownloadOnce\>\""}]}], 
+           "\n", "\t\t\t\t\t\t\t", "|>"}], ",", "\n", "\t\t\t\t\t\t", 
+          "pacletData"}], "\n", "\t\t\t\t\t\t", "]"}]}], "\n", "\t\t\t\t\t", 
+       "]"}]}], "\n", "\t\t\t", "}"}], ",", "\n", "\t\t", 
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{"StringQ", "@", "text"}], ",", "\n", "\t\t\t", 
+      RowBox[{"PPSGitHubCheck", "@", "\n", "\t\t\t\t", 
+       RowBox[{"GitHub", "[", "\n", "\t\t\t\t\t", 
+        RowBox[{
+        "\"\<CreateIssue\>\"", ",", " ", "\n", "\t\t\t\t\t", "$Repository", 
+         ",", "\n", "\t\t\t\t\t", 
+         RowBox[{"\"\<Paclet registration for ``\>\"", "<>", 
+          RowBox[{"pacletData", "[", "\"\<Name\>\"", "]"}]}], ",", "\n", 
+         "\t\t\t\t\t", "text"}], "\n", "\t\t\t\t\t", "]"}]}], ",", "\n", 
+      "\t\t\t", "$Failed"}], "\n", "\t\t\t", "]"}]}], "\n", "\t\t", 
+   "]"}]}]], \
+"CodeInput",ExpressionUUID->"9c970564-fa41-40e3-8ca0-f60dfa9fdb67"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"RegisterPaclet", "[", "s_String", "]"}], ":=", "\n", "\t", 
+  RowBox[{"RegisterPaclet", "[", "\n", "\t\t", 
+   RowBox[{"<|", "\n", "\t\t\t", 
+    RowBox[{"\"\<Name\>\"", "\[Rule]", "s"}], "\n", "\t\t\t", "|>"}], "\n", 
+   "\t\t", "]"}]}]], \
+"CodeInput",ExpressionUUID->"726ead8d-ac76-4856-ae79-3e3403ffa556"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]RequestPacletUpdate\[RightFloor]", "CodeSubsubsubsection",
+ 
+ Evaluatable->True,ExpressionUUID->"bbab9ab6-c901-4fce-8f33-f5143f5c0c78"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"iRequestPacletUpdate", "[", 
+   RowBox[{"pacletName_String", ",", " ", 
+    RowBox[{"retry", ":", 
+     RowBox[{"True", "|", "False"}], ":", "True"}]}], "]"}], ":=", "\n", "\t", 
+  RowBox[{"With", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"t", "=", 
+      RowBox[{"\"\<Paclet registration for \>\"", "<>", "pacletName"}]}], 
+     "}"}], ",", "\n", "\t\t", 
+    RowBox[{"Replace", "[", "\n", "\t\t\t", 
+     RowBox[{
+      RowBox[{"SelectFirst", "[", 
+       RowBox[{"$CurrentIssues", ",", " ", 
+        RowBox[{
+         RowBox[{"#Title", "\[Equal]", "t"}], "&"}]}], "]"}], ",", "\n", 
+      "\t\t\t", 
+      RowBox[{"{", "\n", "\t\t\t\t", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"a_Association", "?", "AssociationQ"}], "\[RuleDelayed]", 
+         "\n", "\t\t\t\t\t", 
+         RowBox[{"With", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{"n", "=", 
+             RowBox[{"a", "[", "\"\<Number\>\"", "]"}]}], "}"}], ",", "\n", 
+           "\t\t\t\t\t\t", 
+           RowBox[{"GitHub", "[", 
+            RowBox[{
+            "\"\<CreateIssueComment\>\"", ",", " ", "$Repository", ",", "\n", 
+             "\t\t\t\t\t\t\t", "n", ",", "\n", "\t\t\t\t\t\t\t", 
+             "\"\<Paclet has been updated\>\""}], "\n", "\t\t\t\t\t\t\t", 
+            "]"}]}], "\n", "\t\t\t\t\t\t", "]"}]}], ",", "\n", "\t\t\t\t", 
+        RowBox[{"_", ":>", "\n", "\t\t\t\t\t", 
+         RowBox[{"If", "[", 
+          RowBox[{"retry", ",", " ", 
+           RowBox[{"LoadIssues", "[", "]"}], ",", " ", "\n", "\t\t\t\t\t\t", 
+           RowBox[{"iRequestPacletUpdate", "[", 
+            RowBox[{"pacletName", ",", " ", "False"}], "]"}]}], "\n", 
+          "\t\t\t\t\t\t", "]"}]}]}], "\n", "\t\t\t\t", "}"}]}], "\n", 
+     "\t\t\t", "]"}]}], "\n", "\t\t", 
+   "]"}]}]], \
+"CodeInput",ExpressionUUID->"76fbb172-45a2-4c4b-9224-8061c121e48e"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]RequestPacletUpdate\[RightFloor]", "CodeSubsubsubsection",
+ 
+ Evaluatable->True,
+ CellLabel->
+  "In[663]:=",ExpressionUUID->"0e27d7ab-ba60-45d1-bfa4-e4be559efaf0"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"RequestPacletUpdate", "[", "pacletName_String", "]"}], ":=", "\n",
+    "\t", 
+   RowBox[{"iRequestPacletUpdate", "[", "pacletName", "]"}]}], 
+  ";"}]], "CodeInput",ExpressionUUID->"a1c5b99d-fcc4-4b53-aa03-017755313e19"]
+}, Open  ]]
+}, Open  ]],
 
 Cell[CellGroupData[{
 
@@ -375,7 +557,7 @@ Cell[BoxData[{
    3.734146839042473*^9, 
    3.734146918052703*^9}},ExpressionUUID->"d6c35e36-3eb2-492d-b7f1-\
 ea7624587971"]
-}, Open  ]],
+}, Closed]],
 
 Cell[CellGroupData[{
 
@@ -482,7 +664,7 @@ Cell[BoxData[{
    3.7341445001662893`*^9}, {3.7341471387149353`*^9, 
    3.734147182884899*^9}},ExpressionUUID->"9a9e7372-3f51-457c-ba9b-\
 91b95e21068b"]
-}, Open  ]]
+}, Closed]]
 }, Open  ]]
 }, Open  ]],
 
@@ -497,7 +679,7 @@ Cell["", "SectionSeparator",ExpressionUUID->"7ae8f3ea-0d98-4fe8-b7be-\
 8fc9c5b0f030"]
 },
 WindowSize->{808, 755},
-WindowMargins->{{180, Automatic}, {18, Automatic}},
+WindowMargins->{{Automatic, 86}, {35, Automatic}},
 FrontEndVersion->"11.3 for Mac OS X x86 (32-bit, 64-bit Kernel) (March 5, \
 2018)",
 StyleDefinitions->FrontEnd`FileName[{"BTools"}, "CodePackage.nb", 

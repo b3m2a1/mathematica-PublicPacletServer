@@ -37,6 +37,13 @@ Cell[BoxData[
   ";"}]], "InputSection",ExpressionUUID->"01a1c17c-d522-4532-84cc-\
 2b7764fd468b"],
 
+Cell[BoxData[
+ RowBox[{"PublicPacletServer", ";", " ", 
+  RowBox[{"(*", " ", 
+   RowBox[{"invoke", " ", "the", " ", "autoloader"}], " ", 
+   "*)"}]}]], \
+"CodeInput",ExpressionUUID->"49d01a12-b988-49c2-bafd-e1c4c9b5c621"],
+
 Cell[CellGroupData[{
 
 Cell["\[LeftCeiling]Repository\[RightFloor]", "CodeSubsubsubsection",
