@@ -683,6 +683,25 @@ Cell[BoxData[
 
 Cell[CellGroupData[{
 
+Cell["\[LeftCeiling]Methods\[RightFloor]", "CodeSubsection",
+ Evaluatable->True,ExpressionUUID->"c9508914-0eee-42a1-aeb0-bb3025e6049d"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"PublicPacletServer", "[", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"c", ":", 
+       RowBox[{"Alternatives", "@@", "$ServerCommands"}]}], ")"}], "[", 
+     "a___", "]"}], "]"}], ":=", "\n", "\t", 
+   RowBox[{"PublicPacletServer", "[", 
+    RowBox[{"c", ",", " ", "a"}], "]"}]}], 
+  ";"}]], "CodeInput",ExpressionUUID->"da97c65d-65bc-4225-bf66-20def4be2067"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
 Cell["\[LeftCeiling]Clean Up\[RightFloor]", "CodeSubsection",
  Evaluatable->True,
  CellChangeTimes->{{3.7338532936434917`*^9, 3.733853295443551*^9}, {

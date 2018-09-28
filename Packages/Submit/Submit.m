@@ -79,7 +79,8 @@ RegisterPaclet[pacletData_?(AssociationQ[#]&&KeyExistsQ[#, "Name"]&)]:=
           "CreateIssue", 
           $Repository,
           pacletRegisterIssueTitle@pacletData["Name"],
-          text
+          text,
+          "ResultObject"
           ],
       $Failed
       ]
@@ -117,7 +118,8 @@ iRequestPacletUpdate[pacletName_String, retry:True|False:True]:=
             GitHub["CreateIssueComment", 
               $Repository,
               n,
-              $pacletUpdateMessage
+              $pacletUpdateMessage,
+              "ResultObject"
               ]
             ],
         _:>

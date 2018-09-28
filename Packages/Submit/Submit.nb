@@ -142,7 +142,8 @@ Cell[BoxData[
          ",", "\n", "\t\t\t\t\t", 
          RowBox[{"pacletRegisterIssueTitle", "@", 
           RowBox[{"pacletData", "[", "\"\<Name\>\"", "]"}]}], ",", "\n", 
-         "\t\t\t\t\t", "text"}], "\n", "\t\t\t\t\t", "]"}]}], ",", "\n", 
+         "\t\t\t\t\t", "text", ",", "\n", "\t\t\t\t\t", 
+         "\"\<ResultObject\>\""}], "\n", "\t\t\t\t\t", "]"}]}], ",", "\n", 
       "\t\t\t", "$Failed"}], "\n", "\t\t\t", "]"}]}], "\n", "\t\t", 
    "]"}]}]], \
 "CodeInput",ExpressionUUID->"9c970564-fa41-40e3-8ca0-f60dfa9fdb67"],
@@ -155,7 +156,7 @@ Cell[BoxData[
     RowBox[{"\"\<Name\>\"", "\[Rule]", "s"}], "\n", "\t\t\t", "|>"}], "\n", 
    "\t\t", "]"}]}]], \
 "CodeInput",ExpressionUUID->"726ead8d-ac76-4856-ae79-3e3403ffa556"]
-}, Closed]],
+}, Open  ]],
 
 Cell[CellGroupData[{
 
@@ -215,7 +216,8 @@ Cell[BoxData[{
            RowBox[{
            "\"\<CreateIssueComment\>\"", ",", " ", "\n", "\t", "\t\t\t\t\t\t",
              "$Repository", ",", "\n", "\t\t\t\t\t\t\t", "n", ",", "\n", 
-            "\t\t\t\t\t\t\t", "$pacletUpdateMessage"}], "\n", 
+            "\t\t\t\t\t\t\t", "$pacletUpdateMessage", ",", "\n", 
+            "\t\t\t\t\t\t\t", "\"\<ResultObject\>\""}], "\n", 
            "\t\t\t\t\t\t\t", "]"}]}], "\n", "\t\t\t\t\t\t", "]"}]}], ",", 
        "\n", "\t\t\t\t", 
        RowBox[{"_", ":>", "\n", "\t", "\t\t\t\t", 
@@ -239,7 +241,7 @@ PublicPacletServer[\\\"RegisterPaclet\\\", \\\"`1`\\\"].\>\"", ",", "\n",
   "(*", "]", 
    "*)"}]}]}], \
 "CodeInput",ExpressionUUID->"76fbb172-45a2-4c4b-9224-8061c121e48e"]
-}, Closed]],
+}, Open  ]],
 
 Cell[CellGroupData[{
 

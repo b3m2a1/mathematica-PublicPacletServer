@@ -298,6 +298,15 @@ PublicPacletServer["PushServer", ops:OptionsPattern[]]:=
 
 
 (* ::Subsection:: *)
+(*Methods*)
+
+
+
+PublicPacletServer[(c:Alternatives@@$ServerCommands)[a___]]:=
+  PublicPacletServer[c, a];
+
+
+(* ::Subsection:: *)
 (*Clean Up*)
 
 
