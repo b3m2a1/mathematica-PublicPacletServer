@@ -1,5 +1,6 @@
 (* ::Package:: *)
 
 {
-	"PreLoad"->{"Main"}
+	"PreLoad"->{"Main"},
+	"AllowAutocompletions"->True
 	}

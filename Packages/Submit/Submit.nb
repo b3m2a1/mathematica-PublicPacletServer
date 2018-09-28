@@ -44,6 +44,15 @@ Cell[CellGroupData[{
 Cell["\[LeftCeiling]Register\[RightFloor]", "CodeSubsubsection",
  Evaluatable->True,ExpressionUUID->"35488bba-4f1c-41e7-b129-175576b42046"],
 
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"pacletRegisterIssueTitle", "[", "pacletName_", "]"}], ":=", "\n", 
+   "\t", 
+   RowBox[{
+   "\"\<Register paclet: ``\>\"", "~", "TemplateApply", "~", "pacletName"}]}],
+   ";"}]], "CodeInput",ExpressionUUID->"bb4a5bf3-a5ad-4af2-9998-1b16e0e8e346"],
+
 Cell[CellGroupData[{
 
 Cell["\[LeftCeiling]$registerPacletTemplate\[RightFloor]", \
@@ -54,8 +63,8 @@ Cell[BoxData[
  RowBox[{
   RowBox[{
   "$registerPacletTemplate", "=", "\n", 
-   "\"\<Request for addition of new paclet to server\n\n\tName:   `Name`\n\t\
-Author: `Author`\n URL:     `URL`\n Update:  `Update`\n\n\>\""}], 
+   "\"\<Request to add paclet to server:\n\n     Name:   `Name`\n     Author: \
+`Author`\n     URL:    `URL`\n     Update: `Update`\n\n\>\""}], 
   ";"}]], "CodeInput",ExpressionUUID->"2241fcd6-5907-471b-a4e8-3c3eb30a68cf"]
 }, Closed]],
 
@@ -95,21 +104,30 @@ Cell[BoxData[
                  ",", " ", "#"}], "]"}], "]"}], "@", 
               RowBox[{"GitHub", "[", "\"\<CurrentUser\>\"", "]"}]}]}], ",", 
             " ", "\n", "\t", "\t\t\t\t\t\t", 
-            RowBox[{"\"\<URL\>\"", "->", "\n", "\t", "\t\t\t\t\t\t\t", 
-             RowBox[{
-             "\"\<https://github.com/\>\"", "<>", "\n", "\t", 
-              "\t\t\t\t\t\t\t\t", 
-              RowBox[{
-               RowBox[{"Function", "[", 
-                RowBox[{"If", "[", 
-                 RowBox[{
-                  RowBox[{"!", 
-                   RowBox[{"StringQ", "@", "#"}]}], ",", " ", "\"\<usr\>\"", 
-                  ",", " ", "#"}], "]"}], "]"}], "@", 
-               RowBox[{"GitHub", "[", "\"\<CurrentUser\>\"", "]"}]}], "<>", 
-              "\n", "\t", "\t\t\t\t\t\t\t\t", 
-              RowBox[{"pacletData", "[", "\"\<Name\>\"", "]"}]}]}], ",", "\n",
-             "\t", "\t\t\t\t\t\t", 
+            RowBox[{"\"\<URL\>\"", "->", "\n", "\t\t\t\t\t\t\t\t", 
+             RowBox[{"URLBuild", "@", "\n", "\t\t\t\t\t\t\t\t\t", 
+              RowBox[{"<|", "\n", "\t\t\t\t\t\t\t\t\t\t", 
+               RowBox[{
+                RowBox[{"\"\<Scheme\>\"", "\[Rule]", "\"\<https\>\""}], ",", 
+                "\n", "\t\t\t\t\t\t\t\t\t\t", 
+                RowBox[{"\"\<Domain\>\"", "\[Rule]", "\"\<github.com\>\""}], 
+                ",", "\n", "\t\t\t\t\t\t\t\t\t\t", 
+                RowBox[{"\"\<Path\>\"", "\[Rule]", 
+                 RowBox[{"{", "\n", "\t\t\t\t\t\t\t\t\t\t\t", 
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{"Function", "[", 
+                    RowBox[{"If", "[", 
+                    RowBox[{
+                    RowBox[{"!", 
+                    RowBox[{"StringQ", "@", "#"}]}], ",", " ", "\"\<usr\>\"", 
+                    ",", " ", "#"}], "]"}], "]"}], "@", 
+                    RowBox[{"GitHub", "[", "\"\<CurrentUser\>\"", "]"}]}], 
+                   ",", "\n", "\t\t\t\t\t\t\t\t\t\t\t", 
+                   RowBox[{"pacletData", "[", "\"\<Name\>\"", "]"}]}], "\n", 
+                  "\t\t\t\t\t\t\t\t\t\t\t", "}"}]}]}], "\n", 
+               "\t\t\t\t\t\t\t\t\t\t", "|>"}]}]}], ",", "\n", 
+            "\t\t\t\t\t\t\t", 
             RowBox[{"\"\<Update\>\"", "\[Rule]", "\"\<DownloadOnce\>\""}]}], 
            "\n", "\t\t\t\t\t\t\t", "|>"}], ",", "\n", "\t\t\t\t\t\t", 
           "pacletData"}], "\n", "\t\t\t\t\t\t", "]"}]}], "\n", "\t\t\t\t\t", 
@@ -122,7 +140,7 @@ Cell[BoxData[
         RowBox[{
         "\"\<CreateIssue\>\"", ",", " ", "\n", "\t\t\t\t\t", "$Repository", 
          ",", "\n", "\t\t\t\t\t", 
-         RowBox[{"\"\<Paclet registration for ``\>\"", "<>", 
+         RowBox[{"pacletRegisterIssueTitle", "@", 
           RowBox[{"pacletData", "[", "\"\<Name\>\"", "]"}]}], ",", "\n", 
          "\t\t\t\t\t", "text"}], "\n", "\t\t\t\t\t", "]"}]}], ",", "\n", 
       "\t\t\t", "$Failed"}], "\n", "\t\t\t", "]"}]}], "\n", "\t\t", 
@@ -147,49 +165,79 @@ Cell["\[LeftCeiling]RequestPacletUpdate\[RightFloor]", "CodeSubsubsubsection",
 
 Cell[BoxData[
  RowBox[{
+  RowBox[{
+  "$pacletUpdateMessage", "=", "\n", "\t", 
+   "\"\<Paclet has been updated. Merge of new version requested.\>\""}], 
+  ";"}]], "CodeInput",ExpressionUUID->"c5294ca2-688f-4a57-8c6b-74f9154ef8bb"],
+
+Cell[BoxData[{
+ RowBox[{
   RowBox[{"iRequestPacletUpdate", "[", 
    RowBox[{"pacletName_String", ",", " ", 
     RowBox[{"retry", ":", 
      RowBox[{"True", "|", "False"}], ":", "True"}]}], "]"}], ":=", "\n", "\t", 
-  RowBox[{"With", "[", 
-   RowBox[{
-    RowBox[{"{", 
-     RowBox[{"t", "=", 
-      RowBox[{"\"\<Paclet registration for \>\"", "<>", "pacletName"}]}], 
-     "}"}], ",", "\n", "\t\t", 
-    RowBox[{"Replace", "[", "\n", "\t\t\t", 
+  RowBox[{
+   RowBox[{"PackageExceptionBlock", "[", "\"\<GitHub\>\"", "]"}], "@", "\n", 
+   "\t", "\t", 
+   RowBox[{"(*", 
+    RowBox[{"With", "[", 
      RowBox[{
-      RowBox[{"SelectFirst", "[", 
-       RowBox[{"$CurrentIssues", ",", " ", 
-        RowBox[{
-         RowBox[{"#Title", "\[Equal]", "t"}], "&"}]}], "]"}], ",", "\n", 
-      "\t\t\t", 
-      RowBox[{"{", "\n", "\t\t\t\t", 
+      RowBox[{"{", 
+       RowBox[{"t", "=", 
+        RowBox[{"\"\<Paclet registration for \>\"", "<>", "pacletName"}]}], 
+       "}"}], ","}]}], "*)"}], "\n", "\t", "\t", 
+   RowBox[{"Replace", "[", "\n", "\t", "\t\t", 
+    RowBox[{
+     RowBox[{"SelectFirst", "[", 
+      RowBox[{"$CurrentIssues", ",", " ", "\n", "\t", "\t\t\t", 
        RowBox[{
         RowBox[{
-         RowBox[{"a_Association", "?", "AssociationQ"}], "\[RuleDelayed]", 
-         "\n", "\t\t\t\t\t", 
-         RowBox[{"With", "[", 
+         RowBox[{"StringContainsQ", "[", 
+          RowBox[{"#Title", ",", " ", "pacletName"}], "]"}], "&&", "\n", "\t",
+          "\t\t\t\t", 
+         RowBox[{"StringContainsQ", "[", 
+          RowBox[{"#Title", ",", " ", 
+           RowBox[{"\"\<Register\>\"", "|", "\"\<registration\>\""}]}], 
+          "]"}]}], "&"}]}], "\n", "\t", "\t\t\t", "]"}], ",", "\n", "\t", 
+     "\t\t", 
+     RowBox[{"{", "\n", "\t", "\t\t\t", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"a_Association", "?", "AssociationQ"}], "\[RuleDelayed]", 
+        "\n", "\t", "\t\t\t\t", 
+        RowBox[{"With", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"n", "=", 
+            RowBox[{"a", "[", "\"\<Number\>\"", "]"}]}], "}"}], ",", "\n", 
+          "\t", "\t\t\t\t\t", 
+          RowBox[{"GitHub", "[", 
+           RowBox[{
+           "\"\<CreateIssueComment\>\"", ",", " ", "\n", "\t", "\t\t\t\t\t\t",
+             "$Repository", ",", "\n", "\t\t\t\t\t\t\t", "n", ",", "\n", 
+            "\t\t\t\t\t\t\t", "$pacletUpdateMessage"}], "\n", 
+           "\t\t\t\t\t\t\t", "]"}]}], "\n", "\t\t\t\t\t\t", "]"}]}], ",", 
+       "\n", "\t\t\t\t", 
+       RowBox[{"_", ":>", "\n", "\t", "\t\t\t\t", 
+        RowBox[{"If", "[", 
+         RowBox[{"retry", ",", " ", "\n", "\t", "\t\t\t\t\t", 
           RowBox[{
-           RowBox[{"{", 
-            RowBox[{"n", "=", 
-             RowBox[{"a", "[", "\"\<Number\>\"", "]"}]}], "}"}], ",", "\n", 
-           "\t\t\t\t\t\t", 
-           RowBox[{"GitHub", "[", 
-            RowBox[{
-            "\"\<CreateIssueComment\>\"", ",", " ", "$Repository", ",", "\n", 
-             "\t\t\t\t\t\t\t", "n", ",", "\n", "\t\t\t\t\t\t\t", 
-             "\"\<Paclet has been updated\>\""}], "\n", "\t\t\t\t\t\t\t", 
-            "]"}]}], "\n", "\t\t\t\t\t\t", "]"}]}], ",", "\n", "\t\t\t\t", 
-        RowBox[{"_", ":>", "\n", "\t\t\t\t\t", 
-         RowBox[{"If", "[", 
-          RowBox[{"retry", ",", " ", 
-           RowBox[{"LoadIssues", "[", "]"}], ",", " ", "\n", "\t\t\t\t\t\t", 
+           RowBox[{"LoadIssues", "[", "]"}], ";", "\n", "\t", "\t\t\t\t\t", 
            RowBox[{"iRequestPacletUpdate", "[", 
-            RowBox[{"pacletName", ",", " ", "False"}], "]"}]}], "\n", 
-          "\t\t\t\t\t\t", "]"}]}]}], "\n", "\t\t\t\t", "}"}]}], "\n", 
-     "\t\t\t", "]"}]}], "\n", "\t\t", 
-   "]"}]}]], \
+            RowBox[{"pacletName", ",", " ", "False"}], "]"}]}], ",", "\n", 
+          "\t", "\t\t\t\t\t", 
+          RowBox[{"PackageRaiseException", "[", "\n", "\t", "\t\t\t\t\t\t", 
+           RowBox[{
+           "Automatic", ",", "\n", "\t", "\t\t\t\t\t\t", 
+            "\"\<No paclet registration found for paclet `1`. \\\nTry \
+PublicPacletServer[\\\"RegisterPaclet\\\", \\\"`1`\\\"].\>\"", ",", "\n", 
+            "\t", "\t\t\t\t\t\t", "pacletName"}], "\n", "\t", "\t\t\t\t\t\t", 
+           "]"}]}], "\n", "\t", "\t\t\t\t\t", "]"}]}]}], "\n", "\t", "\t\t\t",
+       "}"}]}], "\n", "\t", "\t\t", "]"}]}]}], "\n", 
+ RowBox[{"\t\t", 
+  RowBox[{
+  "(*", "]", 
+   "*)"}]}]}], \
 "CodeInput",ExpressionUUID->"76fbb172-45a2-4c4b-9224-8061c121e48e"]
 }, Closed]],
 
@@ -679,7 +727,7 @@ Cell["", "SectionSeparator",ExpressionUUID->"7ae8f3ea-0d98-4fe8-b7be-\
 8fc9c5b0f030"]
 },
 WindowSize->{808, 755},
-WindowMargins->{{Automatic, 86}, {35, Automatic}},
+WindowMargins->{{Automatic, 278}, {41, Automatic}},
 FrontEndVersion->"11.3 for Mac OS X x86 (32-bit, 64-bit Kernel) (March 5, \
 2018)",
 StyleDefinitions->FrontEnd`FileName[{"BTools"}, "CodePackage.nb", 

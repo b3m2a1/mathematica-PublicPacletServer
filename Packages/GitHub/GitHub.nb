@@ -100,7 +100,8 @@ Cell[BoxData[
 2b7764fd468b"],
 
 Cell[BoxData[
- RowBox[{"PublicPacletServer", ";", " ", 
+ RowBox[{
+  RowBox[{"PublicPacletServer", ";"}], " ", 
   RowBox[{"(*", " ", 
    RowBox[{"invoke", " ", "the", " ", "autoloader"}], " ", 
    "*)"}]}]], \
@@ -119,15 +120,18 @@ Cell["\[LeftCeiling]LoadIssues\[RightFloor]", "CodeSubsubsubsection",
 Cell[BoxData[
  RowBox[{
   RowBox[{"LoadIssues", "[", "]"}], ":=", "\n", "\t", 
-  RowBox[{"With", "[", 
+  RowBox[{"With", "[", "\n", "\t\t", 
    RowBox[{
-    RowBox[{"{", 
-     RowBox[{"res", "=", 
-      RowBox[{"PPSGitHubCheck", "@", 
+    RowBox[{"{", "\n", "\t\t\t", 
+     RowBox[{"res", "=", "\n", "\t\t\t\t", 
+      RowBox[{"PPSGitHubCheck", "@", "\n", "\t", "\t", "\t\t\t", 
        RowBox[{"GitHub", "[", 
         RowBox[{
-        "\"\<ListIssues\>\"", ",", " ", "\"\<paclets/PacletServer\>\""}], 
-        "]"}]}]}], "}"}], ",", "\n", "\t\t", 
+        "\"\<ListIssues\>\"", ",", " ", "\"\<paclets/PacletServer\>\"", ",", 
+         " ", 
+         RowBox[{"\"\<State\>\"", "\[Rule]", "\"\<all\>\""}], ",", "\n", 
+         "\t\t\t\t\t\t", "\"\<ImportedResult\>\""}], "\n", "\t\t\t\t\t\t", 
+        "]"}]}]}], "\n", "\t\t\t\t", "}"}], ",", "\n", "\t\t", 
     RowBox[{"If", "[", 
      RowBox[{
       RowBox[{"res", "=!=", "$Failed"}], ",", "\n", "\t\t\t", 
@@ -135,7 +139,7 @@ Cell[BoxData[
      "\n", "\t\t\t", "]"}]}], "\n", "\t\t", 
    "]"}]}]], \
 "CodeInput",ExpressionUUID->"3e7e0b3c-db35-40f6-ad4b-cc8b906c8249"]
-}, Closed]],
+}, Open  ]],
 
 Cell[CellGroupData[{
 

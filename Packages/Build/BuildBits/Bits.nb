@@ -386,7 +386,7 @@ Cell[BoxData[{
          RowBox[{"#Message", ",", " ", 
           RowBox[{
            RowBox[{"StartOfString", "|", "StartOfLine"}], "\[Rule]", 
-           "\"\<>\>\""}]}], "]"}]}], "&"}], "/@", "a"}], ",", " ", "\n", 
+           "\"\<\\n>\>\""}]}], "]"}]}], "&"}], "/@", "a"}], ",", " ", "\n", 
      "\t\t", "\"\<\\n\\n\>\""}], "\n", "\t\t", "]"}]}], ";"}], "\n", 
  RowBox[{
   RowBox[{
@@ -598,7 +598,7 @@ Cell[BoxData[
    "]"}]}]], \
 "CodeInput",ExpressionUUID->"adb69ee0-2d54-4c05-bfca-89604c9a7021"]
 }, Open  ]]
-}, Closed]],
+}, Open  ]],
 
 Cell[CellGroupData[{
 
