@@ -45,14 +45,10 @@ Cell["\[LeftCeiling]Load BTools\[RightFloor]", "CodeSubsection",
 22755a2f6f65"],
 
 Cell[BoxData[
- RowBox[{"PackageLoadPacletDependency", "[", "\"\<BTools`\>\"", 
-  "]"}]], "CodeInput",
- CellChangeTimes->{{3.733695621481332*^9, 3.733695627697706*^9}, 
-   3.73385318409159*^9, {3.733855743456921*^9, 3.733855746173312*^9}, {
-   3.733928819973312*^9, 3.733928820148624*^9}, {3.734137557362502*^9, 
-   3.73413755865501*^9}, {3.734137889361022*^9, 
-   3.7341378900917587`*^9}},ExpressionUUID->"1c2fd870-f37a-478c-8a49-\
-9bbd696eea43"],
+ RowBox[{"PackageLoadPacletDependency", "[", 
+  RowBox[{"\"\<BTools`\>\"", ",", "\n", "\t", 
+   RowBox[{"\"\<Update\>\"", "\[Rule]", "True"}]}], "\n", "\t", 
+  "]"}]], "CodeInput",ExpressionUUID->"1c2fd870-f37a-478c-8a49-9bbd696eea43"],
 
 Cell[BoxData[
  RowBox[{"PackageExtendContextPath", "[", "\n", "\t", 
