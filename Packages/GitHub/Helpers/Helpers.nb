@@ -84,7 +84,7 @@ e3b3deaf2235"],
 Cell[BoxData[{
  RowBox[{
   RowBox[{"PPSGitHubCheck", "[", "resObj_", "]"}], ":=", "\n", "\t", 
-  RowBox[{"With", "[", 
+  RowBox[{"Module", "[", 
    RowBox[{
     RowBox[{"{", 
      RowBox[{"res", "=", 
@@ -104,11 +104,8 @@ Cell[BoxData[{
         RowBox[{"PublicPacletServer", "::", "badhub"}], "]"}], ";", "\n", 
        "\t", "\t\t\t", "$Failed"}], ",", "\n", "\t", "\t\t", 
       RowBox[{"MatchQ", "[", 
-       RowBox[{"res", ",", " ", "_Success"}], "]"}], ",", "\n", "\t", 
-      "\t\t\t", "res", ",", "\n", "\t", "\t\t", 
-      RowBox[{"MatchQ", "[", 
-       RowBox[{"res", ",", " ", "_Failure"}], "]"}], ",", "\n", "\t", "\t\t", 
-      
+       RowBox[{"res", ",", " ", "_Success"}], "]"}], ",", "\n", "\t\t\t\t", 
+      "res", ",", "\n", "\t\t\t", 
       RowBox[{
        RowBox[{"res", "[", "\"\<StatusCode\>\"", "]"}], "===", "401"}], ",", 
       "\n", "\t", "\t\t\t", 
@@ -171,7 +168,7 @@ Cell["", "SectionSeparator",ExpressionUUID->"7ae8f3ea-0d98-4fe8-b7be-\
 8fc9c5b0f030"]
 },
 WindowSize->{808, 755},
-WindowMargins->{{Automatic, 124}, {43, Automatic}},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
 FrontEndVersion->"11.3 for Mac OS X x86 (32-bit, 64-bit Kernel) (March 5, \
 2018)",
 StyleDefinitions->FrontEnd`FileName[{"BTools"}, "CodePackage.nb", 
