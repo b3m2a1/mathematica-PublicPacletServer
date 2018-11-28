@@ -246,6 +246,189 @@ Cell[CellGroupData[{
 Cell["\[LeftCeiling]PublicPacletInstall\[RightFloor]", "CodeSubsubsection",
  Evaluatable->True,ExpressionUUID->"604b0e89-8a48-44f9-a48f-a7ef40f39a3a"],
 
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]downloadRawPacletsToo\[RightFloor]", \
+"CodeSubsubsubsection",
+ Evaluatable->True,ExpressionUUID->"95e28395-6b47-4b00-9142-2a561ef3fdea"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"Options", "[", "downloadRawPacletsToo", "]"}], " ", "=", " ", 
+   "\n", "\t", 
+   RowBox[{"{", 
+    RowBox[{"\"\<CompletionFunction\>\"", " ", "->", " ", "None"}], "}"}]}], 
+  ";"}], "\n", 
+ RowBox[{
+  RowBox[{"downloadRawPacletsToo", "[", "\n", "\t", 
+   RowBox[{"remotePaclet_PacletManager`Paclet", ",", "\n", "\t", 
+    RowBox[{"async", ":", 
+     RowBox[{"(", 
+      RowBox[{"True", "|", "False"}], ")"}], ":", "True"}], ",", "\n", "\t", 
+    RowBox[{"OptionsPattern", "[", "]"}]}], "\n", "\t", "]"}], ":=", "\n", 
+  "\t", 
+  RowBox[{"Module", "[", "\n", "\t\t", 
+   RowBox[{
+    RowBox[{"{", "\n", "\t\t\t", 
+     RowBox[{
+     "loc", ",", "downloadTask", ",", "pacletFileName", ",", 
+      "downloadedFileName", ",", "\n", "\t\t\t", "truePaclet", ",", " ", 
+      "pName"}], "\n", "\t\t\t", "}"}], ",", "\n", "\t\t", 
+    RowBox[{
+     RowBox[{"loc", "=", 
+      RowBox[{
+      "PacletManager`Package`PgetLocation", "[", "remotePaclet", "]"}]}], ";",
+      "\n", "\t\t", 
+     RowBox[{"pName", "=", 
+      RowBox[{
+      "PacletManager`Package`PgetQualifiedName", "[", "remotePaclet", "]"}]}],
+      ";", "\n", "\t\t", 
+     RowBox[{"pacletFileName", "=", 
+      RowBox[{"pName", "<>", "\"\<.paclet\>\""}]}], ";", "\n", "\t\t", 
+     RowBox[{"truePaclet", "=", "\n", "\t\t  ", 
+      RowBox[{"Which", "[", "\n", "\t\t    ", 
+       RowBox[{
+        RowBox[{"StringEndsQ", "[", 
+         RowBox[{"loc", ",", " ", "pacletFileName"}], "]"}], ",", "\n", 
+        "\t\t\t  ", "loc", ",", "\n", "\t\t\t", 
+        RowBox[{"(*", " ", 
+         RowBox[{
+          RowBox[{
+          "should", " ", "add", " ", "some", " ", "GitHub", " ", "logic"}], 
+          "..."}], " ", "*)"}], "\n", "\t\t\t", "True", ",", "\n", "\t\t\t  ", 
+        RowBox[{"loc", "<>", "\"\</Paclets/\>\"", "<>", 
+         RowBox[{
+         "ExternalService`EncodeString", "[", "pacletFileName", "]"}]}]}], 
+       "\n", "\t\t\t", "]"}]}], ";", "\n", "\t\t", 
+     RowBox[{"(*", 
+      RowBox[{
+       RowBox[{
+       "To", " ", "avoid", " ", "conflicts", " ", "with", " ", "multiple", 
+        " ", "instances", " ", "of", " ", "M"}], ",", 
+       RowBox[{"or", " ", "preemptive", " ", "computations"}], ",", "\n", 
+       "\t\t", 
+       RowBox[{"downloading", " ", "the", " ", "same", " ", "paclet"}], ",", 
+       RowBox[{
+       "generate", " ", "a", " ", "unique", " ", "name", " ", "for", " ", 
+        "the", " ", "download", " ", 
+        RowBox[{"file", "."}]}]}], "*)"}], "\n", "\t\t", 
+     RowBox[{"downloadedFileName", "=", "\n", "\t\t\t", 
+      RowBox[{"ToFileName", "[", "\n", "\t\t\t  ", 
+       RowBox[{
+       "PacletManager`Package`$userTemporaryDir", ",", "\n", "\t\t\t\t", 
+        RowBox[{"pName", "<>", 
+         RowBox[{"ToString", "[", "$ProcessID", "]"}], "<>", "\n", 
+         "\t\t\t\t  ", 
+         RowBox[{"ToString", "[", 
+          RowBox[{"Random", "[", 
+           RowBox[{"Integer", ",", 
+            RowBox[{"{", 
+             RowBox[{"1", ",", " ", "1000"}], "}"}]}], "]"}], "]"}], "<>", 
+         "\"\<.paclet\>\""}]}], "\n", "\t\t\t  ", "]"}]}], ";", "\n", "\t\t", 
+     
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"StringMatchQ", "[", 
+         RowBox[{"loc", ",", "\"\<http*:*\>\"", ",", 
+          RowBox[{"IgnoreCase", "\[Rule]", "True"}]}], "]"}], "||", "\n", 
+        "\t\t\t", 
+        RowBox[{"StringMatchQ", "[", 
+         RowBox[{"loc", ",", "\"\<file:*\>\"", ",", 
+          RowBox[{"IgnoreCase", "\[Rule]", "True"}]}], "]"}]}], ",", "\n", 
+       "\t\t\t", 
+       RowBox[{"If", "[", 
+        RowBox[{"async", ",", "\n", "\t\t\t\t", 
+         RowBox[{
+          RowBox[{"PreemptProtect", "[", 
+           RowBox[{"(*", 
+            RowBox[{
+            "Use", " ", "PreemptProtect", " ", "to", " ", "ensure", " ", 
+             "that", " ", 
+             RowBox[{"setTaskData", "[", "]"}], " ", "\n", "\t\t\t\t\t", 
+             "gets", " ", "called", " ", "before", " ", 
+             "pacletDownloadCallback", " ", "can", " ", 
+             RowBox[{"fire", "."}]}], "*)"}], "\n", "\t\t\t\t\t", 
+           RowBox[{
+            RowBox[{"downloadTask", "=", "\n", "\t\t\t\t", 
+             RowBox[{"URLSaveAsynchronous", "[", "\n", "\t\t\t\t\t\t", 
+              RowBox[{
+              "truePaclet", ",", "\n", "\t\t\t\t\t\t", "downloadedFileName", 
+               ",", "\n", "\t\t\t\t\t\t", 
+               "PacletManager`Manager`Private`pacletDownloadCallback", ",", 
+               "\n", "\t\t\t\t\t\t", 
+               RowBox[{"\"\<Headers\>\"", "\[Rule]", "\n", "\t\t\t\t\t\t\t", 
+                RowBox[{"{", "\n", "\t\t\t\t\t\t\t\t", 
+                 RowBox[{
+                  RowBox[{
+                  "\"\<Mathematica-systemID\>\"", "\[Rule]", "$SystemID"}], 
+                  ",", "\n", "\t\t\t\t\t\t\t\t", 
+                  RowBox[{"\"\<Mathematica-license\>\"", "\[Rule]", 
+                   RowBox[{"ToString", "[", "$LicenseID", "]"}]}], ",", "\n", 
+                  "\t\t\t\t\t\t\t\t", 
+                  RowBox[{"\"\<Mathematica-mathID\>\"", "\[Rule]", 
+                   RowBox[{"ToString", "[", "$MachineID", "]"}]}], ",", "\n", 
+                  "\t\t\t\t\t\t\t\t", 
+                  RowBox[{"\"\<Mathematica-language\>\"", "\[Rule]", 
+                   RowBox[{"ToString", "[", "$Language", "]"}]}], ",", "\n", 
+                  "\t\t\t\t\t\t\t\t", 
+                  RowBox[{"\"\<Mathematica-activationKey\>\"", "\[Rule]", 
+                   RowBox[{"ToString", "[", "$ActivationKey", "]"}]}]}], "\n",
+                  "\t\t\t\t\t\t\t\t", "}"}]}], ",", "\n", "\t\t\t\t\t\t", 
+               RowBox[{
+               "\"\<UserAgent\>\"", "\[Rule]", 
+                "PacletManager`Package`$userAgent"}], ",", "\n", 
+               "\t\t\t\t\t\t", 
+               RowBox[{"BinaryFormat", "\[Rule]", "True"}], ",", "\n", 
+               "\t\t\t\t\t\t", 
+               RowBox[{"\"\<Progress\>\"", "\[Rule]", "True"}]}], "\n", 
+              "\t\t\t\t\t\t", "]"}]}], ";", "\n", "\t\t\t\t\t", 
+            RowBox[{"PacletManager`Package`setTaskData", "[", 
+             RowBox[{"downloadTask", ",", "\n", "\t\t\t\t\t\t", 
+              RowBox[{"{", "\n", "\t\t\t\t\t\t\t", 
+               RowBox[{
+               "pName", ",", "\n", "\t\t\t\t\t\t\t", "downloadedFileName", 
+                ",", "\n", "\t\t\t\t\t\t\t", "loc", ",", "\n", 
+                "\t\t\t\t\t\t\t", "\"\<Running\>\"", ",", "\n", 
+                "\t\t\t\t\t\t\t", 
+                RowBox[{
+                "OptionValue", "[", "\"\<CompletionFunction\>\"", "]"}], ",", 
+                "\n", "\t\t\t\t\t\t\t", "0", ",", "\n", "\t\t\t\t\t\t\t", 
+                "\"\<\>\"", ",", "\n", "\t\t\t\t\t\t\t", "\"\<Unknown\>\""}], 
+               "\n", "\t\t\t\t\t\t\t", "}"}]}], "]"}]}], "]"}], ";", "\n", 
+          "\t\t\t\t\t", "downloadTask"}], ",", 
+         RowBox[{"(*", "else", "*)"}], "\n", "\t\t\t\t\t", 
+         RowBox[{"(*", 
+          RowBox[{"Synchronous", ";", " ", 
+           RowBox[{"returns", " ", 
+            RowBox[{"filename", "."}]}]}], "*)"}], "\n", "\t\t\t\t\t", 
+         RowBox[{"URLSave", "[", 
+          RowBox[{"truePaclet", ",", "\n", "\t\t\t\t\t\t", 
+           RowBox[{"ToFileName", "[", 
+            RowBox[{
+            "PacletManager`Package`$userTemporaryDir", ",", " ", 
+             "pacletFileName"}], "]"}], ",", "\n", "\t\t\t\t\t\t", 
+           RowBox[{
+           "\"\<UserAgent\>\"", "\[Rule]", 
+            "PacletManager`Package`$userAgent"}], ",", "\n", "\t\t\t\t\t\t", 
+           RowBox[{"BinaryFormat", "\[Rule]", "True"}]}], "\n", 
+          "\t\t\t\t\t\t", "]"}]}], "\n", "\t\t\t\t\t", "]"}], ",", "\n", 
+       "\t\t\t\t", 
+       RowBox[{"(*", "else", "*)"}], "\n", "\t\t\t\t", "$Failed"}], "\n", 
+      "\t\t\t\t", "]"}]}]}], "\n", "\t\t\t", "]"}]}]}], "CodeInput",
+ CellChangeTimes->{{3.752402952317212*^9, 3.7524029803836107`*^9}, {
+   3.752403089552629*^9, 3.752403096142582*^9}, {3.752403265806404*^9, 
+   3.752403378036812*^9}, 
+   3.752403425093834*^9},ExpressionUUID->"3759e040-8ffa-458e-8def-\
+6c2afa69b049"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]setNonRemoteLocation\[RightFloor]", "CodeSubsubsubsection",
+ Evaluatable->True,ExpressionUUID->"42d8cafa-f5c2-4720-a396-927ec6c83d3b"],
+
 Cell[BoxData[{
  RowBox[{
   RowBox[{
@@ -315,7 +498,15 @@ Cell[BoxData[{
                 RowBox[{"\"\<Location\>\"", "->", "fullLoc"}], ")"}]}]}]}], 
             "]"}]}], "\n", "        ", "]"}]}], "\n", "      ", "]"}], "/@", 
        "paclets"}]}]}], "\n", "    ", "]"}]}], 
-  ";"}]}], "CodeInput",ExpressionUUID->"b83ce92d-ac75-4675-b259-ce7dc7106b36"],
+  ";"}]}], "CodeInput",ExpressionUUID->"b83ce92d-ac75-4675-b259-ce7dc7106b36"]\
+
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]PublicPacletInstall\[RightFloor]", "CodeSubsubsubsection",
+ 
+ Evaluatable->True,ExpressionUUID->"3b87c63e-b2c9-433f-9028-e7fb07c6821e"],
 
 Cell[BoxData[
  RowBox[{
@@ -327,8 +518,13 @@ Cell[BoxData[
    RowBox[{
     RowBox[{"{", "\n", "\t\t\t", 
      RowBox[{
-     "PacletManager`Package`setLocation", "=", "setNonRemoteLocation"}], "\n",
-      "\t\t\t", "}"}], ",", "\n", "\t\t", 
+      RowBox[{
+      "PacletManager`Package`setLocation", "=", "setNonRemoteLocation"}], ",",
+       "\n", "\t\t\t", 
+      RowBox[{
+      "PacletManager`Package`downloadPaclet", "=", 
+       "downloadRawPacletsToo"}]}], "\n", "\t\t\t", "}"}], ",", "\n", "\t\t", 
+    
     RowBox[{"PacletManager`PacletInstall", "[", "\n", "\t\t\t", 
      RowBox[{"name", ",", "\n", "\t\t\t", "ops", ",", "\n", "\t\t\t", 
       RowBox[{
@@ -337,7 +533,8 @@ Cell[BoxData[
      "]"}]}], "\n", "\t\t", 
    "]"}]}]], \
 "CodeInput",ExpressionUUID->"72078b94-6710-4738-8099-605924f4c499"]
-}, Closed]]
+}, Open  ]]
+}, Open  ]]
 }, Open  ]],
 
 Cell[BoxData[
@@ -351,7 +548,7 @@ Cell["", "SectionSeparator",ExpressionUUID->"7ae8f3ea-0d98-4fe8-b7be-\
 8fc9c5b0f030"]
 },
 WindowSize->{808, 755},
-WindowMargins->{{77, Automatic}, {Automatic, 0}},
+WindowMargins->{{272, Automatic}, {Automatic, 41}},
 FrontEndVersion->"11.3 for Mac OS X x86 (32-bit, 64-bit Kernel) (March 5, \
 2018)",
 StyleDefinitions->Notebook[{
