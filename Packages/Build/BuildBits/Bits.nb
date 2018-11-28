@@ -598,6 +598,131 @@ Cell[BoxData[
    "]"}]}]], \
 "CodeInput",ExpressionUUID->"adb69ee0-2d54-4c05-bfca-89604c9a7021"]
 }, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]BuildPacletSite\[RightFloor]", "CodeSubsubsection",
+ Evaluatable->True,ExpressionUUID->"76293947-568b-4c6d-bf07-cdf5992fb904"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"buildPacletLocation", "[", "p_", "]"}], ":=", "\n", "\t", 
+   RowBox[{"URLBuild", "@", "\n", "\t\t", 
+    RowBox[{"<|", "\n", "\t\t\t", 
+     RowBox[{
+      RowBox[{"\"\<Scheme\>\"", "\[Rule]", "\"\<http\>\""}], ",", "\n", 
+      "\t\t\t", 
+      RowBox[{
+      "\"\<Domain\>\"", "\[Rule]", "\"\<raw.githubusercontent.com\>\""}], ",",
+       "\n", "\t\t\t", 
+      RowBox[{"\"\<Path\>\"", "\[Rule]", 
+       RowBox[{"{", "\n", "\t\t\t\t", 
+        RowBox[{
+        "\"\<paclets\>\"", ",", " ", "\"\<Repository\>\"", ",", " ", 
+         "\"\<master\>\""}], " ", 
+        RowBox[{"(*", 
+         RowBox[{",", " ", "\"\<Paclets\>\""}], "*)"}], 
+        RowBox[{"(*", 
+         RowBox[{",", "\n", "\t\t\t\t", 
+          RowBox[{
+           RowBox[{"p", "[", "\"\<Name\>\"", "]"}], "<>", "\"\<-\>\"", "<>", 
+           RowBox[{"p", "[", "\"\<Version\>\"", "]"}], "<>", 
+           "\"\<.paclet\>\""}]}], " ", "*)"}], "\n", "\t\t\t\t", "}"}]}]}], 
+     "\n", "\t\t\t", "|>"}]}]}], 
+  ";"}]], "CodeInput",ExpressionUUID->"cc313d15-5de5-49f7-bbce-e6024e9c09ff"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"BuildPacletSite", "[", 
+   RowBox[{"ops", ":", 
+    RowBox[{"OptionsPattern", "[", "]"}]}], "]"}], ":=", "\n", "\t", 
+  RowBox[{"Module", "[", "\n", "\t\t", 
+   RowBox[{
+    RowBox[{"{", "\n", "\t\t\t", 
+     RowBox[{"(*", 
+      RowBox[{
+       RowBox[{"mainFiles", "=", "\n", "\t\t\t\t", 
+        RowBox[{
+        "PacletManager`Package`BuildPacletSiteFiles", "[", "$Clone", "]"}]}], 
+       ","}], "*)"}], "\n", "\t\t\t", 
+     RowBox[{
+      RowBox[{"coreData", "=", "\n", "\t\t\t\t", 
+       RowBox[{"PacletExecute", "[", 
+        RowBox[{"\"\<SiteDataset\>\"", ",", " ", "$Paclets"}], "]"}]}], ",", 
+      "\n", "\t\t\t", "extraParameters", ",", "\n", "\t\t\t", "pacletData", 
+      ",", "\n", "\t\t\t", "pacletSite", ",", "\n", "\t\t\t", "siteMZ"}], 
+     "\n", "\t\t\t", "}"}], ",", "\n", "\t\t", 
+    RowBox[{
+     RowBox[{"extraParameters", "=", "\n", "\t\t\t", 
+      RowBox[{"FileNameJoin", "@", 
+       RowBox[{"{", 
+        RowBox[{
+        "$Clone", ",", " ", "\"\<ReviewQueue\>\"", ",", " ", 
+         "\"\<ExtraPacletInfo.wl\>\""}], "}"}]}]}], ";", "\n", "\t\t", 
+     RowBox[{"extraParameters", "=", "\n", "\t\t\t", 
+      RowBox[{
+       RowBox[{"Replace", "[", 
+        RowBox[{
+         RowBox[{"Except", "[", 
+          RowBox[{"_", "?", "OptionQ"}], "]"}], "\[Rule]", 
+         RowBox[{"<|", "|>"}]}], "]"}], "@", "\n", "\t\t\t\t", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"FileExistsQ", "@", "extraParameters"}], ",", " ", 
+         RowBox[{"Import", "[", "extraParameters", "]"}]}], "]"}]}]}], ";", 
+     "\n", "\t\t", 
+     RowBox[{"pacletData", "=", "\n", "\t\t\t", 
+      RowBox[{"Normal", "@", 
+       RowBox[{
+        RowBox[{"coreData", "[", "\n", "\t\t\t\t", 
+         RowBox[{"SortBy", "[", 
+          RowBox[{"{", 
+           RowBox[{"\"\<Name\>\"", ",", " ", "\"\<Version\>\""}], "}"}], 
+          "]"}], "\n", "\t\t\t\t", "]"}], "[", "\n", "\t\t\t\t", 
+        RowBox[{"DeleteDuplicatesBy", "[", "\"\<Name\>\"", "]"}], "\n", 
+        "\t\t\t\t", "]"}]}]}], ";", "\n", "\t\t", 
+     RowBox[{"pacletData", "=", "\n", "\t\t\t", 
+      RowBox[{"Map", "[", "\n", "\t\t\t\t", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"Join", "[", "\n", "\t\t\t\t\t", 
+          RowBox[{"#", ",", "\n", "\t\t\t\t\t", 
+           RowBox[{"Lookup", "[", 
+            RowBox[{"extraParameters", ",", " ", 
+             RowBox[{"#", "[", "\"\<Name\>\"", "]"}], ",", " ", 
+             RowBox[{"<|", "|>"}]}], "]"}]}], "\n", "\t\t\t\t\t", "]"}], 
+         "&"}], ",", "\n", "\t\t\t\t", "pacletData"}], "\n", "\t\t\t\t", 
+       "]"}]}], ";", "\n", "\t\t", 
+     RowBox[{"pacletData", "=", "\n", "\t\t\t", 
+      RowBox[{"Map", "[", "\n", "\t\t\t\t", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"Append", "[", 
+          RowBox[{"#", ",", "\n", "\t\t\t\t\t", 
+           RowBox[{"\"\<Location\>\"", "->", "\n", "\t\t\t\t\t\t", 
+            RowBox[{"Lookup", "[", 
+             RowBox[{"#", ",", " ", "\"\<Location\>\"", ",", " ", 
+              RowBox[{"buildPacletLocation", "[", "#", "]"}]}], "]"}]}]}], 
+          "\n", "\t\t\t\t\t", "]"}], "&"}], ",", "\n", "\t\t\t\t", 
+        "pacletData"}], "\n", "\t\t\t\t", "]"}]}], ";", "\n", "\t\t", 
+     RowBox[{"pacletSite", "=", 
+      RowBox[{"PacletExecute", "[", 
+       RowBox[{"\"\<SiteFromDataset\>\"", ",", " ", "pacletData"}], "]"}]}], 
+     ";", "\n", "\t\t", 
+     RowBox[{"siteMZ", "=", "\n", "\t\t\t", 
+      RowBox[{"PacletExecute", "[", 
+       RowBox[{
+       "\"\<BundleSite\>\"", ",", " ", "pacletSite", ",", " ", "$Clone", ",", 
+        "\n", "\t", "\t\t\t", 
+        RowBox[{"\"\<BuildExtension\>\"", "\[Rule]", "Nothing"}], ",", "\n", 
+        "\t\t\t\t", 
+        RowBox[{"\"\<ExcludedElements\>\"", "\[Rule]", 
+         RowBox[{"{", "\"\<Resources\>\"", "}"}]}]}], "\n", "\t\t\t\t", 
+       "]"}]}]}]}], "\n", "\t\t", 
+   "]"}]}]], \
+"CodeInput",ExpressionUUID->"8f1ca9c7-e88f-427f-9d04-c1608156607a"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -618,38 +743,39 @@ Cell[BoxData[{
    RowBox[{"ops", ":", 
     RowBox[{"OptionsPattern", "[", "]"}]}], "]"}], ":=", "\n", "\t", 
   RowBox[{
-   RowBox[{"Function", "[", 
-    RowBox[{
+   RowBox[{
+    RowBox[{"(", 
      RowBox[{
-     "PacletManager`Package`BuildPacletSiteFiles", "[", "$Clone", "]"}], ";", 
-     "#"}], "]"}], "@", "\n", "\t\t", 
-   RowBox[{"Map", "[", "\n", "\t\t\t", 
+      RowBox[{"BuildPacletSite", "[", "ops", "]"}], ";", "#"}], ")"}], "&"}], 
+   "@", "\n", "\t", 
+   RowBox[{"Map", "[", "\n", "\t\t", 
     RowBox[{
-     RowBox[{"Function", "[", "\n", "\t", "\t\t\t", 
-      RowBox[{"With", "[", 
+     RowBox[{"Function", "[", "\n", "\t\t\t", 
+      RowBox[{"With", "[", "\n", "\t\t\t\t", 
        RowBox[{
-        RowBox[{"{", 
-         RowBox[{"psa", "=", "\n", "\t", "\t\t\t\t", 
+        RowBox[{"{", "\n", "\t\t\t\t\t", 
+         RowBox[{"psa", "=", "\n", "\t\t\t\t\t\t", 
           RowBox[{"PacletServerAdd", "[", 
            RowBox[{
-           "$Clone", ",", " ", "#", ",", " ", "\n", "\t", "\t\t\t\t\t", 
+           "$Paclets", ",", " ", "#", ",", " ", "\n", "\t", "\t", 
+            "\t\t\t\t\t", 
             RowBox[{"FilterRules", "[", 
              RowBox[{
               RowBox[{"{", "ops", "}"}], ",", " ", 
               RowBox[{"Options", "[", "PacletServerAdd", "]"}]}], "]"}]}], 
-           "\n", "\t", "\t\t\t\t\t", "]"}]}], "}"}], ",", "\n", "\t", 
-        "\t\t\t\t", 
+           "\n", "\t", "\t\t\t\t\t\t", "]"}]}], "\n", "\t\t\t\t\t\t", "}"}], 
+        ",", "\n", "\t\t\t\t", 
         RowBox[{
          RowBox[{"CopyFile", "[", 
-          RowBox[{"#", ",", " ", "\n", "\t", "\t\t\t\t\t", 
+          RowBox[{"#", ",", " ", "\n", "\t\t\t\t\t", 
            RowBox[{"FileNameJoin", "@", 
             RowBox[{"{", 
              RowBox[{"$BuildDir", ",", " ", "\"\<last_build\>\"", ",", " ", 
               RowBox[{"FileNameTake", "[", "#", "]"}]}], "}"}]}], ",", "\n", 
-           "\t", "\t\t\t\t\t", 
-           RowBox[{"OverwriteTarget", "\[Rule]", "True"}]}], "\n", "\t", 
-          "\t\t\t\t\t", "]"}], "->", "\n", "\t", "\t\t\t\t", 
-         RowBox[{"(", "\n", "\t", "\t\t\t\t\t", 
+           "\t\t\t\t\t", 
+           RowBox[{"OverwriteTarget", "\[Rule]", "True"}]}], "\n", 
+          "\t\t\t\t\t", "]"}], "->", "\n", "\t\t\t\t", 
+         RowBox[{"(", "\n", "\t\t\t\t\t", 
           RowBox[{
            RowBox[{"If", "[", 
             RowBox[{
@@ -658,46 +784,43 @@ Cell[BoxData[{
               RowBox[{"#", ",", " ", 
                RowBox[{"DeleteContents", "\[Rule]", "True"}]}], "]"}], ",", 
              " ", 
-             RowBox[{"DeleteFile", "[", "#", "]"}]}], "]"}], ";", "\n", "\t", 
-           "\t\t\t\t\t", "psa"}], "\n", "\t", "\t\t\t\t\t", ")"}]}]}], "\n", 
-       "\t", "\t\t\t\t", "]"}], "\n", "\t", "\t\t\t", "]"}], ",", "\n", "\t", 
-     "\t\t", 
-     RowBox[{"Join", "[", "\n", "\t", "\t\t\t", 
+             RowBox[{"DeleteFile", "[", "#", "]"}]}], "]"}], ";", "\n", 
+           "\t\t\t\t\t", "psa"}], "\n", "\t\t\t\t\t", ")"}]}]}], "\n", 
+       "\t\t\t\t", "]"}], "\n", "\t\t\t", "]"}], ",", "\n", "\t\t", 
+     RowBox[{"Join", "[", "\n", "\t\t\t", 
       RowBox[{
        RowBox[{
         RowBox[{
          RowBox[{"PacletExecute", "[", 
           RowBox[{"\"\<AutoGeneratePaclet\>\"", ",", " ", "#"}], "]"}], "&"}],
-         "/@", "\n", "\t", "\t\t\t\t", 
+         "/@", "\n", "\t\t\t\t", 
         RowBox[{
-         RowBox[{"Select", "[", "\n", "\t", "\t\t\t\t\t", 
+         RowBox[{"Select", "[", "\n", "\t\t\t\t\t", 
           RowBox[{
            RowBox[{
             RowBox[{"FileExistsQ", "[", 
              RowBox[{"FileNameJoin", "[", 
               RowBox[{"{", 
                RowBox[{"#", ",", " ", "\"\<PacletInfo.m\>\""}], "}"}], "]"}], 
-             "]"}], "||", "\n", "\t", "\t\t\t\t\t", 
+             "]"}], "||", "\n", "\t\t\t\t\t", 
             RowBox[{"FileExistsQ", "[", 
              RowBox[{"FileNameJoin", "[", 
               RowBox[{"{", 
                RowBox[{"#", ",", " ", 
                 RowBox[{
                  RowBox[{"FileBaseName", "[", "#", "]"}], "<>", 
-                 "\"\<.m\>\""}]}], "}"}], "]"}], "]"}]}], "&"}], "\n", "\t", 
-          "\t\t\t\t\t", "]"}], "@", "\n", "\t", "\t\t\t\t\t", 
-         RowBox[{"FileNames", "[", "\n", "\t", "\t", "\t\t\t\t\t", 
-          RowBox[{
-          "\"\<*\>\"", ",", "\n", "\t", "\t\t\t\t\t\t", "$ReviewQueueDir"}], 
-          "\n", "\t", "\t\t\t\t\t\t", "]"}]}]}], ",", "\n", "\t", "\t\t\t", 
-       RowBox[{"FileNames", "[", "\n", "\t", "\t\t\t\t", 
+                 "\"\<.m\>\""}]}], "}"}], "]"}], "]"}]}], "&"}], "\n", 
+          "\t\t\t\t\t", "]"}], "@", "\n", "\t\t\t\t\t", 
+         RowBox[{"FileNames", "[", "\n", "\t", "\t\t\t\t\t", 
+          RowBox[{"\"\<*\>\"", ",", "\n", "\t\t\t\t\t\t", "$ReviewQueueDir"}],
+           "\n", "\t\t\t\t\t\t", "]"}]}]}], ",", "\n", "\t\t\t", 
+       RowBox[{"FileNames", "[", "\n", "\t\t\t\t", 
         RowBox[{
-        "\"\<*.paclet\>\"", ",", "\n", "\t", "\t\t\t\t", "$ReviewQueueDir"}], 
-        "\n", "\t", "\t\t\t\t", "]"}]}], "\n", "\t\t\t\t", "]"}]}], "\n", 
-    "\t\t\t", 
+        "\"\<*.paclet\>\"", ",", "\n", "\t\t\t\t", "$ReviewQueueDir"}], "\n", 
+        "\t\t\t\t", "]"}]}], "\n", "\t\t\t", "]"}]}], "\n", "\t\t", 
     "]"}]}]}]}], \
 "CodeInput",ExpressionUUID->"257dcd82-eea0-4ca9-9730-c08f608d6de6"]
-}, Open  ]],
+}, Closed]],
 
 Cell[CellGroupData[{
 
@@ -713,19 +836,42 @@ Cell[BoxData[{
    RowBox[{"Options", "[", "BuildPages", "]"}], "=", "\n", "\t", 
    RowBox[{"Options", "[", "PacletServerBuild", "]"}]}], ";"}], "\n", 
  RowBox[{
-  RowBox[{
-   RowBox[{"BuildPages", "[", 
-    RowBox[{"ops", ":", 
-     RowBox[{"OptionsPattern", "[", "]"}]}], "]"}], ":=", "\n", "\t", 
-   RowBox[{"PacletServerBuild", "[", 
-    RowBox[{"$Clone", ",", "\n", "\t ", 
-     RowBox[{"FilterRules", "[", 
+  RowBox[{"BuildPages", "[", 
+   RowBox[{"ops", ":", 
+    RowBox[{"OptionsPattern", "[", "]"}]}], "]"}], ":=", "\n", "\t", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", "out", "}"}], ",", "\n", "\t\t", 
+    RowBox[{
+     RowBox[{"out", "=", "\n", "\t\t\t", 
+      RowBox[{"PacletServerBuild", "[", 
+       RowBox[{"$Clone", ",", "\n", "\t", "\t", "\t\t", 
+        RowBox[{"FilterRules", "[", "\n", "\t", "\t", "\t\t\t", 
+         RowBox[{
+          RowBox[{"{", "\n", "\t", "\t", "\t\t\t\t", 
+           RowBox[{"ops", ",", "\n", "\t", "\t", "\t\t\t\t", 
+            RowBox[{"\"\<PacletsDirectory\>\"", "\[Rule]", 
+             RowBox[{"FileNameJoin", "@", 
+              RowBox[{"{", 
+               RowBox[{"$Paclets", ",", " ", "\"\<Paclets\>\""}], "}"}]}]}]}],
+            "\n", "\t", "\t", "\t\t\t\t", "}"}], ",", " ", "\n", "\t", "\t", 
+          "\t\t\t", 
+          RowBox[{"Options", "[", "PacletServerBuild", "]"}]}], "]"}]}], "\n",
+        "\t\t\t\t", "]"}]}], ";", "\n", "\t\t", 
+     RowBox[{"CopyFile", "[", "\n", "\t\t\t", 
       RowBox[{
-       RowBox[{"{", "ops", "}"}], ",", " ", 
-       RowBox[{"Options", "[", "PacletServerBuild", "]"}]}], "]"}]}], "\n", 
-    "\t ", "]"}]}], 
-  ";"}]}], "CodeInput",ExpressionUUID->"80513858-7c87-4552-9a62-a873b15c7c55"]\
-
+       RowBox[{"FileNameJoin", "@", 
+        RowBox[{"{", 
+         RowBox[{"$Clone", ",", " ", "\"\<PacletSite.mz\>\""}], "}"}]}], ",", 
+       "\n", "\t\t\t", 
+       RowBox[{"FileNameJoin", "@", 
+        RowBox[{"{", 
+         RowBox[{"out", ",", " ", "\"\<PacletSite.mz\>\""}], "}"}]}], ",", 
+       "\n", "\t\t\t", 
+       RowBox[{"OverwriteTarget", "\[Rule]", "True"}]}], "\n", "\t\t\t", 
+      "]"}]}]}], "\n", "\t\t", 
+   "]"}]}]}], \
+"CodeInput",ExpressionUUID->"80513858-7c87-4552-9a62-a873b15c7c55"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -753,41 +899,45 @@ Cell["\[LeftCeiling]PushGitHub\[RightFloor]", "CodeSubsubsection",
 
 Cell[BoxData[
  RowBox[{
+  RowBox[{"PushServer", "[", 
+   RowBox[{"ops", ":", 
+    RowBox[{"OptionsPattern", "[", "]"}]}], "]"}], ":=", "\n", "\t", 
   RowBox[{
-   RowBox[{"PushServer", "[", 
-    RowBox[{"ops", ":", 
-     RowBox[{"OptionsPattern", "[", "]"}]}], "]"}], ":=", "\n", "\t", 
-   RowBox[{"With", "[", 
-    RowBox[{
-     RowBox[{"{", 
-      RowBox[{"dir", "=", "$Clone"}], "}"}], ",", "\n", "\t\t", 
+   RowBox[{
+    RowBox[{"With", "[", 
      RowBox[{
-      RowBox[{"Git", "[", 
-       RowBox[{"\"\<Add\>\"", ",", " ", "$Clone", ",", " ", 
-        RowBox[{"\"\<All\>\"", "\[Rule]", "True"}]}], "]"}], ";", "\n", 
-      "\t\t", 
-      RowBox[{"Git", "[", 
-       RowBox[{
-       "\"\<Commit\>\"", ",", " ", "\n", "\t\t\t", "dir", ",", "\n", "\t\t\t", 
-        RowBox[{"FilterRules", "[", "\n", "\t\t\t\t", 
-         RowBox[{
-          RowBox[{"{", "\n", "\t\t\t\t\t", 
-           RowBox[{"ops", ",", "\n", "\t\t\t\t\t", 
-            RowBox[{"\"\<Message\>\"", "\[Rule]", 
-             RowBox[{"TemplateApply", "[", 
-              RowBox[{"\"\<Rebuilt on ``\>\"", ",", " ", 
-               RowBox[{"DateString", "[", "]"}]}], "]"}]}], ",", "\n", "\t", 
-            "\t", "\t\t\t", 
-            RowBox[{"\"\<All\>\"", "\[Rule]", "True"}]}], "\n", "\t", 
-           "\t\t\t\t", "}"}], ",", "\n", "\t\t\t\t", 
-          RowBox[{"Git", "[", 
-           RowBox[{"\"\<Commit\>\"", ",", " ", "\"\<Options\>\""}], "]"}]}], 
-         "\n", "\t\t\t\t", "]"}]}], "\n", "\t\t\t", "]"}], ";", "\n", "\t\t", 
-      
-      RowBox[{"Pause", "[", ".5", "]"}], ";", "\n", "\t\t", 
-      RowBox[{"GitHub", "[", 
-       RowBox[{"\"\<Push\>\"", ",", " ", "dir"}], "]"}]}]}], "\n", "\t\t", 
-    "]"}]}], ";"}]], \
+      RowBox[{"{", 
+       RowBox[{"dir", "=", "#"}], "}"}], ",", "\n", "\t\t", 
+      RowBox[{
+       RowBox[{"Git", "[", 
+        RowBox[{"\"\<Add\>\"", ",", " ", "dir", ",", " ", 
+         RowBox[{"\"\<All\>\"", "\[Rule]", "True"}]}], "]"}], ";", "\n", 
+       "\t\t", 
+       RowBox[{"Git", "[", 
+        RowBox[{
+        "\"\<Commit\>\"", ",", " ", "\n", "\t\t\t", "dir", ",", "\n", 
+         "\t\t\t", 
+         RowBox[{"FilterRules", "[", "\n", "\t\t\t\t", 
+          RowBox[{
+           RowBox[{"{", "\n", "\t\t\t\t\t", 
+            RowBox[{"ops", ",", "\n", "\t\t\t\t\t", 
+             RowBox[{"\"\<Message\>\"", "\[Rule]", 
+              RowBox[{"TemplateApply", "[", 
+               RowBox[{"\"\<Rebuilt on ``\>\"", ",", " ", 
+                RowBox[{"DateString", "[", "]"}]}], "]"}]}], ",", "\n", "\t", 
+             "\t", "\t\t\t", 
+             RowBox[{"\"\<All\>\"", "\[Rule]", "True"}]}], "\n", "\t", 
+            "\t\t\t\t", "}"}], ",", "\n", "\t\t\t\t", 
+           RowBox[{"Git", "[", 
+            RowBox[{"\"\<Commit\>\"", ",", " ", "\"\<Options\>\""}], "]"}]}], 
+          "\n", "\t\t\t\t", "]"}]}], "\n", "\t\t\t", "]"}], ";", "\n", "\t\t", 
+       RowBox[{"Pause", "[", ".5", "]"}], ";", "\n", "\t\t", 
+       RowBox[{"GitHub", "[", 
+        RowBox[{"\"\<Push\>\"", ",", " ", "dir"}], "]"}]}]}], "\n", "\t\t", 
+     "]"}], "&"}], "/@", 
+   RowBox[{"{", 
+    RowBox[{"$Clone", ",", " ", "$Paclets"}], 
+    "}"}]}]}]], \
 "CodeInput",ExpressionUUID->"3697c639-a185-4d99-b1a1-03d208f3b45d"]
 }, Open  ]]
 }, Open  ]],
@@ -803,7 +953,7 @@ Cell["", "SectionSeparator",ExpressionUUID->"7ae8f3ea-0d98-4fe8-b7be-\
 8fc9c5b0f030"]
 },
 WindowSize->{808, 755},
-WindowMargins->{{Automatic, 224}, {Automatic, 45}},
+WindowMargins->{{Automatic, 220}, {Automatic, 0}},
 FrontEndVersion->"11.3 for Mac OS X x86 (32-bit, 64-bit Kernel) (March 5, \
 2018)",
 StyleDefinitions->FrontEnd`FileName[{"BTools"}, "CodePackage.nb", 

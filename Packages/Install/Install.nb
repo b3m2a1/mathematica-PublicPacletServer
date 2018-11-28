@@ -1,20 +1,11 @@
 Notebook[{
 
 Cell[CellGroupData[{
-Cell["PublicPacletServer", "CodeSection",
+Cell["\[LeftCeiling]PublicPacletServer\[RightFloor]", "CodeSection",
+ Evaluatable->True,
  CellChangeTimes->{{3.733695313464614*^9, 
   3.733695317660263*^9}},ExpressionUUID->"6335eed0-9b17-4929-a372-\
 1feface45096"],
-
-Cell[BoxData[
- RowBox[{
-  RowBox[{
-   RowBox[{"PublicPacletServer", "::", "usage"}], "=", "\n", "\t", 
-   "\"\<Main function and head for working with the paclet server\>\""}], 
-  ";"}]], "CodeInput",
- CellChangeTimes->{{3.73380485593637*^9, 
-  3.7338048704074707`*^9}},ExpressionUUID->"c750f053-e8be-42cc-9627-\
-e7ff85baad18"],
 
 Cell[CellGroupData[{
 
@@ -144,7 +135,7 @@ Cell[BoxData[
   3.733805363631209*^9}},ExpressionUUID->"beed675b-5f47-408b-bcf7-\
 9c8938998177"]
 }, Open  ]]
-}, Open  ]],
+}, Closed]],
 
 Cell[CellGroupData[{
 
@@ -196,7 +187,7 @@ Cell["\[LeftCeiling]Fork\[RightFloor]", "CodeSubsubsubsection",
    3.733805242520644*^9, 
    3.733805242910717*^9}},ExpressionUUID->"210f90a3-3893-47e3-a228-\
 ae3ac317139f"]
-}, Open  ]],
+}, Closed]],
 
 Cell[CellGroupData[{
 
@@ -248,7 +239,104 @@ Cell[BoxData[{
   3.73369581861005*^9, 
   3.733695901927829*^9}},ExpressionUUID->"d6c35e36-3eb2-492d-b7f1-\
 ea7624587971"]
-}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]PublicPacletInstall\[RightFloor]", "CodeSubsubsection",
+ Evaluatable->True,ExpressionUUID->"604b0e89-8a48-44f9-a48f-a7ef40f39a3a"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"setNonRemoteLocation", "[", 
+    RowBox[{
+     RowBox[{"paclets", ":", "_Paclet"}], ",", "location_String"}], "]"}], ":=",
+    "\n", "\t", 
+   RowBox[{
+    RowBox[{"setNonRemoteLocation", "[", 
+     RowBox[{
+      RowBox[{"{", "paclets", "}"}], ",", "location"}], "]"}], "[", 
+    RowBox[{"[", "1", "]"}], "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"setNonRemoteLocation", "[", 
+    RowBox[{
+     RowBox[{"paclets", ":", 
+      RowBox[{"{", "___Paclet", "}"}]}], ",", "location_String"}], "]"}], ":=",
+    "\n", "\t", 
+   RowBox[{"Module", "[", "\n", "\t\t", 
+    RowBox[{
+     RowBox[{"{", "\n", "\t\t\t", 
+      RowBox[{"loc", ",", "\n", "\t\t\t", "fullLoc", ",", "\n", "\t\t\t", 
+       RowBox[{"inRem", "=", 
+        RowBox[{"MemberQ", "[", 
+         RowBox[{
+          RowBox[{"Stack", "[", "]"}], ",", " ", "PacletFindRemote"}], 
+         "]"}]}]}], "\n", "\t\t\t", "}"}], ",", "\n", "\t\t", 
+     RowBox[{
+      RowBox[{"fullLoc", "=", "\n", "\t\t\t", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"StringMatchQ", "[", 
+           RowBox[{"location", ",", "\"\<http*:*\>\"", ",", 
+            RowBox[{"IgnoreCase", "\[Rule]", "True"}]}], "]"}], "||", "\n", 
+          "\t\t\t\t\t", 
+          RowBox[{"StringMatchQ", "[", 
+           RowBox[{"location", ",", "\"\<file:*\>\"", ",", 
+            RowBox[{"IgnoreCase", "\[Rule]", "True"}]}], "]"}]}], ",", "\n", 
+         "\t\t\t\t", "location", ",", "\n", "\t\t\t\t", 
+         RowBox[{"ExpandFileName", "[", "location", "]"}]}], "\n", "\t\t\t\t",
+         "]"}]}], ";", "\n", "\t\t", 
+      RowBox[{
+       RowBox[{"Function", "[", "\n", "\t\t\t", 
+        RowBox[{
+         RowBox[{"loc", "=", 
+          RowBox[{"PacletManager`Package`getPIValue", "[", 
+           RowBox[{"#", ",", "\"\<Location\>\""}], "]"}]}], ";", "\n", 
+         "\t\t\t", 
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{"loc", "===", "Null"}], ",", "\n", "\t\t\t\t", 
+           RowBox[{"Append", "[", 
+            RowBox[{"#", ",", 
+             RowBox[{"\"\<Location\>\"", "\[Rule]", "fullLoc"}]}], "]"}], ",",
+            "\n", "\t\t\t\t", 
+           RowBox[{"If", "[", 
+            RowBox[{"inRem", ",", "#", ",", 
+             RowBox[{"#", "/.", 
+              RowBox[{
+               RowBox[{"(", 
+                RowBox[{"\"\<Location\>\"", "\[Rule]", "_"}], ")"}], 
+               "\[RuleDelayed]", 
+               RowBox[{"(", 
+                RowBox[{"\"\<Location\>\"", "\[Rule]", "#"}], ")"}]}]}]}], 
+            "]"}]}], "\n", "\t\t\t\t", "]"}]}], "\n", "\t\t\t", "]"}], "/@", 
+       "paclets"}]}]}], "\n", "\t\t", "]"}]}], 
+  ";"}]}], "CodeInput",ExpressionUUID->"b83ce92d-ac75-4675-b259-ce7dc7106b36"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"PublicPacletInstall", "[", 
+   RowBox[{"name_", ",", " ", 
+    RowBox[{"ops", ":", 
+     RowBox[{"OptionsPattern", "[", "]"}]}]}], "]"}], ":=", "\n", "\t", 
+  RowBox[{"Block", "[", "\n", "\t\t", 
+   RowBox[{
+    RowBox[{"{", "\n", "\t\t\t", 
+     RowBox[{
+     "PacletManager`Package`setLocation", "=", "setNonRemoteLocation"}], "\n",
+      "\t\t\t", "}"}], ",", "\n", "\t\t", 
+    RowBox[{"PacletManager`PacletInstall", "[", "\n", "\t\t\t", 
+     RowBox[{"name", ",", "\n", "\t\t\t", "ops", ",", "\n", "\t\t\t", 
+      RowBox[{
+      "\"\<Site\>\"", "\[Rule]", 
+       "\"\<http://paclets.github.io/PacletServer\>\""}]}], "\n", "\t\t\t", 
+     "]"}]}], "\n", "\t\t", 
+   "]"}]}]], \
+"CodeInput",ExpressionUUID->"72078b94-6710-4738-8099-605924f4c499"]
+}, Closed]]
 }, Open  ]],
 
 Cell[BoxData[
@@ -270,9 +358,7 @@ StyleDefinitions->Notebook[{
     StyleData[
     StyleDefinitions -> 
      FrontEnd`FileName[{"BTools"}, "CodePackagePlain.nb", CharacterEncoding -> 
-       "UTF-8"]]]}, WindowSize -> {808, 755}, 
-  WindowMargins -> {{188, Automatic}, {-4, Automatic}}, Visible -> False, 
-  FrontEndVersion -> 
+       "UTF-8"]]]}, Visible -> False, FrontEndVersion -> 
   "11.3 for Mac OS X x86 (32-bit, 64-bit Kernel) (March 5, 2018)", 
   StyleDefinitions -> "PrivateStylesheetFormatting.nb"]
 ]

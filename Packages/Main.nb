@@ -674,6 +674,23 @@ Cell[BoxData[
    "\t\t", "]"}]}]], \
 "CodeInput",ExpressionUUID->"ca0e2c30-8746-4a06-9ad1-948237d20ec5"]
 }, Closed]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]Install\[RightFloor]", "CodeSubsubsection",
+ Evaluatable->True,ExpressionUUID->"75e7dcfd-793c-4832-a5b1-6cabf4e00a90"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"PublicPacletServer", "[", 
+   RowBox[{"\"\<Install\>\"", ",", " ", "name_", ",", " ", 
+    RowBox[{"ops", ":", 
+     RowBox[{"OptionsPattern", "[", "]"}]}]}], "]"}], ":=", "\n", "\t", 
+  RowBox[{"PublicPacletInstall", "[", 
+   RowBox[{"name", ",", " ", "ops"}], 
+   "]"}]}]], \
+"CodeInput",ExpressionUUID->"86d2a3c9-0fd7-4856-8eb4-1792f6ed52ad"]
 }, Open  ]]
 }, Open  ]],
 
@@ -711,9 +728,8 @@ Cell[BoxData[
    "\n", "\t", 
   RowBox[{"PackageAddAutocompletions", "[", "\n", "\t\t", 
    RowBox[{"PublicPacletServer", ",", "\n", "\t\t", 
-    RowBox[{
-    "{", "\n", "\t\t\t", "$ServerCommands", "\n", "\t", "\t\t", "}"}]}], "\n",
-    "\t", "\t", 
+    RowBox[{"{", "\n", "\t\t\t", "$ServerCommands", "\n", "\t\t\t", "}"}]}], 
+   "\n", "\t\t", 
    "]"}]}]], \
 "CodeInput",ExpressionUUID->"1c41e1d0-c87b-49c2-9b5d-a9e18a589754"],
 

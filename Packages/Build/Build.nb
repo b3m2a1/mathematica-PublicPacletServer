@@ -29,7 +29,8 @@ Cell[BoxData[
 2b7764fd468b"],
 
 Cell[BoxData[
- RowBox[{"PublicPacletServer", ";", " ", 
+ RowBox[{
+  RowBox[{"PublicPacletServer", ";"}], " ", 
   RowBox[{"(*", " ", 
    RowBox[{"invoke", " ", "the", " ", "autoloader"}], " ", 
    "*)"}]}]], \

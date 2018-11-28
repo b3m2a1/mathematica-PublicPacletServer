@@ -299,6 +299,15 @@ PublicPacletServer["PushServer", ops:OptionsPattern[]]:=
     ]
 
 
+(* ::Subsubsection::Closed:: *)
+(*Install*)
+
+
+
+PublicPacletServer["Install", name_, ops:OptionsPattern[]]:=
+  PublicPacletInstall[name, ops]
+
+
 (* ::Subsection:: *)
 (*Methods*)
 

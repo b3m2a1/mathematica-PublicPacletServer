@@ -17,17 +17,17 @@ Cell[BoxData[{
    "\"\<The URL for installing things from the repository\>\""}], ";"}], "\n", 
  RowBox[{
   RowBox[{
+   RowBox[{"$Paclets", "::", "usage"}], "=", "\n", "\t", 
+   "\"\<The local clone of the paclets repository\>\""}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
    RowBox[{"$Clone", "::", "usage"}], "=", "\n", "\t", 
    "\"\<The local clone of the server\>\""}], ";"}], "\n", 
  RowBox[{
   RowBox[{
    RowBox[{"$Fork", "::", "usage"}], "=", "\n", "\t", 
-   "\"\<The current user's fork of the server\>\""}], ";"}]}], "CodeInput",
- CellChangeTimes->{{3.733852032092121*^9, 3.733852038962039*^9}, {
-  3.733852382815723*^9, 3.73385239137735*^9}, {3.73385443689752*^9, 
-  3.733854441218293*^9}, {3.733942673927726*^9, 
-  3.7339427006366568`*^9}},ExpressionUUID->"0d27a0b7-db40-4430-a02a-\
-c7b0fc7296c4"],
+   "\"\<The current user's fork of the server\>\""}], 
+  ";"}]}], "CodeInput",ExpressionUUID->"0d27a0b7-db40-4430-a02a-c7b0fc7296c4"],
 
 Cell[CellGroupData[{
 
@@ -38,7 +38,8 @@ Cell[BoxData[
 2b7764fd468b"],
 
 Cell[BoxData[
- RowBox[{"PublicPacletServer", ";", " ", 
+ RowBox[{
+  RowBox[{"PublicPacletServer", ";"}], " ", 
   RowBox[{"(*", " ", 
    RowBox[{"invoke", " ", "the", " ", "autoloader"}], " ", 
    "*)"}]}]], \
@@ -58,12 +59,8 @@ Cell[BoxData[
    RowBox[{"$Repository", "=", "\n", "\t\t", 
     RowBox[{"GitHub", "[", 
      RowBox[{"\"\<Path\>\"", ",", " ", "\"\<paclets/PacletServer\>\""}], 
-     "]"}]}]}], ";"}]], "CodeInput",
- CellChangeTimes->{{3.733805189315287*^9, 3.733805211279644*^9}, {
-   3.733851956852549*^9, 3.733851958314591*^9}, 3.733852017101467*^9, {
-   3.7338531779412518`*^9, 3.733853182233944*^9}, {3.7338544481307383`*^9, 
-   3.733854450100689*^9}},ExpressionUUID->"5eff0cb3-ce9c-418d-ba7a-\
-14bccec69d63"]
+     "]"}]}]}], 
+  ";"}]], "CodeInput",ExpressionUUID->"5eff0cb3-ce9c-418d-ba7a-14bccec69d63"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -100,6 +97,19 @@ Cell[BoxData[
    3.733854443607574*^9, {3.733930367350011*^9, 
    3.733930385937351*^9}},ExpressionUUID->"a78aed30-4b38-4a10-a82b-\
 3a3a8e2636a2"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]$Paclets\[RightFloor]", "CodeSubsubsubsection",
+ Evaluatable->True,ExpressionUUID->"072da0a9-04dd-4235-8994-785f093eb662"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"$Paclets", ":=", "\n", "\t", 
+   RowBox[{"$Paclets", "=", 
+    RowBox[{"FindPacletsClone", "[", "]"}]}]}], 
+  ";"}]], "CodeInput",ExpressionUUID->"5fdb2340-d588-4427-b1f1-3ead52fddc6f"]
 }, Open  ]],
 
 Cell[CellGroupData[{
