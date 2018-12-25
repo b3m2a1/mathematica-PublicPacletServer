@@ -17,7 +17,7 @@ Call PublicPacletServer[\"Clone\"] first.";
 
 
 $ServerRebuildKeys=
-  "UpdateQueue"|"Log"|"Add"|"Build"|"Push"|"Test";
+  "UpdateQueue"|"Log"|"Add"|"Build"|"Push"|"Analytics"|"Test";
 
 
 RebuildServer[do:{$ServerRebuildKeys..}:
@@ -58,6 +58,13 @@ RebuildServer[do:{$ServerRebuildKeys..}:
               FilterRules[{ops}, Options[BuildLog]]
               ],
           Internal`LoadingPanel["Building server log..."]
+          ]
+        ];
+      If[MemberQ[do, "Analytics"],
+        Monitor[
+          res["Analytics"]=
+            UpdateAnalytics[],
+          Internal`LoadingPanel["Creating analytics report..."]
           ]
         ];
       If[MemberQ[do, "Build"],

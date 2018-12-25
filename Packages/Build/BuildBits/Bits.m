@@ -330,7 +330,7 @@ BuildPacletSite[ops:OptionsPattern[]]:=
         If[FileExistsQ@extraParameters, Import[extraParameters]];
     pacletData=
       Normal@coreData[
-        SortBy[{"Name", "Version"}]
+        SortBy[{#["Name"]&, -1*ToExpression[StringSplit[#["Version"], "-"]]&}]
         ][
         DeleteDuplicatesBy["Name"]
         ];
@@ -352,10 +352,16 @@ BuildPacletSite[ops:OptionsPattern[]]:=
         ];
     pacletSite=PacletExecute["SiteFromDataset", pacletData];
     siteMZ=
-      PacletExecute["BundleSite", pacletSite, $Clone,
+      PacletExecute["BundleSite", 
+        pacletSite, 
+        $Clone,
         "BuildExtension"->Nothing,
         "ExcludedElements"->{"Resources"}
-        ]
+        ];
+    CopyFile[siteMZ, 
+      FileNameJoin@{$Clone, "docs", "PacletSite.mz"},
+      OverwriteTarget->True
+      ]
     ]
 
 
@@ -367,42 +373,45 @@ BuildPacletSite[ops:OptionsPattern[]]:=
 Options[AddPaclets]=
   Options[PacletServerAdd];
 AddPaclets[ops:OptionsPattern[]]:=
-  (BuildPacletSite[ops];#)&@
-  Map[
-    Function[
-      With[
-        {
-          psa=
-            PacletServerAdd[$Paclets, #, 
-              FilterRules[{ops}, Options[PacletServerAdd]]
-              ]
-            },
-        CopyFile[#, 
-          FileNameJoin@{$BuildDir, "last_build", FileNameTake[#]},
-          OverwriteTarget->True
-          ]->
-        (
-          If[DirectoryQ@#, DeleteDirectory[#, DeleteContents->True], DeleteFile[#]];
-          psa
-          )
-        ]
-      ],
-    Join[
-      PacletExecute["AutoGeneratePaclet", #]&/@
-        Select[
-          FileExistsQ[FileNameJoin[{#, "PacletInfo.m"}]]||
-          FileExistsQ[FileNameJoin[{#, FileBaseName[#]<>".m"}]]&
-          ]@
-          FileNames[
-            "*",
-            $ReviewQueueDir
-            ],
-      FileNames[
-        "*.paclet",
-        $ReviewQueueDir
+  {
+    BuildPacletSite[ops],
+    #
+    }&@
+    Map[
+      Function[
+        With[
+          {
+            psa=
+              PacletServerAdd[$Paclets, #, 
+                FilterRules[{ops}, Options[PacletServerAdd]]
+                ]
+              },
+          CopyFile[#, 
+            FileNameJoin@{$BuildDir, "last_build", FileNameTake[#]},
+            OverwriteTarget->True
+            ]->
+            (
+              If[DirectoryQ@#, DeleteDirectory[#, DeleteContents->True], DeleteFile[#]];
+              psa
+              )
+            ]
+        ],
+      Join[
+        PacletExecute["AutoGeneratePaclet", #]&/@
+          Select[
+            FileExistsQ[FileNameJoin[{#, "PacletInfo.m"}]]||
+            FileExistsQ[FileNameJoin[{#, FileBaseName[#]<>".m"}]]&
+            ]@
+            FileNames[
+              "*",
+              $ReviewQueueDir
+              ],
+        FileNames[
+          "*.paclet",
+          $ReviewQueueDir
+          ]
         ]
       ]
-    ]
 
 
 (* ::Subsubsection::Closed:: *)
@@ -415,7 +424,8 @@ Options[BuildPages]=
 BuildPages[ops:OptionsPattern[]]:=
   Module[{out},
     out=
-      PacletServerBuild[$Clone,
+      PacletServerBuild[
+        $Clone,
         FilterRules[
           {
             ops,

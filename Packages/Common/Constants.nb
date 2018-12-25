@@ -29,6 +29,20 @@ Cell[BoxData[{
    "\"\<The current user's fork of the server\>\""}], 
   ";"}]}], "CodeInput",ExpressionUUID->"0d27a0b7-db40-4430-a02a-c7b0fc7296c4"],
 
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"$Birthday", "::", "usage"}], "=", "\n", "\t", 
+   "\"\<The paclet server creation date\>\""}], 
+  ";"}]], "CodeInput",ExpressionUUID->"56ff0a88-e0af-4a25-9107-2b8bdc205aff"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"$AnalyticsID", "::", "usage"}], "=", "\n", "\t", 
+   "\"\<The ID for Google Analytics\>\""}], 
+  ";"}]], "CodeInput",ExpressionUUID->"4a631404-5813-4722-9bde-5458d1c8d2d9"],
+
 Cell[CellGroupData[{
 
 Cell[BoxData[
@@ -61,7 +75,7 @@ Cell[BoxData[
      RowBox[{"\"\<Path\>\"", ",", " ", "\"\<paclets/PacletServer\>\""}], 
      "]"}]}]}], 
   ";"}]], "CodeInput",ExpressionUUID->"5eff0cb3-ce9c-418d-ba7a-14bccec69d63"]
-}, Open  ]],
+}, Closed]],
 
 Cell[CellGroupData[{
 
@@ -79,7 +93,7 @@ Cell[BoxData[
   ";"}]], "CodeInput",
  CellChangeTimes->{{3.733805189315287*^9, 3.733805211279644*^9}, 
    3.73385444571629*^9},ExpressionUUID->"27295495-a0a1-491b-b3c5-79ad1cf9dad6"]
-}, Open  ]],
+}, Closed]],
 
 Cell[CellGroupData[{
 
@@ -97,7 +111,7 @@ Cell[BoxData[
    3.733854443607574*^9, {3.733930367350011*^9, 
    3.733930385937351*^9}},ExpressionUUID->"a78aed30-4b38-4a10-a82b-\
 3a3a8e2636a2"]
-}, Open  ]],
+}, Closed]],
 
 Cell[CellGroupData[{
 
@@ -110,7 +124,7 @@ Cell[BoxData[
    RowBox[{"$Paclets", "=", 
     RowBox[{"FindPacletsClone", "[", "]"}]}]}], 
   ";"}]], "CodeInput",ExpressionUUID->"5fdb2340-d588-4427-b1f1-3ead52fddc6f"]
-}, Open  ]],
+}, Closed]],
 
 Cell[CellGroupData[{
 
@@ -136,7 +150,32 @@ Cell[BoxData[
   3.733940297425939*^9}, {3.733940560724172*^9, 
   3.733940650299551*^9}},ExpressionUUID->"9bf0eb6b-d347-49cb-b802-\
 224d42950d9f"]
-}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]$Birthday\[RightFloor]", "CodeSubsubsubsection",
+ Evaluatable->True,ExpressionUUID->"a767f20d-4988-4dbc-af12-b286c1d80c46"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"$Birthday", "=", 
+   RowBox[{"DateObject", "[", 
+    RowBox[{"{", 
+     RowBox[{"2018", ",", " ", "4", ",", " ", "29"}], "}"}], "]"}]}], 
+  ";"}]], "CodeInput",ExpressionUUID->"83adeb96-a1ad-496b-b86b-d295bd900a2f"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]$AnalyticsID\[RightFloor]", "CodeSubsubsubsection",
+ Evaluatable->True,ExpressionUUID->"d987d34a-b4e8-4c59-97dd-61651979ca30"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"$AnalyticsID", "=", "174406285"}], 
+  ";"}]], "CodeInput",ExpressionUUID->"9310f72c-7e77-41a1-a3b3-70726671c9e7"]
+}, Closed]]
 }, Open  ]],
 
 Cell[BoxData[

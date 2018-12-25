@@ -1,0 +1,1088 @@
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Google Analytics", \
+"CodeSection",ExpressionUUID->"6335eed0-9b17-4929-a372-1feface45096"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"$PageViewDataset", "::", "usage"}], "=", "\"\<\>\""}], 
+  ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"UpdatePageViews", "::", "usage"}], "=", "\n", "\t", 
+   "\"\<Gets the page view dataset from Google Analytics\>\""}], 
+  ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"CreateAnalyticsImages", "::", "usage"}], "=", "\n", "\t", 
+   "\"\<Creates the images that feed into the analytics notebook\>\""}], 
+  ";"}]}], "CodeInput",ExpressionUUID->"273b0267-e78b-4986-99a6-37d879557e5e"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"UpdateAnalytics", "::", "usage"}], "=", "\"\<\>\""}], 
+  ";"}]], "CodeInput",ExpressionUUID->"df43bf4e-b379-4937-ae1b-08e933ed719b"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Begin", "[", "\"\<`Private`\>\"", "]"}], 
+  ";"}]], "InputSection",ExpressionUUID->"01a1c17c-d522-4532-84cc-\
+2b7764fd468b"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"$PageViewDataset", ":=", "\n", "\t", 
+   RowBox[{"FileNameJoin", "@", 
+    RowBox[{"{", 
+     RowBox[{
+     "$Clone", ",", " ", "\"\<analytics\>\"", ",", " ", 
+      "\"\<page_views.wl\>\""}], "}"}]}]}], 
+  ";"}]], "CodeInput",ExpressionUUID->"3484ae51-031e-4f80-9f10-6def47f0ce41"],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]reportToDataset\[RightFloor]", \
+"CodeSubsubsection",ExpressionUUID->"327f6ef2-947c-4b3e-8be9-78d68c8eed6c"],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]toTypeInterpreter\[RightFloor]", "CodeSubsubsubsection",
+ Evaluatable->True,ExpressionUUID->"316a78c3-eee9-4d1e-854f-c69768d98029"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"toTypeInterpreter", "[", "\"\<integer\>\"", "]"}], ":=", "\n", 
+  "\t", 
+  RowBox[{
+   RowBox[{"Floor", "@", 
+    RowBox[{"Map", "[", 
+     RowBox[{"Internal`StringToDouble", ",", " ", 
+      RowBox[{"StringTrim", "[", "#", "]"}]}], "]"}]}], "&"}]}], "\n", 
+ RowBox[{
+  RowBox[{"toTypeInterpreter", "[", "\"\<float\>\"", "]"}], ":=", "\n", "\t", 
+  
+  RowBox[{
+   RowBox[{"Map", "[", 
+    RowBox[{"Internal`StringToDouble", ",", " ", 
+     RowBox[{"StringTrim", "[", "#", "]"}]}], "]"}], "&"}]}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"toTypeInterpreter", "[", 
+    RowBox[{"\"\<quantity\>\"", ",", " ", "base_", ",", " ", "unit_"}], "]"}],
+    ":=", "\n", "\t", 
+   RowBox[{"With", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"conv", "=", 
+       RowBox[{"toTypeInterpreter", "[", "base", "]"}]}], "}"}], ",", "\n", 
+     "\t\t", 
+     RowBox[{
+      RowBox[{"Thread", "[", 
+       RowBox[{"Quantity", "[", 
+        RowBox[{
+         RowBox[{"conv", "[", "#", "]"}], ",", " ", "unit"}], "]"}], "]"}], 
+      "&"}]}], "\n", "\t\t", "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"toTypeInterpreter", "[", "\"\<time\>\"", "]"}], ":=", "\n", "\t", 
+   
+   RowBox[{"toTypeInterpreter", "[", 
+    RowBox[{"\"\<float\>\"", ",", " ", "\"\<Seconds\>\""}], "]"}]}], 
+  ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"toTypeInterpreter", "[", "\"\<visitors\>\"", "]"}], ":=", "\n", 
+   "\t", 
+   RowBox[{"toTypeInterpreter", "[", 
+    RowBox[{"\"\<integer\>\"", ",", " ", "\"\<People\>\""}], "]"}]}], 
+  ";"}], "\n", 
+ RowBox[{
+  RowBox[{"toTypeInterpreter", "[", "\"\<string\>\"", "]"}], ":=", "\n", "\t", 
+  RowBox[{
+  "#", "&"}]}]}], \
+"CodeInput",ExpressionUUID->"e0717e49-786a-4d19-9de1-f52acb2aea0d"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]capitalize\[RightFloor]", "CodeSubsubsubsection",
+ Evaluatable->True,ExpressionUUID->"2d8b9aba-4598-4f25-97b7-0132af8d5341"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"capitalize", "[", "s_String", "]"}], ":=", "\n", "\t", 
+   RowBox[{
+    RowBox[{"ToUpperCase", "[", 
+     RowBox[{"StringTake", "[", 
+      RowBox[{"s", ",", " ", 
+       RowBox[{"{", "1", "}"}]}], "]"}], "]"}], "<>", 
+    RowBox[{"StringDrop", "[", 
+     RowBox[{"s", ",", " ", 
+      RowBox[{"{", "1", "}"}]}], "]"}]}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"capitalize", "[", 
+    RowBox[{"s", ":", 
+     RowBox[{"{", "__String", "}"}]}], "]"}], ":=", "\n", "\t", 
+   RowBox[{"MapThread", "[", 
+    RowBox[{"StringJoin", ",", " ", "\n", "\t\t", 
+     RowBox[{"{", "\n", "\t\t\t", 
+      RowBox[{
+       RowBox[{"ToUpperCase", "@", 
+        RowBox[{"StringTake", "[", 
+         RowBox[{"s", ",", " ", 
+          RowBox[{"{", "1", "}"}]}], "]"}]}], ",", "\n", "\t\t\t", 
+       RowBox[{"StringDrop", "[", 
+        RowBox[{"s", ",", " ", 
+         RowBox[{"{", "1", "}"}]}], "]"}]}], "\n", "\t\t\t", "}"}]}], "\n", 
+    "\t\t", "]"}]}], 
+  ";"}]}], "CodeInput",ExpressionUUID->"dded118f-6431-4875-8ad9-9781395e6054"]\
+
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]reportToDataset\[RightFloor]", "CodeSubsubsubsection",
+ Evaluatable->True,ExpressionUUID->"041b8b60-9a9c-44bb-b3b6-34676b50fd50"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"reportToDataset", "[", "rep_", "]"}], ":=", "\n", "\t", 
+  RowBox[{"Module", "[", "\n", "\t\t", 
+   RowBox[{
+    RowBox[{"{", "\n", "\t\t\t", 
+     RowBox[{
+      RowBox[{"base", "=", 
+       RowBox[{"rep", "[", 
+        RowBox[{"[", "1", "]"}], "]"}]}], ",", "\n", "\t\t\t", "colhead", ",",
+       "\n", "\t\t\t", "coldat", ",", "\n", "\t\t\t", "dims", ",", "\n", 
+      "\t\t\t", "metrics", ",", "\n", "\t\t\t", "coldatdims", ",", "\n", 
+      "\t\t\t", "coldatmets"}], "\n", "\t\t\t", "}"}], ",", "\n", "\t\t", 
+    RowBox[{
+     RowBox[{"colhead", "=", 
+      RowBox[{"base", "[", "\"\<ColumnHeader\>\"", "]"}]}], ";", "\n", "\t\t", 
+     RowBox[{"coldat", "=", 
+      RowBox[{"base", "[", 
+       RowBox[{"\"\<Data\>\"", ",", " ", "\"\<Rows\>\""}], "]"}]}], ";", "\n",
+      "\t\t", 
+     RowBox[{"dims", "=", 
+      RowBox[{"capitalize", "@", 
+       RowBox[{"StringTrim", "[", 
+        RowBox[{
+         RowBox[{"colhead", "[", "\"\<Dimensions\>\"", "]"}], ",", " ", 
+         "\"\<ga:\>\""}], "]"}]}]}], ";", "\n", "\t\t", 
+     RowBox[{"metrics", "=", "\n", "\t\t\t", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"{", "\n", "\t\t\t\t", 
+         RowBox[{
+          RowBox[{"capitalize", "@", 
+           RowBox[{"StringTrim", "[", 
+            RowBox[{
+             RowBox[{"Lookup", "[", 
+              RowBox[{"#", ",", " ", "\"\<Name\>\""}], "]"}], ",", " ", 
+             "\"\<ga:\>\""}], "]"}]}], ",", "\n", "\t\t\t\t", 
+          RowBox[{"ToLowerCase", "@", 
+           RowBox[{"Lookup", "[", 
+            RowBox[{"#", ",", " ", "\"\<Type\>\""}], "]"}]}]}], "\n", 
+         "\t\t\t\t", "}"}], "&"}], "@", 
+       RowBox[{"colhead", "[", 
+        RowBox[{
+        "\"\<MetricHeader\>\"", ",", " ", "\"\<MetricHeaderEntries\>\""}], 
+        "]"}]}]}], ";", "\n", "\t\t", 
+     RowBox[{"coldatdims", "=", "\n", "\t\t\t", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"AssociationThread", "[", 
+         RowBox[{"dims", ",", "#"}], "]"}], "&"}], "/@", 
+       RowBox[{"Lookup", "[", 
+        RowBox[{"coldat", ",", " ", "\"\<Dimensions\>\""}], "]"}]}]}], ";", 
+     "\n", "\t\t", 
+     RowBox[{"coldatmets", "=", "\n", "\t\t\t", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"Transpose", "@", 
+         RowBox[{"Lookup", "[", 
+          RowBox[{"#", ",", " ", "\"\<Values\>\""}], "]"}]}], "&"}], "/@", 
+       "\n", "\t\t\t\t", 
+       RowBox[{"Transpose", "[", 
+        RowBox[{"Lookup", "[", 
+         RowBox[{"coldat", ",", " ", "\"\<Metrics\>\""}], "]"}], "]"}]}]}], 
+     ";", "\n", "\t\t", 
+     RowBox[{"coldatmets", "=", "\n", "\t\t\t", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"Map", "[", 
+          RowBox[{
+           RowBox[{"AssociationThread", "[", 
+            RowBox[{
+             RowBox[{"metrics", "[", 
+              RowBox[{"[", "1", "]"}], "]"}], ",", "#"}], "]"}], "&"}], "]"}],
+          "@", "\n", "\t\t\t\t", 
+         RowBox[{"Transpose", "@", "\n", "\t\t\t\t\t", 
+          RowBox[{"MapThread", "[", "\n", "\t", "\t\t\t\t\t", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"#", "[", "#2", "]"}], "&"}], ",", "\n", "\t", 
+            "\t\t\t\t\t", 
+            RowBox[{"{", "\n", "\t", "\t\t\t\t\t\t", 
+             RowBox[{
+              RowBox[{"Map", "[", 
+               RowBox[{"toTypeInterpreter", ",", " ", 
+                RowBox[{"metrics", "[", 
+                 RowBox[{"[", "2", "]"}], "]"}]}], "]"}], ",", "\n", "\t", 
+              "\t\t\t\t\t\t", "#"}], "\n", "\t\t\t\t\t\t\t", "}"}]}], "\n", 
+           "\t\t\t\t\t\t", "]"}]}]}], "&"}], "/@", "coldatmets"}]}], ";", 
+     "\n", "\t\t", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"Dataset", "@", 
+        RowBox[{"MapThread", "[", 
+         RowBox[{"Join", ",", " ", 
+          RowBox[{"{", 
+           RowBox[{"coldatdims", ",", " ", "#"}], "}"}]}], "]"}]}], "&"}], "/@",
+       "coldatmets"}]}]}], "\n", "\t\t", 
+   "]"}]}]], \
+"CodeInput",ExpressionUUID->"fd1f9dda-84ce-406b-925e-6bf28c1aa8a2"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]params\[RightFloor]", "CodeSubsubsection",
+ Evaluatable->True,ExpressionUUID->"7f64cd26-c5a6-4cb7-ae0d-8a2134b33f31"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"$samplingRate", "=", "7"}], ";"}], " ", 
+  RowBox[{"(*", " ", 
+   RowBox[{"in", " ", "days"}], " ", 
+   "*)"}]}]], \
+"CodeInput",ExpressionUUID->"69efe9a8-ef4f-4aca-8bfc-4b590e0dec24"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]requestsToMake\[RightFloor]", "CodeSubsubsection",
+ Evaluatable->True,ExpressionUUID->"96662f3a-f345-4655-813d-51d078f425d0"],
+
+Cell[BoxData[{
+ RowBox[{"requestsToMake", "//", "Clear"}], "\n", 
+ RowBox[{
+  RowBox[{"requestsToMake", "[", 
+   RowBox[{"lastPulled_", ",", " ", 
+    RowBox[{"endDate_:", "Automatic"}]}], "]"}], ":=", "\n", "\t", 
+  RowBox[{"Module", "[", "\n", "\t\t", 
+   RowBox[{
+    RowBox[{"{", "\n", "\t\t\t", 
+     RowBox[{"dateRange", ",", "\n", "\t\t\t", "baseRange"}], "\n", "\t\t\t", 
+     "}"}], ",", "\n", "\t\t", 
+    RowBox[{
+     RowBox[{"baseRange", "=", "\n", "\t\t\t", 
+      RowBox[{"DateRange", "[", "\n", "\t\t\t\t", 
+       RowBox[{"lastPulled", ",", " ", "\n", "\t\t\t\t", 
+        RowBox[{"Replace", "[", 
+         RowBox[{"endDate", ",", " ", 
+          RowBox[{"Automatic", ":>", "Tomorrow"}]}], "]"}], ",", " ", "\n", 
+        "\t\t\t\t", 
+        RowBox[{"Quantity", "[", 
+         RowBox[{"$samplingRate", ",", " ", "\"\<Days\>\""}], "]"}]}], "\n", 
+       "\t\t\t\t", "]"}]}], ";", "\n", "\t\t", 
+     RowBox[{"dateRange", "=", "\n", "\t\t\t", 
+      RowBox[{"Partition", "[", "\n", "\t\t\t\t", 
+       RowBox[{
+        RowBox[{"Riffle", "[", 
+         RowBox[{
+          RowBox[{"Most", "[", "baseRange", "]"}], ",", " ", 
+          RowBox[{
+           RowBox[{"Rest", "[", "baseRange", "]"}], "-", 
+           RowBox[{"Quantity", "[", 
+            RowBox[{"1", ",", " ", "\"\<Days\>\""}], "]"}]}]}], "]"}], ",", 
+        "\n", "\t\t\t\t", "2"}], "\n", "\t\t\t\t", "]"}]}], ";", "\n", "\t\t", 
+     RowBox[{"Partition", "[", 
+      RowBox[{"dateRange", ",", " ", 
+       RowBox[{"UpTo", "[", "2", "]"}]}], "]"}]}]}], "\n", "\t\t", 
+   "]"}]}]}], \
+"CodeInput",ExpressionUUID->"14b7038d-3aa1-49a7-949c-0ed35c3178c6"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]getGoogleAnalyticsReport\[RightFloor]", \
+"CodeSubsubsection",
+ Evaluatable->True,ExpressionUUID->"4041b1ba-430e-479a-b5bc-eae4611363c1"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"getGoogleAnalyticsReport", "[", "startEnd_", "]"}], ":=", "\n", 
+  "\t", 
+  RowBox[{
+   RowBox[{"GoogleAnalytics", "[", 
+    RowBox[{
+    "\"\<GetReport\>\"", ",", " ", "$AnalyticsID", ",", " ", 
+     "\"\<PageUserNumbers\>\"", ",", "\n", "\t", "\t", 
+     RowBox[{"\"\<StartDate\>\"", "\[Rule]", 
+      RowBox[{"startEnd", "[", 
+       RowBox[{"[", 
+        RowBox[{"All", ",", " ", "1"}], "]"}], "]"}]}], ",", "\n", "\t", "\t", 
+     RowBox[{"\"\<EndDate\>\"", "  ", "\[Rule]", 
+      RowBox[{"startEnd", "[", 
+       RowBox[{"[", 
+        RowBox[{"All", ",", " ", "2"}], "]"}], "]"}]}]}], "\n", "\t\t", "]"}],
+    "[", "\"\<Reports\>\"", 
+   "]"}]}]], \
+"CodeInput",ExpressionUUID->"4b6c5816-d57f-4f2e-844d-ccf06f8d0cdc"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]pullGAReport\[RightFloor]", "CodeSubsubsection",
+ Evaluatable->True,ExpressionUUID->"f97a649e-c9c5-449b-b8e7-ce3e74ad3a2e"],
+
+Cell[BoxData[{
+ RowBox[{"pullGAReport", "//", "Clear"}], "\n", 
+ RowBox[{
+  RowBox[{"pullGAReport", "[", 
+   RowBox[{"startDate_", ",", " ", 
+    RowBox[{"endDate_:", "Automatic"}]}], "]"}], ":=", "\n", "\t", 
+  RowBox[{"Module", "[", "\n", "\t\t", 
+   RowBox[{
+    RowBox[{"{", "\n", "\t\t\t", 
+     RowBox[{"requests", ",", " ", "pulls"}], "\n", "\t\t\t", "}"}], ",", 
+    "\n", "\t\t", 
+    RowBox[{
+     RowBox[{"requests", "=", 
+      RowBox[{"requestsToMake", "[", 
+       RowBox[{"startDate", ",", " ", "endDate"}], "]"}]}], ";", "\n", "\t\t", 
+     RowBox[{"pulls", "=", 
+      RowBox[{"Map", "[", 
+       RowBox[{"getGoogleAnalyticsReport", ",", " ", "requests"}], "]"}]}], 
+     ";", "\n", "\t\t", 
+     RowBox[{"AssociationThread", "[", "\n", "\t\t\t", 
+      RowBox[{
+       RowBox[{"Flatten", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"Interval", "@@@", "#"}], "&"}], "/@", "requests"}], "]"}], 
+       ",", "\n", "\t", "\t\t", 
+       RowBox[{"Flatten", "[", 
+        RowBox[{"reportToDataset", "/@", "pulls"}], "]"}]}], "\n", "\t", 
+      "\t\t", "]"}]}]}], "\n", "\t\t", 
+   "]"}]}]}], \
+"CodeInput",ExpressionUUID->"a1b6cd98-910b-4030-9ab2-9e392dde2d46"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]dateRefactorDataset\[RightFloor]", "CodeSubsubsection",
+ Evaluatable->True,ExpressionUUID->"78168cbe-cad5-4c47-979c-2240acc6a25c"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"dateRefactorDataset", "[", "ds_", "]"}], ":=", "\n", "\t", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"Merge", "[", 
+     RowBox[{
+      RowBox[{"KeyDrop", "[", 
+       RowBox[{
+        RowBox[{"Normal", "[", "#", "]"}], ",", " ", "\"\<PagePath\>\""}], 
+       "]"}], ",", " ", "Total"}], "]"}], "&"}], "/@", 
+   "ds"}]}]], \
+"CodeInput",ExpressionUUID->"f4b6db95-e3ca-4e6b-bee2-ef5f6312c604"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]pageRefactorDataset\[RightFloor]", "CodeSubsubsection",
+ Evaluatable->True,ExpressionUUID->"5ef639ec-c369-4df9-999c-7e1297de818f"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"pageRefactorDataset", "[", "ds_", "]"}], ":=", "\n", "\t", 
+   RowBox[{"Merge", "[", "\n", "\t\t", 
+    RowBox[{
+     RowBox[{"KeyValueMap", "[", "\n", "\t\t\t", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"With", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"interval", "=", "#"}], ",", " ", 
+            RowBox[{"assocs", "=", "#2"}]}], "}"}], ",", "\n", "\t", "\t\t\t", 
+          RowBox[{"Map", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"interval", "\[Rule]", "#"}], "&"}], ",", " ", 
+            "assocs"}], "]"}]}], "\n", "\t", "\t\t\t", "]"}], "&"}], ",", 
+       "\n", "\t", "\t\t", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"AssociationThread", "[", "\n", "\t\t\t\t", 
+          RowBox[{
+           RowBox[{"Lookup", "[", " ", 
+            RowBox[{
+             RowBox[{"Normal", "[", "#", "]"}], ",", " ", 
+             "\"\<PagePath\>\""}], "]"}], ",", "\n", "\t\t\t\t", 
+           RowBox[{"KeyDrop", "[", 
+            RowBox[{
+             RowBox[{"Normal", "[", "#", "]"}], ",", " ", 
+             "\"\<PagePath\>\""}], "]"}]}], "\n", "\t\t\t\t", "]"}], "&"}], "/@",
+         "ds"}]}], "\n", "\t", "\t\t", "]"}], ",", "\n", "\t", "\t", 
+     "Association"}], "\n", "\t", "\t", "]"}]}], 
+  ";"}]], "CodeInput",ExpressionUUID->"5065391e-f56c-4d0c-85da-13b043953ca6"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]makeDateListPlot\[RightFloor]", "CodeSubsubsection",
+ Evaluatable->True,ExpressionUUID->"8495a6ec-e676-4cae-8a1a-1cb726901404"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"makeDateListPlot", "[", 
+    RowBox[{"dateRef_", ",", " ", 
+     RowBox[{"ops", ":", 
+      RowBox[{"OptionsPattern", "[", "]"}]}]}], "]"}], ":=", "\n", "\t", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Append", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"Quantity", "[", 
+          RowBox[{"7", ",", " ", "\"\<Days\>\""}], "]"}], "+", 
+         RowBox[{
+          RowBox[{"Keys", "[", "dateRef", "]"}], "[", 
+          RowBox[{"[", 
+           RowBox[{
+            RowBox[{"-", "1"}], ",", " ", "1"}], "]"}], "]"}]}], ",", " ", 
+        "0"}], "}"}], "]"}], "@", "\n", "\t\t", 
+     RowBox[{
+      RowBox[{"Prepend", "[", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"Keys", "[", "dateRef", "]"}], "[", 
+          RowBox[{"[", 
+           RowBox[{"1", ",", " ", "1"}], "]"}], "]"}], ",", " ", "0"}], "}"}],
+        "]"}], "@", "\n", "\t\t\t", 
+      RowBox[{"KeyValueMap", "[", "\n", "\t\t\t\t", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"#", "[", 
+            RowBox[{"[", "2", "]"}], "]"}], ",", " ", 
+           RowBox[{"#2", "[", "\"\<Users\>\"", "]"}]}], "}"}], "&"}], ",", 
+        " ", "\n", "\t\t\t\t", "dateRef"}], "\n", "\t\t\t\t", "]"}]}]}], "//",
+     "\n", "\t\t", 
+    RowBox[{
+     RowBox[{"DateListPlot", "[", 
+      RowBox[{"#", ",", "\n", "\t\t\t", "ops", ",", "\n", "\t\t\t", 
+       RowBox[{"FrameTicks", "\[Rule]", "\n", "\t\t\t\t", 
+        RowBox[{"{", "\n", "\t\t\t\t\t", 
+         RowBox[{
+          RowBox[{"{", "\n", "\t\t\t\t\t\t", 
+           RowBox[{
+            RowBox[{"Map", "[", "\n", "\t\t\t\t\t\t\t", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{"#", ",", " ", "#", ",", " ", 
+                 RowBox[{"{", 
+                  RowBox[{".015", ",", " ", "0"}], "}"}]}], "}"}], "&"}], ",",
+               "\n", "\t\t\t\t\t\t\t", 
+              RowBox[{"Floor", "@", "\n", "\t\t\t\t\t\t\t\t", 
+               RowBox[{"Subdivide", "[", 
+                RowBox[{"0", ",", " ", "\n", "\t\t\t\t\t\t\t\t\t", 
+                 RowBox[{"Max", "@", 
+                  RowBox[{"#", "[", 
+                   RowBox[{"[", 
+                    RowBox[{"All", ",", " ", "2"}], "]"}], "]"}]}], ",", " ", 
+                 "\n", "\t\t\t\t\t\t\t\t\t", "10"}], "\n", 
+                "\t\t\t\t\t\t\t\t\t", "]"}]}]}], "\n", "\t\t\t\t\t\t\t", 
+             "]"}], ",", " ", "\n", "\t\t\t\t\t\t", "None"}], "\n", 
+           "\t\t\t\t\t\t", "}"}], ",", " ", "\n", "\t\t\t\t\t", 
+          RowBox[{"{", "\n", "\t\t\t\t\t\t", 
+           RowBox[{
+            RowBox[{"Map", "[", "\n", "\t\t\t\t\t\t\t", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"{", "\n", "\t\t\t\t\t\t\t\t", 
+                RowBox[{"#", ",", " ", "\n", "\t\t\t\t\t\t\t\t", 
+                 RowBox[{"RawBoxes", "@", "\n", "\t\t\t\t\t\t\t\t\t", 
+                  RowBox[{
+                  "AdjustmentBox", "[", "\n", "\t\t\t\t\t\t\t\t\t\t", 
+                   RowBox[{
+                    RowBox[{"ToBoxes", "@", "\n", "\t\t\t\t\t\t\t\t\t\t\t", 
+                    RowBox[{"Rotate", "[", 
+                    RowBox[{
+                    RowBox[{"DateString", "[", 
+                    RowBox[{"#", ",", " ", "\"\<ISODate\>\""}], "]"}], ",", 
+                    " ", 
+                    RowBox[{"\[Pi]", "/", "3"}], ",", " ", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"-", "1"}], ",", " ", "1"}], "}"}]}], "]"}]}], 
+                    ",", " ", "\n", "\t\t\t\t\t\t\t\t\t\t", 
+                    RowBox[{"BoxBaselineShift", "\[Rule]", "0"}], ",", "\n", 
+                    "\t\t\t\t\t\t\t\t\t\t", 
+                    RowBox[{"BoxMargins", "\[Rule]", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"{", 
+                    RowBox[{"0", ",", " ", "3"}], "}"}], ",", " ", 
+                    RowBox[{"{", 
+                    RowBox[{"0", ",", " ", "0"}], "}"}]}], "}"}]}]}], "\n", 
+                   "\t\t\t\t\t\t\t\t\t\t", "]"}]}], "\n", "\t\t\t\t\t\t\t\t", 
+                 
+                 RowBox[{"(*", 
+                  RowBox[{"Graphics", "[", "\n", "\t\t\t\t\t\t\t\t\t", 
+                   RowBox[{
+                    RowBox[{"{", "\n", "\t\t\t\t\t\t\t\t\t\t", 
+                    RowBox[{
+                    RowBox[{"Select", "[", "\n", "\t\t\t\t\t\t\t\t\t\t\t", 
+                    RowBox[{
+                    RowBox[{"Flatten", "@", 
+                    RowBox[{"List", "@", "\n", "\t\t\t\t\t\t\t\t\t\t\t\t", 
+                    RowBox[{"Lookup", "[", 
+                    RowBox[{
+                    RowBox[{"Flatten", "@", 
+                    RowBox[{"{", "ops", "}"}]}], ",", " ", "FrameTicksStyle", 
+                    ",", " ", 
+                    RowBox[{"{", "}"}]}], "]"}]}]}], ",", "\n", 
+                    "\t\t\t\t\t\t\t\t\t\t\t", "ColorQ"}], "\n", 
+                    "\t\t\t\t\t\t\t\t\t\t\t", "]"}], ",", "\n", 
+                    "\t\t\t\t\t\t\t\t\t\t", 
+                    RowBox[{"Text", "[", "\n", "\t\t\t\t\t\t\t\t\t\t\t", 
+                    RowBox[{
+                    RowBox[{
+                    "Style", "[", "\n", "\t", "\t\t\t\t\t\t\t\t\t\t\t", 
+                    RowBox[{
+                    RowBox[{"DateString", "[", 
+                    RowBox[{"#", ",", " ", "\"\<ISODate\>\""}], "]"}], ",", 
+                    " ", "\n", "\t", "\t\t\t\t\t\t\t\t\t\t\t", 
+                    RowBox[{"Lookup", "[", 
+                    RowBox[{
+                    RowBox[{"Flatten", "@", 
+                    RowBox[{"{", "ops", "}"}]}], ",", " ", "FrameTicksStyle", 
+                    ",", " ", "15"}], "]"}]}], "\n", "\t", 
+                    "\t\t\t\t\t\t\t\t\t\t\t", "]"}], ",", "\n", "\t", 
+                    "\t\t\t\t\t\t\t\t\t\t", 
+                    RowBox[{"{", 
+                    RowBox[{"1", ",", " ", "2"}], "}"}], ",", "\n", "\t", 
+                    "\t\t\t\t\t\t\t\t\t\t", 
+                    RowBox[{"{", 
+                    RowBox[{"1", ",", " ", "1"}], "}"}], ",", "\n", "\t", 
+                    "\t\t\t\t\t\t\t\t\t\t", 
+                    RowBox[{"{", 
+                    RowBox[{".5", ",", " ", "1"}], "}"}]}], "\n", 
+                    "\t\t\t\t\t\t\t\t\t\t\t", "]"}]}], "\n", 
+                    "\t\t\t\t\t\t\t\t\t\t", "}"}], ",", "\n", 
+                    "\t\t\t\t\t\t\t\t\t", 
+                    RowBox[{"PlotRange", "\[Rule]", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"{", 
+                    RowBox[{"0", ",", " ", "2.1"}], "}"}], ",", " ", 
+                    RowBox[{"{", 
+                    RowBox[{"0", ",", " ", "2"}], "}"}]}], "}"}]}], ",", "\n",
+                     "\t\t\t\t\t\t\t\t\t", 
+                    RowBox[{"Method", "\[Rule]", 
+                    RowBox[{"{", 
+                    RowBox[{"\"\<ShrinkWrap\>\"", "\[Rule]", "True"}], 
+                    "}"}]}], ",", "\n", "\t\t\t\t\t\t\t\t\t", 
+                    RowBox[{"ImageSize", "\[Rule]", 
+                    RowBox[{"{", 
+                    RowBox[{"65", ",", " ", "80"}], "}"}]}], ",", "\n", 
+                    "\t\t\t\t\t\t\t\t\t", 
+                    RowBox[{"AspectRatio", "\[Rule]", "Full"}], ",", "\n", 
+                    "\t\t\t\t\t\t\t\t\t", 
+                    RowBox[{"Background", "\[Rule]", "Red"}], ",", "\n", 
+                    "\t\t\t\t\t\t\t\t\t", 
+                    RowBox[{"BaselinePosition", "\[Rule]", "Right"}]}], "\n", 
+                   "\t\t\t\t\t\t\t\t\t", "]"}], "*)"}], ",", "\n", 
+                 "\t\t\t\t\t\t\t\t", 
+                 RowBox[{"{", 
+                  RowBox[{".015", ",", " ", "0"}], "}"}], ",", "\n", 
+                 "\t\t\t\t\t\t\t\t", 
+                 RowBox[{"{", 
+                  RowBox[{"Alignment", "\[Rule]", "Right"}], "}"}]}], "\n", 
+                "\t\t\t\t\t\t\t\t", "}"}], "&"}], ",", "\n", "\t\t\t\t\t\t\t", 
+              RowBox[{
+               RowBox[{"#", "[", 
+                RowBox[{"[", 
+                 RowBox[{"All", ",", " ", "1"}], "]"}], "]"}], "[", 
+               RowBox[{"[", "\n", "\t\t\t\t\t\t\t\t", 
+                RowBox[{"Floor", "@", 
+                 RowBox[{"Subdivide", "[", 
+                  RowBox[{"1", ",", " ", 
+                   RowBox[{"Length", "@", "#"}], ",", " ", "8"}], "]"}]}], 
+                "\n", "\t\t\t\t\t\t\t\t", "]"}], "]"}]}], "\n", 
+             "\t\t\t\t\t\t\t", "]"}], ",", "\n", "\t\t\t\t\t\t", " ", 
+            "None"}], "\n", "\t\t\t\t\t\t", "}"}]}], "\n", "\t\t\t\t\t", 
+         "}"}]}], ",", "\n", "\t\t\t", 
+       RowBox[{"FrameStyle", "\[Rule]", "Black"}], ",", "\n", "\t\t\t", 
+       RowBox[{"FrameTicksStyle", "\[Rule]", 
+        RowBox[{"Directive", "[", 
+         RowBox[{"Black", ",", " ", "15"}], "]"}]}], ",", "\n", "\t\t\t", 
+       RowBox[{"PlotMarkers", "\[Rule]", "\n", "\t\t\t\t", 
+        RowBox[{"Pane", "[", "\n", "\t\t\t\t\t", 
+         RowBox[{
+          RowBox[{"Overlay", "[", "\n", "\t\t\t\t\t\t", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"Style", "[", 
+              RowBox[{
+              "\"\<\[FilledSmallCircle]\>\"", ",", "25", ",", "  ", "White"}],
+               "]"}], ",", " ", 
+             RowBox[{"Style", "[", 
+              RowBox[{"\"\<\[EmptySmallCircle]\>\"", ",", " ", "25"}], 
+              "]"}]}], "}"}], "\n", "\t", "\t", "\t", "\t\t\t", "]"}], ",", 
+          "\n", "\t", "\t", "\t", "\t\t", 
+          RowBox[{"{", 
+           RowBox[{"35", ",", " ", "25"}], "}"}], ",", "\n", "\t", "\t", "\t",
+           "\t\t", 
+          RowBox[{"Alignment", "\[Rule]", 
+           RowBox[{"{", 
+            RowBox[{".2", ",", "  ", ".6"}], "}"}]}]}], "\n", "\t", "\t", 
+         "\t", "\t\t", "]"}]}], ",", "\n", "\t\t\t", 
+       RowBox[{"PlotRange", "\[Rule]", 
+        RowBox[{"{", "\n", "\t\t\t\t\t", 
+         RowBox[{
+          RowBox[{"Rescale", "[", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"-", ".05"}], ",", " ", "1.05"}], "}"}], ",", " ", 
+            RowBox[{"{", 
+             RowBox[{"0", ",", " ", "1"}], "}"}], ",", " ", 
+            RowBox[{"MinMax", "@", 
+             RowBox[{"#", "[", 
+              RowBox[{"[", 
+               RowBox[{"All", ",", " ", "1"}], "]"}], "]"}]}]}], "]"}], ",", 
+          "\n", "\t\t\t\t\t", 
+          RowBox[{"Rescale", "[", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"-", ".1"}], ",", " ", "1.05"}], "}"}], ",", " ", 
+            RowBox[{"{", 
+             RowBox[{"0", ",", " ", "1"}], "}"}], ",", " ", 
+            RowBox[{"MinMax", "@", 
+             RowBox[{"#", "[", 
+              RowBox[{"[", 
+               RowBox[{"All", ",", " ", "2"}], "]"}], "]"}]}]}], "]"}]}], 
+         "\n", "\t\t\t\t\t", "}"}]}], ",", "\n", "\t\t\t", 
+       RowBox[{"PlotStyle", "\[Rule]", 
+        RowBox[{"Directive", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"ColorData", "[", "97", "]"}], "[", "1", "]"}], ",", " ", 
+          "Thick"}], "]"}]}], ",", "\n", "\t\t\t", 
+       RowBox[{"FrameStyle", "\[Rule]", 
+        RowBox[{"AbsoluteThickness", "[", "1.5", "]"}]}]}], "\n", "\t\t\t", 
+      "]"}], "&"}]}]}], 
+  ";"}]], "CodeInput",ExpressionUUID->"3544ae36-d77b-4493-80ee-b1cfbcbf08e2"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]createAnalyticsImages\[RightFloor]", "CodeSubsubsection",
+ Evaluatable->True,ExpressionUUID->"58a30cc0-343c-4a4c-8443-5315c5b8e969"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"CreateAnalyticsImages", "[", "ds_", "]"}], ":=", "\n", "\t", 
+   RowBox[{"Module", "[", "\n", "\t\t", 
+    RowBox[{
+     RowBox[{"{", "\n", "\t\t\t", 
+      RowBox[{
+      "refactor", ",", "\n", "\t\t\t", "dref", ",", "\n", "\t\t\t", "totals", 
+       ",", "\n", "\t\t\t", "pacpages", ",", "\n", "\t\t\t", "mainPlot", ",", 
+       "\n", "\t\t\t", "structForms", ",", "\n", "\t\t\t", "maxPages", ",", 
+       "\n", "\t\t\t", "subplots", ",", "\n", "\t\t\t", "maxViews", ",", "\n",
+        "\t\t\t", "imgDir", ",", "\n", "\t\t\t", 
+       RowBox[{"res", "=", 
+        RowBox[{"{", "}"}]}], ",", "\n", "\t\t\t", "userGrid"}], "\n", 
+      "\t\t\t", "}"}], ",", "\n", "\t\t", 
+     RowBox[{
+      RowBox[{"refactor", "=", 
+       RowBox[{"pageRefactorDataset", "[", "ds", "]"}]}], ";", "\n", "\t\t", 
+      RowBox[{"totals", "=", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"Merge", "[", 
+          RowBox[{
+           RowBox[{"Values", "@", "#"}], ",", " ", "Total"}], "]"}], "&"}], "/@",
+         "refactor"}]}], ";", "\n", "\t\t", 
+      RowBox[{"dref", "=", 
+       RowBox[{"dateRefactorDataset", "[", "ds", "]"}]}], ";", "\n", "\t\t", 
+      RowBox[{"structForms", "=", "\n", "\t\t\t", 
+       RowBox[{"{", "\n", "\t\t\t\t", 
+        RowBox[{
+        "\"\<\>\"", ",", "\n", "\t\t\t\t", "\"\<categories.html\>\"", ",", 
+         " ", "\"\<authors.html\>\"", ",", " ", "\"\<tags.html\>\"", ",", " ",
+          "\n", "\t\t\t\t", "\"\<search.html\>\"", ",", " ", "\"\<tags\>\"", 
+         ",", " ", "\"\<authors\>\"", ",", " ", "\"\<categories\>\"", ",", 
+         " ", "\"\<pages\>\"", ",", " ", "\"\<index\>\""}], "\n", "\t\t\t\t", 
+        "}"}]}], ";", "\n", "\t\t", 
+      RowBox[{"pacpages", "=", "\n", "\t\t\t", 
+       RowBox[{"KeySelect", "[", 
+        RowBox[{"totals", ",", "\n", "\t\t\t\t", 
+         RowBox[{
+          RowBox[{
+           RowBox[{
+            RowBox[{"Length", "[", 
+             RowBox[{"URLParse", "[", "#", "]"}], "]"}], ">", "2"}], "&&", 
+           "\n", "\t\t\t\t\t", 
+           RowBox[{"!", 
+            RowBox[{"StringMatchQ", "[", " ", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"URLParse", "[", 
+                RowBox[{"#", ",", " ", "\"\<Path\>\""}], "]"}], "[", 
+               RowBox[{"[", "3", "]"}], "]"}], ",", " ", "structForms"}], 
+             "]"}]}]}], "&"}]}], "]"}]}], ";", "\n", "\t\t", 
+      RowBox[{"mainPlot", "=", "\n", "\t\t\t", 
+       RowBox[{"makeDateListPlot", "[", 
+        RowBox[{"dref", ",", " ", "\n", "\t\t\t\t", 
+         RowBox[{"ImageSize", "\[Rule]", "750"}], ",", "\n", "\t\t\t\t", 
+         RowBox[{"AspectRatio", "\[Rule]", ".5"}], ",", "\n", "\t\t\t\t", 
+         RowBox[{"PlotLabel", "\[Rule]", "\"\<Paclet Server Users\>\""}]}], 
+        "\n", "\t\t\t\t", "]"}]}], ";", "\n", "\t\t", 
+      RowBox[{"imgDir", "=", 
+       RowBox[{"FileNameJoin", "@", 
+        RowBox[{"{", 
+         RowBox[{
+         "$Clone", ",", " ", "\"\<content\>\"", ",", " ", "\"\<img\>\"", ",", 
+          " ", "\"\<analytics\>\""}], "}"}]}]}], ";", "\n", "\t\t", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{"!", 
+         RowBox[{"DirectoryQ", "@", "imgDir"}]}], ",", " ", 
+        RowBox[{"CreateDirectory", "[", "imgDir", "]"}]}], "]"}], ";", "\n", 
+      "\t\t", 
+      RowBox[{"AppendTo", "[", 
+       RowBox[{"res", ",", " ", 
+        RowBox[{"Export", "[", 
+         RowBox[{
+          RowBox[{"FileNameJoin", "@", 
+           RowBox[{"{", 
+            RowBox[{"imgDir", ",", " ", "\"\<users.png\>\""}], "}"}]}], ",", 
+          " ", "mainPlot"}], "]"}]}], "]"}], ";", "\n", "\t\t", 
+      RowBox[{"maxPages", "=", "\n", "\t\t\t", 
+       RowBox[{"MaximalBy", "[", 
+        RowBox[{"pacpages", ",", " ", 
+         RowBox[{"#Users", "&"}], ",", " ", "9"}], "]"}]}], ";", "\n", "\t\t", 
+      RowBox[{"maxViews", "=", "\n", "\t\t\t", 
+       RowBox[{"Max", "@", 
+        RowBox[{"refactor", "[", 
+         RowBox[{"[", 
+          RowBox[{
+           RowBox[{"Keys", "@", "maxPages"}], ",", " ", "All", ",", " ", 
+           "\"\<Users\>\""}], "]"}], "]"}]}]}], ";", "\n", "\t\t", 
+      RowBox[{"subplots", "=", "\n", "\t\t\t", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"makeDateListPlot", "[", 
+          RowBox[{
+           RowBox[{"refactor", "[", "#", "]"}], ",", " ", "\n", "\t\t\t\t", 
+           RowBox[{"ImageSize", "\[Rule]", "250"}], ",", "\n", "\t\t\t\t", 
+           RowBox[{"AspectRatio", "\[Rule]", ".5"}], ",", "\n", "\t\t\t\t", 
+           RowBox[{"PlotLabel", "\[Rule]", "\n", "\t\t\t\t\t", 
+            RowBox[{"StringReplace", "[", "\n", "\t\t\t\t\t\t", 
+             RowBox[{
+              RowBox[{"StringTrim", "[", 
+               RowBox[{
+                RowBox[{
+                 RowBox[{"URLParse", "[", 
+                  RowBox[{"#", ",", " ", "\"\<Path\>\""}], "]"}], "[", 
+                 RowBox[{"[", "3", "]"}], "]"}], ",", " ", "\"\<.html\>\""}], 
+               "]"}], ",", "\n", "\t\t\t\t\t\t", 
+              RowBox[{
+              "\"\<serviceconnection\>\"", "\[Rule]", "\"\<SC: \>\""}]}], 
+             "\n", "\t\t\t\t\t\t", "]"}]}], ",", "\n", "\t\t\t\t", 
+           RowBox[{"FrameTicks", "\[Rule]", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"Floor", "@", 
+                 RowBox[{"Subdivide", "[", 
+                  RowBox[{"0", ",", " ", "maxViews", ",", " ", "4"}], "]"}]}],
+                 ",", " ", "None"}], "}"}], ",", " ", 
+              RowBox[{"{", 
+               RowBox[{"None", ",", " ", "None"}], "}"}]}], "}"}]}], ",", 
+           "\n", "\t\t\t\t", 
+           RowBox[{"PlotRange", "\[Rule]", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{"All", ",", " ", "All"}], "}"}], ",", " ", 
+              RowBox[{"Rescale", "[", 
+               RowBox[{
+                RowBox[{"{", 
+                 RowBox[{
+                  RowBox[{"-", ".1"}], ",", " ", "1.05"}], "}"}], ",", " ", 
+                RowBox[{"{", 
+                 RowBox[{"0", ",", " ", "1"}], "}"}], ",", " ", 
+                RowBox[{"{", 
+                 RowBox[{"0", ",", " ", "maxViews"}], "}"}]}], "]"}]}], 
+             "}"}]}], ",", "\n", "\t\t\t\t", 
+           RowBox[{"PlotMarkers", "->", "\n", "\t\t\t\t\t", 
+            RowBox[{"Pane", "[", "\n", "\t\t\t\t\t\t", 
+             RowBox[{
+              RowBox[{"Overlay", "[", "\n", "\t\t\t\t\t\t\t", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"Style", "[", 
+                  RowBox[{
+                  "\"\<\[FilledSmallCircle]\>\"", ",", "15", ",", "  ", 
+                   "White"}], "]"}], ",", " ", 
+                 RowBox[{"Style", "[", 
+                  RowBox[{"\"\<\[EmptySmallCircle]\>\"", ",", " ", "15"}], 
+                  "]"}]}], "}"}], "\n", "\t\t\t\t\t\t\t", "]"}], ",", "\n", 
+              "\t\t\t\t\t\t", 
+              RowBox[{"{", 
+               RowBox[{"25", ",", " ", "15"}], "}"}], ",", "\n", 
+              "\t\t\t\t\t\t", 
+              RowBox[{"Alignment", "\[Rule]", 
+               RowBox[{"{", 
+                RowBox[{".2", ",", "  ", ".6"}], "}"}]}]}], "\n", "\t", "\t", 
+             "\t", "\t", "\t\t", "]"}]}]}], "\n", "\t\t\t\t", "]"}], "&"}], "/@", 
+        RowBox[{"Keys", "@", "maxPages"}]}]}], ";", "\n", "\t\t", 
+      RowBox[{"userGrid", "=", "\n", "\t\t\t", 
+       RowBox[{"Grid", "[", "\n", "\t\t\t\t", 
+        RowBox[{
+         RowBox[{"Prepend", "[", "\n", "\t", "\t\t\t\t", 
+          RowBox[{
+           RowBox[{"Partition", "[", 
+            RowBox[{"subplots", ",", " ", "3"}], "]"}], ",", "\n", "\t", 
+           "\t\t\t\t", 
+           RowBox[{"{", "\n", "\t", "\t\t\t\t\t", 
+            RowBox[{
+             RowBox[{"Show", "[", 
+              RowBox[{"mainPlot", ",", " ", "\n", "\t", "\t\t\t\t\t\t", 
+               RowBox[{
+               "FrameTicks", "\[Rule]", "\n", "\t", "\t\t\t\t\t\t\t", 
+                RowBox[{"Replace", "[", "\n", "\t", "\t\t\t\t\t\t\t\t", 
+                 RowBox[{
+                  RowBox[{"Lookup", "[", 
+                   RowBox[{
+                    RowBox[{"Options", "[", "mainPlot", "]"}], ",", " ", 
+                    "FrameTicks"}], "]"}], ",", "\n", "\t", 
+                  "\t\t\t\t\t\t\t\t", 
+                  RowBox[{
+                   RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"{", 
+                    RowBox[{"a_", ",", " ", "b_"}], "}"}], ",", " ", 
+                    RowBox[{"{", 
+                    RowBox[{"c_", ",", " ", "d_"}], "}"}]}], "}"}], ":>", 
+                   "\n", "\t", "\t\t\t\t\t\t\t\t\t", 
+                   RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"{", 
+                    RowBox[{"a", ",", " ", "b"}], "}"}], ",", " ", 
+                    RowBox[{"{", 
+                    RowBox[{"None", ",", " ", "d"}], "}"}]}], "}"}]}]}], "\n",
+                  "\t", "\t\t\t\t\t\t\t\t", "]"}]}]}], "\n", "\t", 
+              "\t\t\t\t\t\t", "]"}], ",", " ", "\n", "\t", "\t\t\t\t\t", 
+             "SpanFromLeft"}], "\n", "\t", "\t\t\t\t\t", "}"}]}], "\n", "\t", 
+          "\t\t\t\t", "]"}], ",", "\n", "\t", "\t\t\t", 
+         RowBox[{"Spacings", "\[Rule]", 
+          RowBox[{"{", 
+           RowBox[{"0", ",", " ", "Automatic"}], "}"}]}]}], "\n", "\t", 
+        "\t\t\t", "]"}]}], ";", "\n", "\t\t", 
+      RowBox[{"AppendTo", "[", 
+       RowBox[{"res", ",", " ", 
+        RowBox[{"Export", "[", 
+         RowBox[{
+          RowBox[{"FileNameJoin", "@", 
+           RowBox[{"{", 
+            RowBox[{"imgDir", ",", " ", "\"\<user_grid.png\>\""}], "}"}]}], 
+          ",", " ", "userGrid"}], "]"}]}], "]"}]}]}], "\n", "\t\t", "]"}]}], 
+  ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"CreateAnalyticsImages", "[", "]"}], ":=", "\n", "\t", 
+   RowBox[{"CreateAnalyticsImages", "@", 
+    RowBox[{"Get", "@", "$PageViewDataset"}]}]}], 
+  ";"}]}], "CodeInput",ExpressionUUID->"99a65edd-6e1e-4db0-86cb-72028377ec7f"]\
+
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]UpdatePageViews\[RightFloor]", "CodeSubsubsection",
+ Evaluatable->True,ExpressionUUID->"c5a59247-1a4b-403c-8eb3-4ad9413b413f"],
+
+Cell[BoxData[{
+ RowBox[{"UpdatePageViews", "//", "Clear"}], "\n", 
+ RowBox[{
+  RowBox[{"UpdatePageViews", "[", 
+   RowBox[{"endDate_:", "Automatic"}], "]"}], ":=", "\n", "\t", 
+  RowBox[{"Module", "[", "\n", "\t\t", 
+   RowBox[{
+    RowBox[{"{", "\n", "\t\t\t", 
+     RowBox[{"current", ",", " ", "startDate", ",", " ", "dates", ",", " ", 
+      RowBox[{"dsfile", "=", "$PageViewDataset"}], ",", "\n", "\t\t\t", 
+      "updates", ",", " ", "new", ",", " ", "dateGap"}], "\n", "\t\t\t", 
+     "}"}], ",", "\n", "\t\t", 
+    RowBox[{
+     RowBox[{"current", "=", "\n", "\t\t\t", 
+      RowBox[{
+       RowBox[{"KeySortBy", "[", "First", "]"}], "@", "\n", "\t\t\t\t", 
+       RowBox[{"Replace", "[", "\n", "\t\t\t\t\t", 
+        RowBox[{
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{"FileExistsQ", "@", "dsfile"}], ",", " ", 
+           RowBox[{"Get", "@", "dsfile"}]}], "]"}], ",", "\n", "\t", 
+         "\t\t\t\t", 
+         RowBox[{
+          RowBox[{"Except", "[", 
+           RowBox[{"_", "?", "AssociationQ"}], "]"}], "\[RuleDelayed]", 
+          RowBox[{"<|", "|>"}]}]}], "\n", "\t\t\t\t\t", "]"}]}]}], ";", "\n", 
+     "\t\t", 
+     RowBox[{"dates", "=", "\n", "\t\t\t", 
+      RowBox[{"Switch", "[", 
+       RowBox[{
+        RowBox[{"Length", "@", "current"}], ",", "\n", "\t\t\t\t", "0", ",", 
+        "\n", "\t\t\t\t\t", 
+        RowBox[{"{", 
+         RowBox[{"$Birthday", ",", " ", "$Birthday"}], "}"}], ",", "\n", 
+        "\t\t\t\t", "1", ",", "\n", "\t\t\t\t\t", 
+        RowBox[{"{", 
+         RowBox[{"$Birthday", ",", " ", 
+          RowBox[{
+           RowBox[{"Keys", "[", "current", "]"}], "[", 
+           RowBox[{"[", 
+            RowBox[{"1", ",", " ", "1"}], "]"}], "]"}]}], "}"}], ",", "\n", 
+        "\t\t\t\t", "_", ",", "\n", "\t\t\t\t\t", 
+        RowBox[{
+         RowBox[{"Keys", "[", "current", "]"}], "[", 
+         RowBox[{"[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"-", "2"}], ";;"}], ",", " ", "1"}], "]"}], "]"}]}], "\n",
+        "\t\t\t\t", "]"}]}], ";", "\n", "\t\t", 
+     RowBox[{"dateGap", "=", 
+      RowBox[{
+       RowBox[{"dates", "[", 
+        RowBox[{"[", "1", "]"}], "]"}], "-", 
+       RowBox[{"dates", "[", 
+        RowBox[{"[", "2", "]"}], "]"}]}]}], ";", "\n", "\t\t", 
+     RowBox[{"startDate", "=", "\n", "\t\t\t", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{"dateGap", "<", 
+         RowBox[{"Quantity", "[", 
+          RowBox[{"$samplingRate", ",", " ", "\"\<Days\>\""}], "]"}]}], ",", 
+        "\n", "\t\t\t\t", 
+        RowBox[{"dates", "[", 
+         RowBox[{"[", "2", "]"}], "]"}], ",", "\n", "\t\t\t\t", 
+        RowBox[{"dates", "[", 
+         RowBox[{"[", "1", "]"}], "]"}]}], "\n", "\t", "\t\t\t", "]"}]}], ";",
+      "\n", "\t\t", 
+     RowBox[{"updates", "=", 
+      RowBox[{"pullGAReport", "[", 
+       RowBox[{"startDate", ",", " ", "endDate"}], "]"}]}], ";", "\n", "\t\t", 
+     RowBox[{"new", "=", "\n", "\t\t\t", 
+      RowBox[{
+       RowBox[{"KeySortBy", "[", "First", "]"}], "@", "\n", "\t\t\t\t", 
+       RowBox[{"Join", "[", "\n", "\t\t\t\t\t", 
+        RowBox[{
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"startDate", "==", 
+             RowBox[{"dates", "[", 
+              RowBox[{"[", "1", "]"}], "]"}]}], "||", 
+            RowBox[{
+             RowBox[{"Length", "@", "current"}], "\[Equal]", "0"}]}], ",", 
+           "\n", "\t\t\t\t\t\t", "current", ",", "\n", "\t\t\t\t\t\t", 
+           RowBox[{"Most", "@", "current"}]}], "\n", "\t\t\t\t\t\t", "]"}], 
+         ",", " ", "\n", "\t\t\t\t\t", "updates"}], "\n", "\t\t\t\t\t", 
+        "]"}]}]}], ";", "\n", "\t\t", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"!", 
+        RowBox[{"DirectoryQ", "@", 
+         RowBox[{"DirectoryName", "[", "dsfile", "]"}]}]}], ",", " ", "\n", 
+       "\t\t\t", 
+       RowBox[{"CreateDirectory", "[", 
+        RowBox[{
+         RowBox[{"DirectoryName", "[", "dsfile", "]"}], ",", " ", 
+         RowBox[{"CreateIntermediateDirectories", "\[Rule]", "True"}]}], 
+        "]"}]}], "\n", "\t\t\t", "]"}], ";", "\n", "\t\t", 
+     RowBox[{"Export", "[", 
+      RowBox[{"dsfile", ",", " ", "new"}], "]"}], ";", "\n", "\t\t", 
+     "new"}]}], " ", "\n", "\t\t", 
+   "]"}]}]}], \
+"CodeInput",ExpressionUUID->"03c3ea9d-8ff5-43d5-aea8-adb1017241e0"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]UpdateAnalytics\[RightFloor]", "CodeSubsubsection",
+ Evaluatable->True,ExpressionUUID->"34c4d3c2-441e-4454-a953-4409065d952b"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"UpdateAnalytics", "[", "]"}], ":=", "\n", "\t", 
+  RowBox[{"(", "\n", "\t\t", 
+   RowBox[{
+    RowBox[{"UpdatePageViews", "[", "]"}], ";", "\n", "\t\t", 
+    RowBox[{"CopyFile", "[", "\n", "\t\t\t", 
+     RowBox[{
+      RowBox[{"FileNameJoin", "@", 
+       RowBox[{"{", 
+        RowBox[{
+        "$Clone", ",", " ", "\"\<analytics\>\"", ",", " ", 
+         "\"\<page_views.wl\>\""}], "}"}]}], ",", "\n", "\t\t\t", 
+      RowBox[{"FileNameJoin", "@", 
+       RowBox[{"{", 
+        RowBox[{
+        "$Clone", ",", " ", "\"\<content\>\"", ",", " ", 
+         "\"\<analytics_dataset.wl\>\""}], "}"}]}], ",", "\n", "\t\t\t", 
+      RowBox[{"OverwriteTarget", "\[Rule]", "True"}]}], "\n", "\t\t\t", "]"}],
+     ";", "\n", "\t\t", 
+    RowBox[{"CreateAnalyticsImages", "[", "]"}], ";"}], "\n", "\t\t", 
+   ")"}]}]], \
+"CodeInput",ExpressionUUID->"e4b7ea56-a4e6-416e-8ffc-a30a8ae45e94"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"End", "[", "]"}], 
+  ";"}]], \
+"InputSection",ExpressionUUID->"8c65acb2-a737-495d-a2a4-c330f4f5c5fe"]
+}, Open  ]],
+
+Cell["", "SectionSeparator",ExpressionUUID->"7ae8f3ea-0d98-4fe8-b7be-\
+8fc9c5b0f030"]
+},
+WindowSize->{808, 755},
+WindowMargins->{{43, Automatic}, {35, Automatic}},
+FrontEndVersion->"11.3 for Mac OS X x86 (32-bit, 64-bit Kernel) (March 5, \
+2018)",
+StyleDefinitions->FrontEnd`FileName[{"BTools"}, "CodePackage.nb", 
+  CharacterEncoding -> "UTF-8"]
+]
+

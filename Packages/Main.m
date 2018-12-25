@@ -14,25 +14,6 @@ Clear[PublicPacletServer];
 
 
 (* ::Subsection:: *)
-(*Load BTools*)
-
-
-
-PackageLoadPacletDependency["BTools`",
-  "Update"->True
-  ]
-
-
-PackageExtendContextPath[
-  {
-    "BTools`",
-    "BTools`External`",
-    "BTools`Paclets`"
-    }
-  ]
-
-
-(* ::Subsection:: *)
 (*Interface*)
 
 
@@ -297,6 +278,15 @@ PublicPacletServer["PushServer", ops:OptionsPattern[]]:=
   With[{res=RebuildServer[{"Push"}, ops]},
     Null/;Head[res]=!=RebuildServer
     ]
+
+
+(* ::Subsubsection::Closed:: *)
+(*UpdateAnalytics*)
+
+
+
+PublicPacletServer["UpdateAnalytics", ops:OptionsPattern[]]:=
+  UpdateAnalytics[ops];
 
 
 (* ::Subsubsection::Closed:: *)

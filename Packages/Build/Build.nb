@@ -51,7 +51,8 @@ Cell[BoxData[
   RowBox[{"$ServerRebuildKeys", "=", "\n", "\t", 
    RowBox[{
    "\"\<UpdateQueue\>\"", "|", "\"\<Log\>\"", "|", "\"\<Add\>\"", "|", 
-    "\"\<Build\>\"", "|", "\"\<Push\>\"", "|", "\"\<Test\>\""}]}], 
+    "\"\<Build\>\"", "|", "\"\<Push\>\"", "|", "\"\<Analytics\>\"", "|", 
+    "\"\<Test\>\""}]}], 
   ";"}]], "CodeInput",ExpressionUUID->"69801bec-f6d7-47b1-8614-33375850c080"],
 
 Cell[BoxData[{
@@ -141,6 +142,22 @@ Cell[BoxData[{
             "Internal`LoadingPanel", "[", "\"\<Building server log...\>\"", 
              "]"}]}], "\n", "\t\t\t\t\t", "]"}]}], "\n", "\t\t\t\t", "]"}], 
         ";", "\n", "\t\t\t", 
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{"MemberQ", "[", 
+           RowBox[{"do", ",", " ", "\"\<Analytics\>\""}], "]"}], ",", "\n", 
+          "\t\t\t\t", 
+          RowBox[{"Monitor", "[", "\n", "\t", "\t\t\t\t", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"res", "[", "\"\<Analytics\>\"", "]"}], "=", "\n", 
+             "\t\t\t\t\t\t", 
+             RowBox[{"UpdateAnalytics", "[", "]"}]}], ",", "\n", "\t\t\t\t\t", 
+            RowBox[{
+            "Internal`LoadingPanel", "[", 
+             "\"\<Creating analytics report...\>\"", "]"}]}], "\n", 
+           "\t\t\t\t\t", "]"}]}], "\n", "\t\t\t\t", "]"}], ";", "\n", 
+        "\t\t\t", 
         RowBox[{"If", "[", 
          RowBox[{
           RowBox[{"MemberQ", "[", 

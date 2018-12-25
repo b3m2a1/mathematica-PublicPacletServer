@@ -38,30 +38,6 @@ Cell[BoxData[{
 
 Cell[CellGroupData[{
 
-Cell["\[LeftCeiling]Load BTools\[RightFloor]", "CodeSubsection",
- Evaluatable->True,
- CellChangeTimes->{{3.733928804090145*^9, 
-  3.733928805760441*^9}},ExpressionUUID->"842e5510-0f76-4a68-9d6a-\
-22755a2f6f65"],
-
-Cell[BoxData[
- RowBox[{"PackageLoadPacletDependency", "[", 
-  RowBox[{"\"\<BTools`\>\"", ",", "\n", "\t", 
-   RowBox[{"\"\<Update\>\"", "\[Rule]", "True"}]}], "\n", "\t", 
-  "]"}]], "CodeInput",ExpressionUUID->"1c2fd870-f37a-478c-8a49-9bbd696eea43"],
-
-Cell[BoxData[
- RowBox[{"PackageExtendContextPath", "[", "\n", "\t", 
-  RowBox[{"{", "\n", "\t\t", 
-   RowBox[{
-   "\"\<BTools`\>\"", ",", "\n", "\t\t", "\"\<BTools`External`\>\"", ",", 
-    "\n", "\t\t", "\"\<BTools`Paclets`\>\""}], "\n", "\t\t", "}"}], "\n", 
-  "\t", "]"}]], \
-"CodeInput",ExpressionUUID->"51edb6e2-129e-4942-badd-1e1048a06f77"]
-}, Open  ]],
-
-Cell[CellGroupData[{
-
 Cell["\[LeftCeiling]Interface\[RightFloor]", "CodeSubsection",
  Evaluatable->True,
  CellChangeTimes->{{3.733853066150236*^9, 
@@ -674,6 +650,22 @@ Cell[BoxData[
    "\t\t", "]"}]}]], \
 "CodeInput",ExpressionUUID->"ca0e2c30-8746-4a06-9ad1-948237d20ec5"]
 }, Closed]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]UpdateAnalytics\[RightFloor]", "CodeSubsubsection",
+ Evaluatable->True,ExpressionUUID->"54fe1d9b-d906-4822-8bb4-aba486055ef5"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"PublicPacletServer", "[", 
+    RowBox[{"\"\<UpdateAnalytics\>\"", ",", " ", 
+     RowBox[{"ops", ":", 
+      RowBox[{"OptionsPattern", "[", "]"}]}]}], "]"}], ":=", "\n", "\t", 
+   RowBox[{"UpdateAnalytics", "[", "ops", "]"}]}], 
+  ";"}]], "CodeInput",ExpressionUUID->"46b4f5d5-8739-4e1f-8d02-a5cbf72f93c2"]
 }, Open  ]],
 
 Cell[CellGroupData[{

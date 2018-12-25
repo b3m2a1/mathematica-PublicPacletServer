@@ -14,6 +14,14 @@ $Fork::usage=
   "The current user's fork of the server";
 
 
+$Birthday::usage=
+  "The paclet server creation date";
+
+
+$AnalyticsID::usage=
+  "The ID for Google Analytics";
+
+
 Begin["`Private`"];
 
 
@@ -68,6 +76,22 @@ $Fork:=
     Alternatives@@Lookup[$CurrentRepos, "FullName"], 
     None
     ]
+
+
+(* ::Subsubsubsection::Closed:: *)
+(*$Birthday*)
+
+
+
+$Birthday=DateObject[{2018, 4, 29}];
+
+
+(* ::Subsubsubsection::Closed:: *)
+(*$AnalyticsID*)
+
+
+
+$AnalyticsID=174406285;
 
 
 End[];

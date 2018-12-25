@@ -7,16 +7,6 @@ Cell["\[LeftCeiling]PublicPacletServer\[RightFloor]", "CodeSection",
   3.733695317660263*^9}},ExpressionUUID->"6335eed0-9b17-4929-a372-\
 1feface45096"],
 
-Cell[CellGroupData[{
-
-Cell[BoxData[
- RowBox[{
-  RowBox[{"BeginPackage", "[", "\"\<`Package`\>\"", "]"}], 
-  ";"}]], "InputSubsection",
- CellChangeTimes->{
-  3.733804897346599*^9},ExpressionUUID->"dd91bc02-a199-4f69-ac6e-\
-584cb94ae5df"],
-
 Cell[BoxData[
  RowBox[{
   RowBox[{
@@ -48,15 +38,7 @@ Cell[BoxData[
  CellChangeTimes->{{3.733695318656706*^9, 3.733695418619937*^9}, {
   3.73380515797801*^9, 
   3.7338051668094482`*^9}},ExpressionUUID->"eebbfc8a-ced4-4be9-a467-\
-c312d4c153cf"]
-}, Open  ]],
-
-Cell[BoxData[
- RowBox[{
-  RowBox[{"EndPackage", "[", "]"}], ";"}]], "InputSubsection",
- CellChangeTimes->{
-  3.733804888283333*^9},ExpressionUUID->"a2de7d5d-073b-4c40-9659-\
-9fa9655e22e2"],
+c312d4c153cf"],
 
 Cell[CellGroupData[{
 
@@ -427,15 +409,15 @@ Cell[BoxData[{
 Cell[CellGroupData[{
 
 Cell["\[LeftCeiling]setNonRemoteLocation\[RightFloor]", "CodeSubsubsubsection",
- Evaluatable->True,ExpressionUUID->"42d8cafa-f5c2-4720-a396-927ec6c83d3b"],
+ Evaluatable->True,ExpressionUUID->"bf5eb004-b9ab-4391-82d0-938f0432fc88"],
 
 Cell[BoxData[{
  RowBox[{
   RowBox[{
    RowBox[{"setNonRemoteLocation", "[", 
     RowBox[{
-     RowBox[{"paclets", ":", "_Paclet"}], ",", "location_String"}], "]"}], ":=",
-    "\n", "\t", 
+     RowBox[{"paclets", ":", "_PacletManager`Paclet"}], ",", " ", 
+     "location_String"}], "]"}], ":=", "\n", "\t", 
    RowBox[{
     RowBox[{"setNonRemoteLocation", "[", 
      RowBox[{
@@ -451,25 +433,26 @@ Cell[BoxData[{
    RowBox[{"Module", "[", "\n", "    ", 
     RowBox[{
      RowBox[{"{", "\n", "      ", 
-      RowBox[{"loc", ",", "\n", "      ", "fullLoc", ",", "\n", "      ", 
-       RowBox[{"remStackLen", "=", "\n", "        ", 
-        RowBox[{"Length", "[", 
-         RowBox[{"Stack", "[", "_PacletManager`PacletFindRemote", "]"}], 
-         "]"}]}], ",", "\n", "      ", "inRem"}], "\n", "      ", "}"}], ",", 
-     "\n", "    ", 
+      RowBox[{"loc", ",", "\n", "      ", "fullLoc", ",", 
+       RowBox[{"(*", "\n", "      ", 
+        RowBox[{
+         RowBox[{"remStackLen", "=", "\n", "        ", 
+          RowBox[{"Length", "[", 
+           RowBox[{"Stack", "[", "_PacletManager`PacletFindRemote", "]"}], 
+           "]"}]}], ","}], "*)"}], "\n", "      ", "inRem"}], "\n", "      ", 
+      "}"}], ",", "\n", "    ", 
      RowBox[{
-      RowBox[{"inRem", "=", 
-       RowBox[{"remStackLen", ">", "0"}]}], ";", "\n", "    ", 
+      RowBox[{"inRem", "=", "True"}], ";", "\n", "    ", 
       RowBox[{"fullLoc", "=", "\n", "      ", 
        RowBox[{"If", "[", 
         RowBox[{
          RowBox[{
           RowBox[{"StringMatchQ", "[", 
-           RowBox[{"location", ",", "\"\<http*:*\>\"", ",", " ", 
+           RowBox[{"location", ",", " ", "\"\<http*:*\>\"", ",", " ", 
             RowBox[{"IgnoreCase", "->", "True"}]}], "]"}], "||", "\n", 
           "        ", 
           RowBox[{"StringMatchQ", "[", 
-           RowBox[{"location", ",", "\"\<file:*\>\"", ",", " ", 
+           RowBox[{"location", ",", "  ", "\"\<file:*\>\"", ",", " ", 
             RowBox[{"IgnoreCase", "->", "True"}]}], "]"}]}], ",", "\n", 
          "        ", "location", ",", "\n", "        ", 
          RowBox[{"ExpandFileName", "[", "location", "]"}]}], "\n", "        ",
@@ -497,44 +480,102 @@ Cell[BoxData[{
                RowBox[{"(", 
                 RowBox[{"\"\<Location\>\"", "->", "fullLoc"}], ")"}]}]}]}], 
             "]"}]}], "\n", "        ", "]"}]}], "\n", "      ", "]"}], "/@", 
-       "paclets"}]}]}], "\n", "    ", "]"}]}], 
-  ";"}]}], "CodeInput",ExpressionUUID->"b83ce92d-ac75-4675-b259-ce7dc7106b36"]\
-
+       "paclets"}]}]}], "\n", "    ", "]"}]}], ";"}]}], "Code",
+ CellChangeTimes->{{3.754249409553464*^9, 
+  3.754249420502452*^9}},ExpressionUUID->"a8f85323-3411-4a0a-9486-\
+8931a043e60d"]
 }, Closed]],
 
 Cell[CellGroupData[{
 
 Cell["\[LeftCeiling]PublicPacletInstall\[RightFloor]", "CodeSubsubsubsection",
  
- Evaluatable->True,ExpressionUUID->"3b87c63e-b2c9-433f-9028-e7fb07c6821e"],
+ Evaluatable->True,ExpressionUUID->"b8f01faf-01b0-424d-83af-58d9739334fc"],
 
 Cell[BoxData[
  RowBox[{
   RowBox[{"PublicPacletInstall", "[", 
    RowBox[{"name_", ",", " ", 
     RowBox[{"ops", ":", 
-     RowBox[{"OptionsPattern", "[", "]"}]}]}], "]"}], ":=", "\n", "\t", 
-  RowBox[{"Block", "[", "\n", "\t\t", 
+     RowBox[{"OptionsPattern", "[", "]"}]}]}], "]"}], ":=", "\n", "  ", 
+  RowBox[{"Catch", "[", "\n", "    ", 
    RowBox[{
-    RowBox[{"{", "\n", "\t\t\t", 
+    RowBox[{"Catch", "[", "\n", "      ", 
      RowBox[{
       RowBox[{
-      "PacletManager`Package`setLocation", "=", "setNonRemoteLocation"}], ",",
-       "\n", "\t\t\t", 
+      "GeneralUtilities`WithMessageHandler", "[", "\n", "  ", "      ", 
+       RowBox[{
+        RowBox[{"Block", "[", "\n", "  ", "  ", "      ", 
+         RowBox[{
+          RowBox[{"{", "\n", "  ", "  ", "        ", 
+           RowBox[{
+            RowBox[{
+            "PacletManager`Package`setLocation", "=", 
+             "setNonRemoteLocation"}], ",", "\n", "  ", "  ", "  ", "      ", 
+            
+            RowBox[{
+            "PacletManager`Package`downloadPaclet", "=", 
+             "downloadRawPacletsToo"}]}], "\n", "  ", "  ", "  ", "      ", 
+           "}"}], ",", "\n", "  ", "  ", "  ", "    ", 
+          RowBox[{
+          "PacletManager`PacletInstall", "[", "\n", "  ", "  ", "  ", 
+           "      ", 
+           RowBox[{
+           "name", ",", "\n", "  ", "  ", "  ", "      ", "ops", ",", "\n", 
+            "  ", "  ", "  ", "      ", 
+            RowBox[{
+            "\"\<Site\>\"", "->", 
+             "\"\<http://paclets.github.io/PacletServer\>\""}]}], "\n", "  ", 
+           "  ", "        ", "]"}]}], "\n", "  ", "  ", "      ", "]"}], ",", 
+        "\n", "  ", "      ", 
+        RowBox[{
+         RowBox[{"If", "[", "\n", "  ", "        ", 
+          RowBox[{
+           RowBox[{
+            RowBox[{
+             RowBox[{"Extract", "[", 
+              RowBox[{
+               RowBox[{"#", "[", 
+                RowBox[{"[", "2", "]"}], "]"}], ",", " ", 
+               "\"\<MessageTemplate\>\"", ",", " ", "Hold"}], "]"}], "===", 
+             "\n", "  ", "          ", 
+             RowBox[{"Hold", "[", 
+              RowBox[{"PacletManager`PacletInstall", "::", "instl"}], "]"}]}],
+             "&&", "\n", "  ", "          ", 
+            RowBox[{"FileExistsQ", "[", 
+             RowBox[{"#", "[", 
+              RowBox[{"[", 
+               RowBox[{
+               "2", ",", " ", "\"\<MessageParameters\>\"", ",", " ", "1"}], 
+               "]"}], "]"}], "]"}]}], ",", "\n", "  ", "        ", 
+           RowBox[{"Throw", "[", 
+            RowBox[{
+             RowBox[{"PacletManager`CreatePaclet", "@", 
+              RowBox[{"#", "[", 
+               RowBox[{"[", 
+                RowBox[{
+                "2", ",", " ", "\"\<MessageParameters\>\"", ",", " ", "1"}], 
+                "]"}], "]"}]}], ",", " ", "\"\<Paclet\>\""}], "]"}], ",", 
+           "\n", "  ", "        ", 
+           RowBox[{"Throw", "[", 
+            RowBox[{"#", ",", " ", "\"\<Exception\>\""}], "]"}]}], "\n", "  ",
+           "        ", "]"}], "&"}]}], "\n", "  ", "      ", "]"}], ",", "\n",
+       "  ", "    ", "\"\<Exception\>\"", ",", "\n", "  ", "    ", 
       RowBox[{
-      "PacletManager`Package`downloadPaclet", "=", 
-       "downloadRawPacletsToo"}]}], "\n", "\t\t\t", "}"}], ",", "\n", "\t\t", 
-    
-    RowBox[{"PacletManager`PacletInstall", "[", "\n", "\t\t\t", 
-     RowBox[{"name", ",", "\n", "\t\t\t", "ops", ",", "\n", "\t\t\t", 
-      RowBox[{
-      "\"\<Site\>\"", "\[Rule]", 
-       "\"\<http://paclets.github.io/PacletServer\>\""}]}], "\n", "\t\t\t", 
-     "]"}]}], "\n", "\t\t", 
-   "]"}]}]], \
-"CodeInput",ExpressionUUID->"72078b94-6710-4738-8099-605924f4c499"]
-}, Open  ]]
-}, Open  ]]
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"GeneralUtilities`ReissueMessage", "[", "#", "]"}], ";", 
+         "#"}], ")"}], "&"}]}], "\n", "      ", "]"}], ",", "\n", "   ", 
+    "\"\<Paclet\>\"", ",", "\n", "   ", 
+    RowBox[{"#", "&"}]}], "\n", "   ", "]"}]}]], "Code",
+ CellChangeTimes->{{3.754248089977915*^9, 3.754248140243531*^9}, {
+  3.754248317036097*^9, 3.754248483292094*^9}, {3.754248858785666*^9, 
+  3.7542490361342297`*^9}, {3.754249133779994*^9, 3.7542491388739758`*^9}, {
+  3.754249244747533*^9, 
+  3.754249313286797*^9}},ExpressionUUID->"d51696f2-f284-4154-81ce-\
+f5bc40e52d71"]
+}, Closed]]
+}, Closed]]
 }, Open  ]],
 
 Cell[BoxData[
@@ -548,7 +589,7 @@ Cell["", "SectionSeparator",ExpressionUUID->"7ae8f3ea-0d98-4fe8-b7be-\
 8fc9c5b0f030"]
 },
 WindowSize->{808, 755},
-WindowMargins->{{272, Automatic}, {Automatic, 41}},
+WindowMargins->{{Automatic, 283}, {21, Automatic}},
 FrontEndVersion->"11.3 for Mac OS X x86 (32-bit, 64-bit Kernel) (March 5, \
 2018)",
 StyleDefinitions->Notebook[{

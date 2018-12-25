@@ -7,9 +7,6 @@
 
 
 
-BeginPackage["`Package`"];
-
-
 SubmitPublicPaclet::usage=
   "Submits a paclet to the public paclet server for review";
 
@@ -20,9 +17,6 @@ CloneReviewQueue::usage=
 
 PublicPacletInstall::usage=
   "Installs a paclet from the public paclet server";
-
-
-EndPackage[];
 
 
 Begin["`Private`"];
@@ -206,21 +200,21 @@ downloadRawPacletsToo[
 
 
 
-setNonRemoteLocation[paclets:_Paclet,location_String]:=
+setNonRemoteLocation[paclets:_PacletManager`Paclet, location_String]:=
   setNonRemoteLocation[{paclets},location][[1]];
 setNonRemoteLocation[paclets:{___PacletManager`Paclet}, location_String]:=
   Module[
     {
       loc,
-      fullLoc,
+      fullLoc,(*
       remStackLen=
-        Length[Stack[_PacletManager`PacletFindRemote]],
+        Length[Stack[_PacletManager`PacletFindRemote]],*)
       inRem
       },
-    inRem=remStackLen>0;
+    inRem=True;
     fullLoc=
-      If[StringMatchQ[location,"http*:*", IgnoreCase->True]||
-        StringMatchQ[location,"file:*", IgnoreCase->True],
+      If[StringMatchQ[location, "http*:*", IgnoreCase->True]||
+        StringMatchQ[location,  "file:*", IgnoreCase->True],
         location,
         ExpandFileName[location]
         ];
@@ -240,17 +234,34 @@ setNonRemoteLocation[paclets:{___PacletManager`Paclet}, location_String]:=
 
 
 PublicPacletInstall[name_, ops:OptionsPattern[]]:=
-  Block[
-    {
-      PacletManager`Package`setLocation=setNonRemoteLocation,
-      PacletManager`Package`downloadPaclet=downloadRawPacletsToo
-      },
-    PacletManager`PacletInstall[
-      name,
-      ops,
-      "Site"->"http://paclets.github.io/PacletServer"
-      ]
-    ]
+  Catch[
+    Catch[
+      GeneralUtilities`WithMessageHandler[
+        Block[
+          {
+            PacletManager`Package`setLocation=setNonRemoteLocation,
+            PacletManager`Package`downloadPaclet=downloadRawPacletsToo
+            },
+          PacletManager`PacletInstall[
+            name,
+            ops,
+            "Site"->"http://paclets.github.io/PacletServer"
+            ]
+          ],
+        If[
+          Extract[#[[2]], "MessageTemplate", Hold]===
+            Hold[PacletManager`PacletInstall::instl]&&
+            FileExistsQ[#[[2, "MessageParameters", 1]]],
+          Throw[PacletManager`CreatePaclet@#[[2, "MessageParameters", 1]], "Paclet"],
+          Throw[#, "Exception"]
+          ]&
+        ],
+      "Exception",
+      (GeneralUtilities`ReissueMessage[#];#)&
+      ],
+   "Paclet",
+   #&
+   ]
 
 
 End[];

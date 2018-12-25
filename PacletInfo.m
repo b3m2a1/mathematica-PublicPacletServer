@@ -1,6 +1,6 @@
 Paclet[
   Name -> "PublicPacletServer",
-  Version -> "0.0.7",
+  Version -> "0.0.8",
   Description -> "A toolchain for working with the public paclet server",
   Thumbnail -> "PacletIcon.png",
   Extensions -> {
