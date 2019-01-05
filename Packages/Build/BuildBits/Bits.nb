@@ -123,7 +123,7 @@ Cell[BoxData[
    RowBox[{"ToString", "[", 
     RowBox[{
      RowBox[{"data", "[", "\"\<Name\>\"", "]"}], ",", " ", "InputForm"}], 
-    "]"}], "<>", "\"\<]=\\n\>\"", "<>", "\n", "\t\t", 
+    "]"}], "<>", "\"\<]=\>\"", "<>", "\n", "\t\t", 
    "str"}]}]], \
 "CodeInput",ExpressionUUID->"d0720832-6402-410a-ba51-f9f738ec8931"],
 

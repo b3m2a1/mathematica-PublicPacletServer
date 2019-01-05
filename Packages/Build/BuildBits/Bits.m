@@ -59,7 +59,7 @@ $ReviewQueueDir:=
 
 getSinglePacString[data_, str_]:=
   "(* ::Subsubsection::Closed:: *)\n(*"<>data["Name"]<>"*)\n\n"<>
-    "$IncludedPaclets["<>ToString[data["Name"], InputForm]<>"]=\n"<>
+    "$IncludedPaclets["<>ToString[data["Name"], InputForm]<>"]="<>
     str
 
 
