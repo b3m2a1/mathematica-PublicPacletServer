@@ -2999,6 +2999,7 @@ iWebSiteAggExportItem[
   outDir_, thm_, longDir_, config_,
   aggdata_, aggsingular_, aggthing_,
   Hold[aggbit_, $aggregationFiles_],
+  pruningList_,
   ops:OptionsPattern[]
   ][aggKey_, aggFiles_]:=
   With[{
@@ -3030,27 +3031,29 @@ iWebSiteAggExportItem[
 		Export aggregation file, e.g. tags/mathematica.html passing the 
 		list of file URLs as the aggregation name, e.g. Tags
 		*)
-    WebSiteTemplateExportPaginated[
-      aggbit,
-      FileBaseName[fout],
-      FileNameTake[fout, {1, -2}],
-      outDir,
-      {
-        thm,
-        FileNameJoin@{thm, "templates"},
-        longDir
-        },
-      None,
-      templates, 
-      Append[config, aggsingular->aggKey],
-      Lookup[
-        Lookup[$WebSiteBuildContentStack, aggFiles, <||>],
-        "Attributes",
-        <||>
-        ],
-      FilterRules[
-        {ops}, 
-        Options@WebSiteTemplateExportPaginated
+    If[KeyExistsQ[pruningList, aggKey],
+      WebSiteTemplateExportPaginated[
+        aggbit,
+        FileBaseName[fout],
+        FileNameTake[fout, {1, -2}],
+        outDir,
+        {
+          thm,
+          FileNameJoin@{thm, "templates"},
+          longDir
+          },
+        None,
+        templates, 
+        Append[config, aggsingular->aggKey],
+        Lookup[
+          Lookup[$WebSiteBuildContentStack, aggFiles, <||>],
+          "Attributes",
+          <||>
+          ],
+        FilterRules[
+          {ops}, 
+          Options@WebSiteTemplateExportPaginated
+          ]
         ]
       ];
       aggbit=.;
@@ -3093,9 +3096,10 @@ iWebSiteGenerateAggPages[
           outDir, thm, longDir, config,
           aggdata, aggsingular, aggthing,
           Hold[aggbit, $aggregationFiles],
+          pragglist,
           ops
           ],
-        pragglist
+        agglist
         ];
       If[(* If there's a overall aggregation to use, e.g. all tags or categories*)
         AllTrue[{"AggregationFile","AggregationTemplates"},
