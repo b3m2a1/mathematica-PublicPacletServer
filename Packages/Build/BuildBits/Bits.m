@@ -52,6 +52,64 @@ $ReviewQueueDir:=
 
 
 
+(* ::Subsubsubsection::Closed:: *)
+(*buildIncludedPacletsFile*)
+
+
+
+getSinglePacString[data_, str_]:=
+  "(* ::Subsubsection::Closed:: *)\n(*"<>data["Name"]<>"*)\n\n"<>
+    "$IncludedPaclets["<>ToString[data["Name"], InputForm]<>"]=\n"<>
+    str
+
+
+buildIncludedPacletsFile[file_, pacs_]:=
+  Module[
+    {
+      template=
+        Import[
+          PackageFilePath["Resources", "Templates", "IncludedPaclets.wl"],
+          "Text"
+          ],
+      key="<*Insert Paclets*>",
+      pacStrings,
+      fill
+      },
+    pacStrings=
+      StringJoin/@Partition[
+        StringSplit[
+          StringTrim[PrettyString[pacs], "{"|"}"], 
+          "|>,"->"|>"
+          ],
+        UpTo[2]
+        ];
+    fill=
+      StringRiffle[
+        MapThread[
+          getSinglePacString,
+          {
+            pacs,
+            pacStrings
+            }
+          ],
+        "\n\n"
+        ];
+    Export[
+      file,
+      StringReplace[template,
+        key->fill,
+        1
+        ],
+      "Text"
+      ]
+    ]
+
+
+(* ::Subsubsubsection::Closed:: *)
+(*UpdateQueue*)
+
+
+
 UpdateQueue[ops:OptionsPattern[]]:=
   Module[
     {
@@ -137,7 +195,7 @@ UpdateQueue[ops:OptionsPattern[]]:=
         e,
         {e, extras}
         ];
-    PrettyExport[
+    buildIncludedPacletsFile[
       FileNameJoin@{dir, "ReviewQueue", "IncludedPaclets.wl"},
       extras
       ];

@@ -107,6 +107,87 @@ Cell[CellGroupData[{
 Cell["\[LeftCeiling]UpdateQueue\[RightFloor]", "CodeSubsubsection",
  Evaluatable->True,ExpressionUUID->"b5d4c0f4-4cae-4a49-9beb-264424bd2467"],
 
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]buildIncludedPacletsFile\[RightFloor]", \
+"CodeSubsubsubsection",
+ Evaluatable->True,ExpressionUUID->"3cd26ab1-c9f3-4c75-9b8a-d6f5d48af703"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"getSinglePacString", "[", 
+   RowBox[{"data_", ",", " ", "str_"}], "]"}], ":=", "\n", "\t", 
+  RowBox[{"\"\<(* ::Subsubsection::Closed:: *)\\n(*\>\"", "<>", 
+   RowBox[{"data", "[", "\"\<Name\>\"", "]"}], "<>", "\"\<*)\\n\\n\>\"", "<>",
+    "\n", "\t\t", "\"\<$IncludedPaclets[\>\"", "<>", 
+   RowBox[{"ToString", "[", 
+    RowBox[{
+     RowBox[{"data", "[", "\"\<Name\>\"", "]"}], ",", " ", "InputForm"}], 
+    "]"}], "<>", "\"\<]=\\n\>\"", "<>", "\n", "\t\t", 
+   "str"}]}]], \
+"CodeInput",ExpressionUUID->"d0720832-6402-410a-ba51-f9f738ec8931"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"buildIncludedPacletsFile", "[", 
+   RowBox[{"file_", ",", " ", "pacs_"}], "]"}], ":=", "\n", "\t", 
+  RowBox[{"Module", "[", "\n", "\t\t", 
+   RowBox[{
+    RowBox[{"{", "\n", "\t\t\t", 
+     RowBox[{
+      RowBox[{"template", "=", "\n", "\t\t\t\t", 
+       RowBox[{"Import", "[", "\n", "\t\t\t\t\t", 
+        RowBox[{
+         RowBox[{"PackageFilePath", "[", 
+          RowBox[{
+          "\"\<Resources\>\"", ",", " ", "\"\<Templates\>\"", ",", " ", 
+           "\"\<IncludedPaclets.wl\>\""}], "]"}], ",", "\n", "\t\t\t\t\t", 
+         "\"\<Text\>\""}], "\n", "\t\t\t\t\t", "]"}]}], ",", "\n", "\t\t\t", 
+      RowBox[{"key", "=", "\"\<<*Insert Paclets*>\>\""}], ",", "\n", "\t\t\t",
+       "pacStrings", ",", "\n", "\t\t\t", "fill"}], "\n", "\t\t\t", "}"}], 
+    ",", "\n", "\t\t", 
+    RowBox[{
+     RowBox[{"pacStrings", "=", "\n", "\t\t\t", 
+      RowBox[{"StringJoin", "/@", 
+       RowBox[{"Partition", "[", "\n", "\t\t\t\t", 
+        RowBox[{
+         RowBox[{"StringSplit", "[", "\n", "\t\t\t\t\t", 
+          RowBox[{
+           RowBox[{"StringTrim", "[", 
+            RowBox[{
+             RowBox[{"PrettyString", "[", "pacs", "]"}], ",", " ", 
+             RowBox[{"\"\<{\>\"", "|", "\"\<}\>\""}]}], "]"}], ",", " ", "\n",
+            "\t", "\t\t\t\t", 
+           RowBox[{"\"\<|>,\>\"", "\[Rule]", "\"\<|>\>\""}]}], "\n", 
+          "\t\t\t\t\t", "]"}], ",", "\n", "\t\t\t\t", 
+         RowBox[{"UpTo", "[", "2", "]"}]}], "\n", "\t\t\t\t", "]"}]}]}], ";", 
+     "\n", "\t\t", 
+     RowBox[{"fill", "=", "\n", "\t\t\t", 
+      RowBox[{"StringRiffle", "[", "\n", "\t\t\t\t", 
+       RowBox[{
+        RowBox[{"MapThread", "[", "\n", "\t\t\t\t\t", 
+         RowBox[{"getSinglePacString", ",", "\n", "\t", "\t\t\t\t", 
+          RowBox[{"{", "\n", "\t", "\t\t\t\t\t", 
+           RowBox[{"pacs", ",", "\n", "\t", "\t\t\t\t\t", "pacStrings"}], 
+           "\n", "\t\t\t\t\t\t", "}"}]}], "\n", "\t\t\t\t\t", "]"}], ",", 
+        "\n", "\t\t\t\t", "\"\<\\n\\n\>\""}], "\n", "\t\t\t\t", "]"}]}], ";", 
+     "\n", "\t\t", 
+     RowBox[{"Export", "[", "\n", "\t\t\t", 
+      RowBox[{"file", ",", "\n", "\t\t\t", 
+       RowBox[{"StringReplace", "[", 
+        RowBox[{"template", ",", "\n", "\t\t\t\t", 
+         RowBox[{"key", "\[Rule]", "fill"}], ",", "\n", "\t\t\t\t", "1"}], 
+        "\n", "\t\t\t\t", "]"}], ",", "\n", "\t\t\t", "\"\<Text\>\""}], "\n", 
+      "\t\t\t", "]"}]}]}], "\n", "\t\t", 
+   "]"}]}]], \
+"CodeInput",ExpressionUUID->"c8d5dd07-1a60-4d3c-9041-8e31c4142cd2"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]UpdateQueue\[RightFloor]", "CodeSubsubsubsection",
+ Evaluatable->True,ExpressionUUID->"19ec435b-89e8-4f47-8d3c-a8bf1b1df47d"],
+
 Cell[BoxData[
  RowBox[{
   RowBox[{"UpdateQueue", "[", 
@@ -280,7 +361,7 @@ Cell[BoxData[
         RowBox[{"{", 
          RowBox[{"e", ",", " ", "extras"}], "}"}]}], "\n", "\t\t\t\t", 
        "]"}]}], ";", "\n", "\t\t", 
-     RowBox[{"PrettyExport", "[", "\n", "\t\t\t", 
+     RowBox[{"buildIncludedPacletsFile", "[", "\n", "\t\t\t", 
       RowBox[{
        RowBox[{"FileNameJoin", "@", 
         RowBox[{"{", 
@@ -315,7 +396,8 @@ Cell[BoxData[
       "\n", "\t\t\t", "]"}]}]}], "\n", "\t\t", 
    "]"}]}]], \
 "CodeInput",ExpressionUUID->"49209c7a-1c52-4d5b-b7e4-7452a8810d21"]
-}, Closed]],
+}, Open  ]]
+}, Open  ]],
 
 Cell[CellGroupData[{
 
@@ -842,7 +924,7 @@ Cell[BoxData[{
     "\t", "\t\t", 
     "]"}]}]}]}], \
 "CodeInput",ExpressionUUID->"257dcd82-eea0-4ca9-9730-c08f608d6de6"]
-}, Open  ]],
+}, Closed]],
 
 Cell[CellGroupData[{
 
@@ -975,7 +1057,7 @@ Cell["", "SectionSeparator",ExpressionUUID->"7ae8f3ea-0d98-4fe8-b7be-\
 8fc9c5b0f030"]
 },
 WindowSize->{808, 755},
-WindowMargins->{{Automatic, 226}, {Automatic, 0}},
+WindowMargins->{{Automatic, 110}, {Automatic, 5}},
 FrontEndVersion->"11.3 for Mac OS X x86 (32-bit, 64-bit Kernel) (March 5, \
 2018)",
 StyleDefinitions->FrontEnd`FileName[{"BTools"}, "CodePackage.nb", 
