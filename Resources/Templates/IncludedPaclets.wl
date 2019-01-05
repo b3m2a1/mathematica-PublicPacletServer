@@ -8,6 +8,10 @@
 (*Loads the included paclets for the server*)
 
 
+(* ::Subsubsection::Closed:: *)
+(*Setup*)
+
+
 BeginPackage["PublicPacletServer`"];
 
 
@@ -30,9 +34,29 @@ $IncludedPaclets=
     |>;
 
 
+(* ::Subsection:: *)
+(*Edit*)
+
+
+(* ::Text:: *)
+(*A sample registration would like*)
+
+
+(* ::Input:: *)
+(*$IncludedPaclets["PacletName"]=*)
+(*  <|*)
+(*		"Name" -> "PacletName",*)
+(*		"Author" -> "Author Name <author@e.mail>",*)
+(*		"Site" -> "https://paclet.site",*)
+(*		"Update" -> <UpdateSpec>*)
+(*	|>*)
+
+
+(* ::Text:: *)
+(*The possible UpdateSpecs are DownloadAlways, DownloadOnce, and DownloadNever*)
+
+
 <*Insert Paclets*>
-
-
 
 
 (* ::Subsubsection::Closed:: *)

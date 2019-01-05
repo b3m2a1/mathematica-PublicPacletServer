@@ -1,6 +1,6 @@
 Paclet[
   Name -> "PublicPacletServer",
-  Version -> "0.0.8",
+  Version -> "0.0.9",
   Description -> "A toolchain for working with the public paclet server",
   Thumbnail -> "PacletIcon.png",
   Extensions -> {
@@ -16,6 +16,21 @@ Paclet[
 Current supports:
   forking the server, submitting paclets, sending PRs,
   cloning the server, and building the server"
+     	},
+    	{
+     		"Resource",
+     		"Root" -> "Resources",
+     		"Resources" -> {
+       			"Templates",
+       			{
+        				"ExtraPacletInfo",
+        				"Templates/ExtraPacletInfo.wl"
+        			},
+       			{
+        				"IncludedPaclets",
+        				"Templates/IncludedPaclets.wl"
+        			}
+       		}
      	}
     }
  ]

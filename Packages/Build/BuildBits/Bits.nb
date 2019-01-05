@@ -117,14 +117,15 @@ Cell[BoxData[
  RowBox[{
   RowBox[{"getSinglePacString", "[", 
    RowBox[{"data_", ",", " ", "str_"}], "]"}], ":=", "\n", "\t", 
-  RowBox[{"\"\<(* ::Subsubsection::Closed:: *)\\n(*\>\"", "<>", 
-   RowBox[{"data", "[", "\"\<Name\>\"", "]"}], "<>", "\"\<*)\\n\\n\>\"", "<>",
-    "\n", "\t\t", "\"\<$IncludedPaclets[\>\"", "<>", 
-   RowBox[{"ToString", "[", 
-    RowBox[{
-     RowBox[{"data", "[", "\"\<Name\>\"", "]"}], ",", " ", "InputForm"}], 
-    "]"}], "<>", "\"\<]=\>\"", "<>", "\n", "\t\t", 
-   "str"}]}]], \
+  RowBox[{"StringTrim", "[", "\n", "\t\t", 
+   RowBox[{"\"\<(* ::Subsubsection::Closed:: *)\\n(*\>\"", "<>", 
+    RowBox[{"data", "[", "\"\<Name\>\"", "]"}], "<>", "\"\<*)\\n\\n\>\"", "<>",
+     "\n", "\t", "\t\t", "\"\<$IncludedPaclets[\>\"", "<>", 
+    RowBox[{"ToString", "[", 
+     RowBox[{
+      RowBox[{"data", "[", "\"\<Name\>\"", "]"}], ",", " ", "InputForm"}], 
+     "]"}], "<>", "\"\<]=\>\"", "<>", "\n", "\t\t\t", "str"}], "\n", "\t\t", 
+   "]"}]}]], \
 "CodeInput",ExpressionUUID->"d0720832-6402-410a-ba51-f9f738ec8931"],
 
 Cell[BoxData[
@@ -181,7 +182,7 @@ Cell[BoxData[
       "\t\t\t", "]"}]}]}], "\n", "\t\t", 
    "]"}]}]], \
 "CodeInput",ExpressionUUID->"c8d5dd07-1a60-4d3c-9041-8e31c4142cd2"]
-}, Open  ]],
+}, Closed]],
 
 Cell[CellGroupData[{
 

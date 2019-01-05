@@ -58,9 +58,11 @@ $ReviewQueueDir:=
 
 
 getSinglePacString[data_, str_]:=
-  "(* ::Subsubsection::Closed:: *)\n(*"<>data["Name"]<>"*)\n\n"<>
-    "$IncludedPaclets["<>ToString[data["Name"], InputForm]<>"]="<>
-    str
+  StringTrim[
+    "(* ::Subsubsection::Closed:: *)\n(*"<>data["Name"]<>"*)\n\n"<>
+      "$IncludedPaclets["<>ToString[data["Name"], InputForm]<>"]="<>
+      str
+    ]
 
 
 buildIncludedPacletsFile[file_, pacs_]:=
