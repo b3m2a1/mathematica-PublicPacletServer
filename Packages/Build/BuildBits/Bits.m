@@ -390,7 +390,12 @@ BuildPacletSite[ops:OptionsPattern[]]:=
         If[FileExistsQ@extraParameters, Import[extraParameters]];
     pacletData=
       Normal@coreData[
-        SortBy[{#["Name"]&, -1*ToExpression[StringSplit[#["Version"], "-"]]&}]
+        SortBy[
+          {
+            #["Name"]&, 
+            -1*ToExpression[StringSplit[#["Version"], "."]]&
+            }
+          ]
         ][
         DeleteDuplicatesBy["Name"]
         ];
