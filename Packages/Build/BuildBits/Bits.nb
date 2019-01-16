@@ -688,6 +688,12 @@ Cell[CellGroupData[{
 Cell["\[LeftCeiling]BuildPacletSite\[RightFloor]", "CodeSubsubsection",
  Evaluatable->True,ExpressionUUID->"76293947-568b-4c6d-bf07-cdf5992fb904"],
 
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]buildPacletLocation\[RightFloor]", "CodeSubsubsubsection",
+ 
+ Evaluatable->True,ExpressionUUID->"931afb46-731e-4fb9-afdf-09a08cbfa2c0"],
+
 Cell[BoxData[
  RowBox[{
   RowBox[{
@@ -714,7 +720,55 @@ Cell[BoxData[
            RowBox[{"p", "[", "\"\<Version\>\"", "]"}], "<>", 
            "\"\<.paclet\>\""}]}], " ", "*)"}], "\n", "\t\t\t\t", "}"}]}]}], 
      "\n", "\t\t\t", "|>"}]}]}], 
-  ";"}]], "CodeInput",ExpressionUUID->"cc313d15-5de5-49f7-bbce-e6024e9c09ff"],
+  ";"}]], "CodeInput",ExpressionUUID->"cc313d15-5de5-49f7-bbce-e6024e9c09ff"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]cleanPacletLocation\[RightFloor]", "CodeSubsubsubsection",
+ 
+ Evaluatable->True,ExpressionUUID->"cd43187f-d515-4566-9988-cfb0cc0818eb"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"cleanPacletLocation", "[", "l_", "]"}], ":=", "\n", "\t", 
+  RowBox[{"If", "[", 
+   RowBox[{
+    RowBox[{"GitHub", "[", 
+     RowBox[{"\"\<ReleaseQ\>\"", ",", " ", "l"}], "]"}], ",", "\n", "\t\t", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", "rel", "}"}], ",", "\n", "\t\t\t", 
+      RowBox[{
+       RowBox[{"rel", "=", "\n", "\t\t\t\t", 
+        RowBox[{"PPSGitHubCheck", "@", "\n", "\t\t\t\t\t", 
+         RowBox[{"GitHub", "[", 
+          RowBox[{
+          "\"\<Releases\>\"", ",", " ", "\n", "\t", "\t\t\t\t\t", 
+           "\"\<github-release:b3m2a1/mathematica-BTools/latest\>\"", ",", 
+           " ", "\n", "\t", "\t", "\t", "\t", "\t", "\t", 
+           "\"\<ResultObject\>\""}], "\n", "\t\t\t\t\t\t", "]"}]}]}], ";", 
+       "\n", "\t\t\t", 
+       RowBox[{"SelectFirst", "[", "\n", "\t\t\t\t", 
+        RowBox[{
+         RowBox[{"First", "/@", "\n", "\t\t\t\t\t", 
+          RowBox[{"Lookup", "[", 
+           RowBox[{
+            RowBox[{"rel", "[", "\"\<Assets\>\"", "]"}], ",", " ", 
+            "\"\<BrowserDownloadURL\>\"", ",", " ", 
+            RowBox[{"URL", "[", "\"\<\>\"", "]"}]}], "]"}]}], ",", "\n", 
+         "\t\t\t\t", 
+         RowBox[{"StringEndsQ", "[", "\"\<.paclet\>\"", "]"}], ",", "\n", 
+         "\t\t\t\t", "l"}], "\n", "\t\t\t\t", "]"}]}]}], "\n", "\t\t\t", 
+     "]"}], ",", "\n", "\t\t", "l"}], "\n", "\t\t", 
+   "]"}]}]], \
+"CodeInput",ExpressionUUID->"9a8f4d0b-9933-46a5-b914-d5f433ce757a"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]BuildPacletSite\[RightFloor]", "CodeSubsubsubsection",
+ Evaluatable->True,ExpressionUUID->"4d14a126-aff4-4275-8991-c6c22a8f39fb"],
 
 Cell[BoxData[
  RowBox[{
@@ -797,9 +851,10 @@ Cell[BoxData[
          RowBox[{"Append", "[", 
           RowBox[{"#", ",", "\n", "\t\t\t\t\t", 
            RowBox[{"\"\<Location\>\"", "->", "\n", "\t\t\t\t\t\t", 
-            RowBox[{"Lookup", "[", 
-             RowBox[{"#", ",", " ", "\"\<Location\>\"", ",", " ", 
-              RowBox[{"buildPacletLocation", "[", "#", "]"}]}], "]"}]}]}], 
+            RowBox[{"cleanPacletLocation", "@", "\n", "\t\t\t\t\t\t\t", 
+             RowBox[{"Lookup", "[", 
+              RowBox[{"#", ",", " ", "\"\<Location\>\"", ",", " ", 
+               RowBox[{"buildPacletLocation", "[", "#", "]"}]}], "]"}]}]}]}], 
           "\n", "\t\t\t\t\t", "]"}], "&"}], ",", "\n", "\t\t\t\t", 
         "pacletData"}], "\n", "\t\t\t\t", "]"}]}], ";", "\n", "\t\t", 
      RowBox[{"pacletSite", "=", 
@@ -827,6 +882,7 @@ Cell[BoxData[
       "]"}]}]}], "\n", "\t\t", 
    "]"}]}]], \
 "CodeInput",ExpressionUUID->"8f1ca9c7-e88f-427f-9d04-c1608156607a"]
+}, Open  ]]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -1060,7 +1116,7 @@ Cell["", "SectionSeparator",ExpressionUUID->"7ae8f3ea-0d98-4fe8-b7be-\
 8fc9c5b0f030"]
 },
 WindowSize->{808, 755},
-WindowMargins->{{Automatic, 110}, {Automatic, 5}},
+WindowMargins->{{262, Automatic}, {Automatic, 46}},
 TaggingRules->{
  "UUIDButtons" -> {
    "Active" -> {

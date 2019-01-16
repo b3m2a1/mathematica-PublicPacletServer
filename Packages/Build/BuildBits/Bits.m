@@ -359,6 +359,11 @@ BuildLog[ops:OptionsPattern[]]:=
 
 
 
+(* ::Subsubsubsection::Closed:: *)
+(*buildPacletLocation*)
+
+
+
 buildPacletLocation[p_]:=
   URLBuild@
     <|
@@ -369,6 +374,36 @@ buildPacletLocation[p_]:=
 				p["Name"]<>"-"<>p["Version"]<>".paclet" *)
         }
       |>;
+
+
+(* ::Subsubsubsection::Closed:: *)
+(*cleanPacletLocation*)
+
+
+
+cleanPacletLocation[l_]:=
+  If[GitHub["ReleaseQ", l],
+    Module[{rel},
+      rel=
+        PPSGitHubCheck@
+          GitHub["Releases", 
+            "github-release:b3m2a1/mathematica-BTools/latest", 
+            "ResultObject"
+            ];
+      SelectFirst[
+        First/@
+          Lookup[rel["Assets"], "BrowserDownloadURL", URL[""]],
+        StringEndsQ[".paclet"],
+        l
+        ]
+      ],
+    l
+    ]
+
+
+(* ::Subsubsubsection::Closed:: *)
+(*BuildPacletSite*)
+
 
 
 BuildPacletSite[ops:OptionsPattern[]]:=
@@ -411,7 +446,8 @@ BuildPacletSite[ops:OptionsPattern[]]:=
       Map[
         Append[#,
           "Location"->
-            Lookup[#, "Location", buildPacletLocation[#]]
+            cleanPacletLocation@
+              Lookup[#, "Location", buildPacletLocation[#]]
           ]&,
         pacletData
         ];

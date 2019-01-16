@@ -26,6 +26,8 @@ If[Temp`PackageScope`PublicPacletServerLoading`Private`$DependencyLoad,
     Get@FileNameJoin@{DirectoryName@$InputFileName, "PublicPacletServerLoader.wl"}
     ],
   If[!TrueQ[Evaluate[Symbol["PublicPacletServer`PackageScope`Private`$LoadCompleted"]]],
-    <<PublicPacletServer`PublicPacletServerLoader`
-    ]
+    <<PublicPacletServer`PublicPacletServerLoader`,
+   BeginPackage["PublicPacletServer`"];
+   EndPackage[];
+   ]
   ]
