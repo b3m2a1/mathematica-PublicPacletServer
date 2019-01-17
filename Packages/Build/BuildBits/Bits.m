@@ -108,68 +108,161 @@ buildIncludedPacletsFile[file_, pacs_]:=
 
 
 (* ::Subsubsubsection::Closed:: *)
-(*UpdateQueue*)
+(*getCurrentPacletVersion*)
 
 
 
-UpdateQueue[ops:OptionsPattern[]]:=
+getCurrentPacletVersion//Clear
+getCurrentPacletVersion[lists_]:=
+  If[Length@lists==0,
+    "0.0.0",
+    Last@SortBy[
+      Lookup[
+        lists,
+        "Version", 
+        "0.0.0"
+        ],
+      getSemVerList
+      ]
+    ];
+getCurrentPacletVersion[name_String, pacDir_]:=
+  getCurrentPacletVersion@
+    Map[
+      PacletManager`PacletInformation,
+      FileNames[name<>"*.paclet", 
+        FileNameJoin@{pacDir, "Paclets"}
+        ]
+      ]
+
+
+(* ::Subsubsubsection::Closed:: *)
+(*getSemVerList*)
+
+
+
+getSemVerList[version_]:=
+  ToExpression@StringSplit[version, "."]
+
+
+(* ::Subsubsubsection::Closed:: *)
+(*getPacletNewerQ*)
+
+
+
+getPacletNewerQ[currVersion_, newVersion_]:=
+  newVersion!=currVersion&&
+    newVersion==
+      Last@
+        SortBy[
+          {newVersion, currVersion}, 
+          getSemVerList
+          ];
+
+
+(* ::Subsubsubsection::Closed:: *)
+(*loadPacletBlah*)
+
+
+
+loadPacletBlah[extras_, logMerge_, log_, dir_, pacDir_]:=
   Module[
     {
-      dir=$Clone,
-      log,
-      logMerge,
-      extras,
-      extrasString,
       pacletLastTime,
       pacletUpdateRate,
       pacletUpdateFlag,
-      paclet
+      paclet,
+      addedSites,
+      currSites,
+      currVersion,
+      newVersion,
+      newerQ
       },
-    extras=
-      Get@FileNameJoin@{dir, "ReviewQueue", "IncludedPaclets.wl"};
-    log=
-      Select[
-        Get@FileNameJoin@{dir, "logs", "download_log.wl"},
-        OptionQ
-        ];
-    logMerge=
-      Merge[log, Last];
-    logMerge=
-      Map[
-        If[StringQ@#Date,
-          ReplacePart[#, "Date":>DateObject[#Date]],
-          #
-          ]&,
-        logMerge
-        ];
-    extras=
-      Table[
-        pacletUpdateRate=Lookup[e, "Update", "DownloadOnce"];
-        Which[
-          pacletUpdateRate=="DownloadNever",
-            pacletUpdateFlag=False,
-          pacletUpdateRate=="DownloadOnce",
-            e["Update"]="DownloadNever";
-            pacletUpdateFlag=True,
-          pacletUpdateRate=="DownloadAlways",
-            pacletUpdateFlag=True,
-          QuantityQ@pacletUpdateRate,
-            pacletUpdateFlag=
-              TrueQ[(Now-logMerge["Date"])>pacletUpdateRate]
-          ];
-        If[pacletUpdateFlag,
+    Internal`WithLocalSettings[
+        currSites=
+          AssociationMap[False&, First/@PacletManager`PacletSites[]],
+        Table[
+          pacletUpdateRate=Lookup[e, "Update", Automatic(*"DownloadOnce"*)];
           Which[
-            KeyExistsQ[e, "Site"], 
-              paclet=
-                PacletExecute[
-                "Download", 
-                  e["Name"],
-                  "Site"->e["Site"]
-                  ],
-            KeyExistsQ[e, "URL"],
-              paclet=PacletExecute["Download", e["URL"]],
+            pacletUpdateRate===Automatic,
+              pacletUpdateFlag=Automatic,
+            pacletUpdateRate==="DownloadNever",
+              pacletUpdateFlag=False,
+            pacletUpdateRate==="DownloadOnce",
+              e["Update"]="DownloadNever";
+              pacletUpdateFlag=True,
+            pacletUpdateRate==="DownloadAlways",
+              pacletUpdateFlag=True,
+            QuantityQ@pacletUpdateRate,
+              pacletUpdateFlag=
+                TrueQ[(Now-logMerge["Date"])>pacletUpdateRate]
+            ];
+          Switch[pacletUpdateFlag,
             True,
-              paclet=$Failed
+              Which[
+                KeyExistsQ[e, "Site"], 
+                  If[!KeyExistsQ[currSites, e["Site"]],
+                    PacletManager`PacletSiteAdd[e["Site"]];
+                    PacletManager`PacletSiteUpdate[e["Site"]]
+                    ];
+                  paclet=
+                    PacletExecute["Download", e["Name"]],
+                KeyExistsQ[e, "URL"],
+                  paclet=PacletExecute["Download", e["URL"]],
+                True,
+                  paclet=$Failed
+                ];,
+            Automatic,
+              Which[
+                KeyExistsQ[e, "Site"], 
+                  If[!KeyExistsQ[currSites, e["Site"]],
+                    PacletManager`PacletSiteAdd[e["Site"]];
+                    PacletManager`PacletSiteUpdate[e["Site"]]
+                    ];
+                  currVersion=
+                    getCurrentPacletVersion[e["Name"], pacDir];
+                  newVersion=
+                    getCurrentPacletVersion@
+                      Select[
+                        PacletManager`PacletInformation/@
+                          PacletManager`PacletFindRemote[e["Name"]],
+                        Lookup[#, "Location"]==e["Site"]&
+                        ];
+                  If[TrueQ@getPacletNewerQ[currVersion, newVersion],
+                    paclet=
+                      PacletExecute["Download", e["Name"]],
+                    paclet=None
+                    ],
+                KeyExistsQ[e, "URL"]&&
+                  GitHub["ReleaseQ", e["URL"]],
+                  currVersion=
+                    getCurrentPacletVersion[e["Name"], pacDir];
+                  newVersion=
+                    PPSGitHubCheck@
+                      GitHub["Releases", e["URL"], "ResultObject"];
+                  newVersion=
+                    SelectFirst[
+                      First/@Lookup[
+                        newVersion["Assets"],
+                        "BrowserDownloadURL",
+                        URL[""]
+                        ],
+                      StringEndsQ[".paclet"],
+                      "https://www.fake.com/asd-0.0.0.paclet"
+                      ];
+                  newVersion=
+                    StringTrim[
+                      StringSplit[URLParse[newVersion, "Path"][[-1]], "-"][[2]],
+                      ".paclet"
+                      ];
+                  If[TrueQ@getPacletNewerQ[currVersion, newVersion],
+                    paclet=PacletExecute["Download", e["URL"]],
+                    None
+                    ],
+                True,
+                  paclet=None
+                ],
+            _,
+              paclet=None
             ];
           If[StringQ@paclet&&FileExistsQ@paclet,
             paclet=
@@ -192,11 +285,60 @@ UpdateQueue[ops:OptionsPattern[]]:=
                   "Author"->e["Author"]
                   |>
               ]
-            ]
-          ];
-        e,
-        {e, extras}
+            ];
+          e,
+          {e, extras}
+          ],
+      KeyValueMap[
+        If[#2, PacletManager`PacletSiteRemove[#]]&, 
+        currSites
+        ]
+      ]
+    ];
+loadPacletBlah~SetAttributes~HoldRest
+
+
+(* ::Subsubsubsection::Closed:: *)
+(*UpdateQueue*)
+
+
+
+(* ::Text:: *)
+(*
+	This needs to be chunked. It\[CloseCurlyQuote]s almost unmaintainable as is.
+*)
+
+
+
+UpdateQueue[ops:OptionsPattern[]]:=
+  Module[
+    {
+      dir=$Clone,
+      pacDir=$Paclets,
+      log,
+      logMerge,
+      extras,
+      extrasString
+      },
+    extras=
+      Get@FileNameJoin@{dir, "ReviewQueue", "IncludedPaclets.wl"};
+    log=
+      Select[
+        Get@FileNameJoin@{dir, "logs", "download_log.wl"},
+        OptionQ
         ];
+    logMerge=
+      Merge[log, Last];
+    logMerge=
+      Map[
+        If[StringQ@#Date,
+          ReplacePart[#, "Date":>DateObject[#Date]],
+          #
+          ]&,
+        logMerge
+        ];
+    extras=
+      loadPacletBlah[extras, logMerge, log, dir, pacDir];
     buildIncludedPacletsFile[
       FileNameJoin@{dir, "ReviewQueue", "IncludedPaclets.wl"},
       extras
@@ -386,10 +528,7 @@ cleanPacletLocation[l_]:=
     Module[{rel},
       rel=
         PPSGitHubCheck@
-          GitHub["Releases", 
-            "github-release:b3m2a1/mathematica-BTools/latest", 
-            "ResultObject"
-            ];
+          GitHub["Releases", l, "ResultObject"];
       SelectFirst[
         First/@
           Lookup[rel["Assets"], "BrowserDownloadURL", URL[""]],
@@ -409,31 +548,36 @@ cleanPacletLocation[l_]:=
 BuildPacletSite[ops:OptionsPattern[]]:=
   Module[
     {
-      (*mainFiles=
-				PacletManager`Package`BuildPacletSiteFiles[$Clone],*)
-      coreData=
-        PacletExecute["SiteDataset", $Paclets],
+      dir=$Clone,
+      pacs=$Paclets,
+      coreSite,
+      coreData,
+      pacletDataRaw,
       extraParameters,
       pacletData,
       pacletSite,
-      siteMZ
+      siteMZ,
+      oldSite
       },
+    coreSite=PacletExecute["PacletSite", pacs];
+    coreData=PacletExecute["SiteDataset", pacs];
     extraParameters=
-      FileNameJoin@{$Clone, "ReviewQueue", "ExtraPacletInfo.wl"};
+      FileNameJoin@{dir, "ReviewQueue", "ExtraPacletInfo.wl"};
     extraParameters=
       Replace[Except[_?OptionQ]-><||>]@
         If[FileExistsQ@extraParameters, Import[extraParameters]];
     pacletData=
-      Normal@coreData[
-        SortBy[
-          {
-            #["Name"]&, 
-            -1*ToExpression[StringSplit[#["Version"], "."]]&
-            }
-          ]
-        ][
-        DeleteDuplicatesBy["Name"]
-        ];
+      Normal@
+        coreData[
+          SortBy[
+            {
+              #["Name"]&, 
+              -1*ToExpression[StringSplit[#["Version"], "."]]&
+              }
+            ]
+          ][
+          DeleteDuplicatesBy["Name"]
+          ];
     pacletData=
       Map[
         Join[
@@ -451,17 +595,22 @@ BuildPacletSite[ops:OptionsPattern[]]:=
           ]&,
         pacletData
         ];
-    pacletSite=PacletExecute["SiteFromDataset", pacletData];
-    siteMZ=
-      PacletExecute["BundleSite", 
-        pacletSite, 
-        $Clone,
-        "BuildExtension"->Nothing,
-        "ExcludedElements"->{"Resources"}
-        ];
-    CopyFile[siteMZ, 
-      FileNameJoin@{$Clone, "docs", "PacletSite.mz"},
-      OverwriteTarget->True
+    pacletSite=
+      PacletExecute["SiteFromDataset", pacletData];
+    oldSite=
+      PacletExecute["PacletSite", FileNameJoin@{dir, "docs"}];
+    If[oldSite=!=pacletSite,
+      siteMZ=
+        PacletExecute["BundleSite", 
+          pacletSite,
+          dir,
+          "BuildExtension"->Nothing,
+          "ExcludedElements"->{"Resources"}
+          ];
+      CopyFile[siteMZ, 
+        FileNameJoin@{dir, "docs", "PacletSite.mz"},
+        OverwriteTarget->True
+        ]
       ]
     ]
 
@@ -521,23 +670,58 @@ AddPaclets[ops:OptionsPattern[]]:=
 
 
 Options[BuildPages]=
-  Options[PacletServerBuild];
+  Join[
+    Options[PacletServerBuild],
+    {
+      "ForceBuild"->False
+      }
+    ]
 BuildPages[ops:OptionsPattern[]]:=
-  Module[{out},
-    out=
-      PacletServerBuild[
-        $Clone,
-        FilterRules[
+  Module[
+    {
+      dir=$Clone,
+      pacs=$Paclets,
+      lastB,
+      psTime,
+      out,
+      floppies
+      },
+    floppies=FilterRules[{ops}, Options@BuildPages];
+    If[TrueQ@OptionValue[BuildPages, floppies, "ForceBuild"],
+      lastB=None,
+      lastB=
+        Replace[
+          OptionValue[BuildPages, floppies, "LastBuild"],
           {
-            ops,
-            "PacletsDirectory"->FileNameJoin@{$Paclets, "Paclets"}
-            }, 
-          Options[PacletServerBuild]]
-        ];
-    CopyFile[
-      FileNameJoin@{$Clone, "PacletSite.mz"},
-      FileNameJoin@{out, "PacletSite.mz"},
-      OverwriteTarget->True
+            Automatic:>
+              Lookup[
+                Replace[
+                  Quiet@Get@FileNameJoin@{dir, "BuildInfo.wl"},
+                  Except[_?OptionQ]->{}
+                  ],
+                "LastBuild",
+                None
+                ]
+            }
+          ];
+      psTime=FileDate[FileNameJoin@{dir, "PacletSite.mz"}];
+      ];
+    If[!DateObjectQ[lastB]||(lastB<=psTime),
+      out=
+        PacletServerBuild[
+          dir,
+          FilterRules[
+            {
+              ops,
+              "PacletsDirectory"->FileNameJoin@{pacs, "Paclets"}
+              }, 
+            Options[PacletServerBuild]]
+          ];
+      CopyFile[
+        FileNameJoin@{dir, "PacletSite.mz"},
+        FileNameJoin@{out, "PacletSite.mz"},
+        OverwriteTarget->True
+        ]
       ]
     ]
 
