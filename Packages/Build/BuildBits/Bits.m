@@ -237,8 +237,26 @@ loadPacletBlah[extras_, logMerge_, log_, dir_, pacDir_]:=
                   currVersion=
                     getCurrentPacletVersion[e["Name"], pacDir];
                   newVersion=
-                    PPSGitHubCheck@
-                      GitHub["Releases", e["URL"], "ResultObject"];
+                    With[
+                      {
+                        pr=
+                          PPSGitHubCheck@
+                            GitHub["Releases", 
+                              e["URL"], 
+                              "Authorization"->{Automatic, Automatic},
+                              "ResultObject"
+                              ]
+                        },
+                      If[pr=!=$Failed,
+                        pr,
+                        GitHub["SetConfig", "AuthorizeRequests"->True];
+                        PPSGitHubCheck@
+                          GitHub["Releases", 
+                            e["URL"], 
+                            "ResultObject"
+                            ]
+                        ]
+                      ];
                   newVersion=
                     SelectFirst[
                       First/@Lookup[
