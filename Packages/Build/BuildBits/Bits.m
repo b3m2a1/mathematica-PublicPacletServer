@@ -10,6 +10,8 @@ UpdateQueue::usage=
   "Downloads paclets to be commited to the review queue";
 BuildLog::usage=
   "Builds the paclet log";
+BuildSiteJSON::usage=
+  "Builds the paclet JSON file";
 AddPaclets::usage=
   "Adds the paclets in the review queue";
 BuildPages::usage=
@@ -152,9 +154,8 @@ getSemVerList[version_]:=
 getPacletNewerQ[currVersion_, newVersion_]:=
   newVersion!=currVersion&&
     newVersion==
-      Last@
-        SortBy[
-          {newVersion, currVersion}, 
+      Last@Echo@SortBy[
+          Flatten[{newVersion, currVersion}, 1],
           getSemVerList
           ];
 
@@ -202,7 +203,8 @@ loadPacletBlah[extras_, logMerge_, log_, dir_, pacDir_]:=
                 KeyExistsQ[e, "Site"], 
                   If[!KeyExistsQ[currSites, e["Site"]],
                     PacletManager`PacletSiteAdd[e["Site"]];
-                    PacletManager`PacletSiteUpdate[e["Site"]]
+                    PacletManager`PacletSiteUpdate[e["Site"]];
+                    currSites[e["Site"]]=True
                     ];
                   paclet=
                     PacletExecute["Download", e["Name"]],
@@ -216,7 +218,8 @@ loadPacletBlah[extras_, logMerge_, log_, dir_, pacDir_]:=
                 KeyExistsQ[e, "Site"], 
                   If[!KeyExistsQ[currSites, e["Site"]],
                     PacletManager`PacletSiteAdd[e["Site"]];
-                    PacletManager`PacletSiteUpdate[e["Site"]]
+                    PacletManager`PacletSiteUpdate[e["Site"]];
+                    currSites[e["Site"]]=True
                     ];
                   currVersion=
                     getCurrentPacletVersion[e["Name"], pacDir];
@@ -227,6 +230,7 @@ loadPacletBlah[extras_, logMerge_, log_, dir_, pacDir_]:=
                           PacletManager`PacletFindRemote[e["Name"]],
                         Lookup[#, "Location"]==e["Site"]&
                         ];
+                  Echo@{currVersion, e["Name"]};
                   If[TrueQ@getPacletNewerQ[currVersion, newVersion],
                     paclet=
                       PacletExecute["Download", e["Name"]],
@@ -510,6 +514,81 @@ BuildLog[ops:OptionsPattern[]]:=
       logStuff//.
         k:KeyValuePattern[{"Date"->d_DateObject}]:>
           RuleCondition[ReplacePart[k, "Date"->DateString[d]], True]
+      ]
+    ]
+
+
+(* ::Subsubsection::Closed:: *)
+(*BuildSiteJSON*)
+
+
+
+BuildSiteJSON[ops:OptionsPattern[]]:=
+  Module[
+    {
+      dir=$Clone,
+      incs,
+      exts,
+      pacs,
+      map,
+      extraParameters,
+      includedPaclets,
+      pacletSiteInfo,
+      mergedInfo,
+      preppedInfo
+      },
+    extraParameters=
+      FileNameJoin@{dir, "ReviewQueue", "ExtraPacletInfo.wl"};
+    extraParameters=
+      Replace[Except[_?OptionQ]-><||>]@
+        If[FileExistsQ@extraParameters, Import[extraParameters]];
+    includedPaclets=
+      FileNameJoin@{dir, "ReviewQueue", "IncludedPaclets.wl"};
+    includedPaclets=
+      Replace[Except[_?List]->{}]@
+        If[FileExistsQ@includedPaclets, Import[includedPaclets]];
+    pacletSiteInfo=
+      PacletExecute["SiteDataset", dir];
+    pacletSiteInfo=
+      AssociationThread[
+        Lookup[#, "Name"],
+        #
+        ]&@
+        Normal@
+          DeleteDuplicatesBy[
+            SortBy[pacletSiteInfo, {#["Name"]&, getSemVerList[#["Version"]]&}],
+            #Name&
+            ];
+    mergedInfo=
+      Merge[
+        {
+          extraParameters,
+          AssociationThread[
+            Lookup[includedPaclets, "Name"],
+            includedPaclets
+            ],
+          pacletSiteInfo
+          },
+        Quiet@Merge[#, First]&
+        ];
+    mergedInfo=
+      AssociationMap[
+        #[[1]]->
+          Append[#[[2]], 
+            "BuildURL"->
+              $SiteURL<>ToLowerCase[#[[1]]]<>".html"
+            ]&,
+        KeySelect[mergedInfo, StringQ]
+        ];
+    preppedInfo=
+      ReplaceAll[
+        Nest[Normal, mergedInfo, 10],
+        s:Except[List|Rule|Association, _Symbol]:>
+          SymbolName[s]
+        ];
+    Export[
+      FileNameJoin@{dir, "content", "site_data.json"},
+      preppedInfo
       ]
     ]
 

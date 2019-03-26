@@ -17,7 +17,7 @@ Call PublicPacletServer[\"Clone\"] first.";
 
 
 $ServerRebuildKeys=
-  "UpdateQueue"|"Log"|"Add"|"Build"|"Push"|"Analytics"|"Test";
+  "UpdateQueue"|"Log"|"Add"|"Build"|"Push"|"Analytics"|"Test"|"JSON";
 
 
 RebuildServer[do:{$ServerRebuildKeys..}:
@@ -58,6 +58,15 @@ RebuildServer[do:{$ServerRebuildKeys..}:
               FilterRules[{ops}, Options[BuildLog]]
               ],
           Internal`LoadingPanel["Building server log..."]
+          ]
+        ];
+      If[MemberQ[do, "JSON"],
+        Monitor[
+          res["JSON"]=
+            BuildSiteJSON[
+              FilterRules[{ops}, Options[BuildSiteJSON]]
+              ],
+          Internal`LoadingPanel["Building site json..."]
           ]
         ];
       If[MemberQ[do, "Analytics"],

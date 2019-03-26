@@ -6,6 +6,7 @@
 			"Update" -> True,
 			"RemovePaths" -> {
 				ParentList,
+				"PacletInfo.m",
 				"Documentation",
 				"Resources/Templates",
 				"Resources/PaletteGenerators",

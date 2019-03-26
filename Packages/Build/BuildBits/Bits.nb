@@ -34,6 +34,10 @@ Cell[BoxData[{
    "\"\<Builds the paclet log\>\""}], ";"}], "\n", 
  RowBox[{
   RowBox[{
+   RowBox[{"BuildSiteJSON", "::", "usage"}], "=", "\n", "\t", 
+   "\"\<Builds the paclet JSON file\>\""}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
    RowBox[{"AddPaclets", "::", "usage"}], "=", "\n", "\t", 
    "\"\<Adds the paclets in the review queue\>\""}], ";"}], "\n", 
  RowBox[{
@@ -225,7 +229,7 @@ Cell[BoxData[{
       "\t\t\t\t", "]"}]}], "\n", "\t\t\t", 
     "]"}]}]}]}], \
 "CodeInput",ExpressionUUID->"8a8d8ef6-4b92-4425-8b50-a35a01b552e0"]
-}, Open  ]],
+}, Closed]],
 
 Cell[CellGroupData[{
 
@@ -240,7 +244,7 @@ Cell[BoxData[
     RowBox[{"version", ",", " ", "\"\<.\>\""}], 
     "]"}]}]}]], \
 "CodeInput",ExpressionUUID->"44f6da93-8787-403a-bac4-e4896e29f007"]
-}, Closed]],
+}, Open  ]],
 
 Cell[CellGroupData[{
 
@@ -256,15 +260,18 @@ Cell[BoxData[
    RowBox[{
     RowBox[{"newVersion", "!=", "currVersion"}], "&&", "\n", "\t\t", 
     RowBox[{"newVersion", "==", "\n", "\t\t\t", 
-     RowBox[{"Last", "@", "\n", "\t\t\t\t", 
-      RowBox[{"SortBy", "[", "\n", "\t\t\t\t\t", 
-       RowBox[{
-        RowBox[{"{", 
-         RowBox[{"newVersion", ",", " ", "currVersion"}], "}"}], ",", " ", 
-        "\n", "\t\t\t\t\t", "getSemVerList"}], "\n", "\t\t\t\t\t", 
-       "]"}]}]}]}]}], 
+     RowBox[{"Last", "@", 
+      RowBox[{"Echo", "@", 
+       RowBox[{"SortBy", "[", "\n", "\t\t\t\t\t", 
+        RowBox[{
+         RowBox[{"Flatten", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{"newVersion", ",", " ", "currVersion"}], "}"}], ",", " ", 
+           "1"}], "]"}], ",", "\n", "\t\t\t\t\t", "getSemVerList"}], "\n", 
+        "\t\t\t\t\t", "]"}]}]}]}]}]}], 
   ";"}]], "CodeInput",ExpressionUUID->"ecf8c550-480d-4331-8b0b-0b729661c53f"]
-}, Closed]],
+}, Open  ]],
 
 Cell[CellGroupData[{
 
@@ -360,9 +367,13 @@ Cell[BoxData[{
                     RowBox[{"e", "[", "\"\<Site\>\"", "]"}], "]"}], ";", "\n",
                     "\t\t\t\t\t\t\t\t\t\t", 
                    RowBox[{"PacletManager`PacletSiteUpdate", "[", 
-                    RowBox[{"e", "[", "\"\<Site\>\"", "]"}], "]"}]}]}], "\n", 
-                 "\t\t\t\t\t\t\t\t\t\t", "]"}], ";", "\n", 
-                "\t\t\t\t\t\t\t\t\t", 
+                    RowBox[{"e", "[", "\"\<Site\>\"", "]"}], "]"}], ";", "\n",
+                    "\t\t\t\t\t\t\t\t\t\t", 
+                   RowBox[{
+                    RowBox[{"currSites", "[", 
+                    RowBox[{"e", "[", "\"\<Site\>\"", "]"}], "]"}], "=", 
+                    "True"}]}]}], "\n", "\t\t\t\t\t\t\t\t\t\t", "]"}], ";", 
+                "\n", "\t\t\t\t\t\t\t\t\t", 
                 RowBox[{"paclet", "=", "\n", "\t\t\t\t\t\t\t\t\t\t", 
                  RowBox[{"PacletExecute", "[", 
                   RowBox[{"\"\<Download\>\"", ",", " ", 
@@ -379,8 +390,8 @@ Cell[BoxData[{
                "\t", "\t\t\t\t\t\t\t", 
                RowBox[{"paclet", "=", "$Failed"}]}], "\n", "\t", 
               "\t\t\t\t\t\t\t", "]"}], ";"}], ",", "\n", "\t", "\t\t\t\t\t", 
-            "Automatic", ",", "\n", "\t", "\t\t\t\t\t\t", 
-            RowBox[{"Which", "[", "\n", "\t", "\t\t\t\t\t\t\t", 
+            "Automatic", ",", "\n", "\t\t\t\t\t\t\t", 
+            RowBox[{"Which", "[", "\n", "\t\t\t\t\t\t\t\t", 
              RowBox[{
               RowBox[{"KeyExistsQ", "[", 
                RowBox[{"e", ",", " ", "\"\<Site\>\""}], "]"}], ",", " ", "\n",
@@ -398,9 +409,13 @@ Cell[BoxData[{
                    RowBox[{"e", "[", "\"\<Site\>\"", "]"}], "]"}], ";", "\n", 
                   "\t\t\t\t\t\t\t\t\t\t", 
                   RowBox[{"PacletManager`PacletSiteUpdate", "[", 
-                   RowBox[{"e", "[", "\"\<Site\>\"", "]"}], "]"}]}]}], "\n", 
-                "\t\t\t\t\t\t\t\t\t\t", "]"}], ";", "\n", 
-               "\t\t\t\t\t\t\t\t\t", 
+                   RowBox[{"e", "[", "\"\<Site\>\"", "]"}], "]"}], ";", "\n", 
+                  "\t\t\t\t\t\t\t\t\t\t", 
+                  RowBox[{
+                   RowBox[{"currSites", "[", 
+                    RowBox[{"e", "[", "\"\<Site\>\"", "]"}], "]"}], "=", 
+                   "True"}]}]}], "\n", "\t\t\t\t\t\t\t\t\t\t", "]"}], ";", 
+               "\n", "\t\t\t\t\t\t\t\t\t", 
                RowBox[{"currVersion", "=", "\n", "\t\t\t\t\t\t\t\t\t\t", 
                 RowBox[{"getCurrentPacletVersion", "[", 
                  RowBox[{
@@ -426,6 +441,11 @@ Cell[BoxData[{
                     RowBox[{"e", "[", "\"\<Site\>\"", "]"}]}], "&"}]}], "\n", 
                   "\t\t\t\t\t\t\t\t\t\t\t\t", "]"}]}]}], ";", "\n", 
                "\t\t\t\t\t\t\t\t\t", 
+               RowBox[{"Echo", "@", 
+                RowBox[{"{", 
+                 RowBox[{"currVersion", ",", " ", 
+                  RowBox[{"e", "[", "\"\<Name\>\"", "]"}]}], "}"}]}], ";", 
+               "\n", "\t\t\t\t\t\t\t\t\t", 
                RowBox[{"If", "[", 
                 RowBox[{
                  RowBox[{"TrueQ", "@", 
@@ -1012,6 +1032,155 @@ Cell[BoxData[
 
 Cell[CellGroupData[{
 
+Cell["\[LeftCeiling]BuildSiteJSON\[RightFloor]", "CodeSubsubsection",
+ Evaluatable->True,ExpressionUUID->"9c64de5d-4b4e-40ac-b632-d6fcfee763d7"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"BuildSiteJSON", "[", 
+   RowBox[{"ops", ":", 
+    RowBox[{"OptionsPattern", "[", "]"}]}], "]"}], ":=", "\n", "\t", 
+  RowBox[{"Module", "[", "\n", "\t\t", 
+   RowBox[{
+    RowBox[{"{", "\n", "\t\t\t", 
+     RowBox[{
+      RowBox[{"dir", "=", "$Clone"}], ",", "\n", "\t\t\t", "incs", ",", "\n", 
+      "\t\t\t", "exts", ",", "\n", "\t\t\t", "pacs", ",", "\n", "\t\t\t", 
+      "map", ",", "\n", "\t\t\t", "extraParameters", ",", "\n", "\t\t\t", 
+      "includedPaclets", ",", "\n", "\t\t\t", "pacletSiteInfo", ",", "\n", 
+      "\t\t\t", "mergedInfo", ",", "\n", "\t\t\t", "preppedInfo"}], "\n", 
+     "\t\t\t", "}"}], ",", "\n", "\t\t", 
+    RowBox[{
+     RowBox[{"extraParameters", "=", "\n", "\t\t\t", 
+      RowBox[{"FileNameJoin", "@", 
+       RowBox[{"{", 
+        RowBox[{
+        "dir", ",", " ", "\"\<ReviewQueue\>\"", ",", " ", 
+         "\"\<ExtraPacletInfo.wl\>\""}], "}"}]}]}], ";", "\n", "\t\t", 
+     RowBox[{"extraParameters", "=", "\n", "\t\t\t", 
+      RowBox[{
+       RowBox[{"Replace", "[", 
+        RowBox[{
+         RowBox[{"Except", "[", 
+          RowBox[{"_", "?", "OptionQ"}], "]"}], "\[Rule]", 
+         RowBox[{"<|", "|>"}]}], "]"}], "@", "\n", "\t\t\t\t", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"FileExistsQ", "@", "extraParameters"}], ",", " ", 
+         RowBox[{"Import", "[", "extraParameters", "]"}]}], "]"}]}]}], ";", 
+     "\n", "\t\t", 
+     RowBox[{"includedPaclets", "=", "\n", "\t\t\t", 
+      RowBox[{"FileNameJoin", "@", 
+       RowBox[{"{", 
+        RowBox[{
+        "dir", ",", " ", "\"\<ReviewQueue\>\"", ",", " ", 
+         "\"\<IncludedPaclets.wl\>\""}], "}"}]}]}], ";", "\n", "\t\t", 
+     RowBox[{"includedPaclets", "=", "\n", "\t\t\t", 
+      RowBox[{
+       RowBox[{"Replace", "[", 
+        RowBox[{
+         RowBox[{"Except", "[", 
+          RowBox[{"_", "?", "List"}], "]"}], "\[Rule]", 
+         RowBox[{"{", "}"}]}], "]"}], "@", "\n", "\t\t\t\t", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"FileExistsQ", "@", "includedPaclets"}], ",", " ", 
+         RowBox[{"Import", "[", "includedPaclets", "]"}]}], "]"}]}]}], ";", 
+     "\n", "\t\t", 
+     RowBox[{"pacletSiteInfo", "=", "\n", "\t\t\t", 
+      RowBox[{"PacletExecute", "[", 
+       RowBox[{"\"\<SiteDataset\>\"", ",", " ", "dir"}], "]"}]}], ";", "\n", 
+     "\t\t", 
+     RowBox[{"pacletSiteInfo", "=", "\n", "\t\t\t", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"AssociationThread", "[", "\n", "\t\t\t\t", 
+         RowBox[{
+          RowBox[{"Lookup", "[", 
+           RowBox[{"#", ",", " ", "\"\<Name\>\""}], "]"}], ",", "\n", 
+          "\t\t\t\t", "#"}], "\n", "\t\t\t\t", "]"}], "&"}], "@", "\n", 
+       "\t\t\t\t", 
+       RowBox[{"Normal", "@", "\n", "\t\t\t\t\t", 
+        RowBox[{"DeleteDuplicatesBy", "[", "\n", "\t\t\t\t\t\t", 
+         RowBox[{
+          RowBox[{"SortBy", "[", 
+           RowBox[{"pacletSiteInfo", ",", " ", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"#", "[", "\"\<Name\>\"", "]"}], "&"}], ",", " ", 
+              RowBox[{
+               RowBox[{"getSemVerList", "[", 
+                RowBox[{"#", "[", "\"\<Version\>\"", "]"}], "]"}], "&"}]}], 
+             "}"}]}], "]"}], ",", "\n", "\t", "\t\t\t\t\t", 
+          RowBox[{"#Name", "&"}]}], "\n", "\t", "\t\t\t\t\t", "]"}]}]}]}], 
+     ";", "\n", "\t\t", 
+     RowBox[{"mergedInfo", "=", "\n", "\t\t\t", 
+      RowBox[{"Merge", "[", "\n", "\t\t\t\t", 
+       RowBox[{
+        RowBox[{"{", "\n", "\t\t\t\t\t", 
+         RowBox[{"extraParameters", ",", "\n", "\t\t\t\t\t", 
+          RowBox[{"AssociationThread", "[", "\n", "\t\t\t\t\t\t", 
+           RowBox[{
+            RowBox[{"Lookup", "[", 
+             RowBox[{"includedPaclets", ",", " ", "\"\<Name\>\""}], "]"}], 
+            ",", "\n", "\t\t\t\t\t\t", "includedPaclets"}], "\n", 
+           "\t\t\t\t\t\t", "]"}], ",", "\n", "\t\t\t\t\t", "pacletSiteInfo"}],
+          "\n", "\t\t\t\t\t", "}"}], ",", "\n", "\t\t\t\t", 
+        RowBox[{
+         RowBox[{"Quiet", "@", 
+          RowBox[{"Merge", "[", 
+           RowBox[{"#", ",", " ", "First"}], "]"}]}], "&"}]}], "\n", 
+       "\t\t\t\t", "]"}]}], ";", "\n", "\t\t", 
+     RowBox[{"mergedInfo", "=", "\n", "\t\t\t", 
+      RowBox[{"AssociationMap", "[", "\n", "\t\t\t\t", 
+       RowBox[{
+        RowBox[{
+         RowBox[{
+          RowBox[{"#", "[", 
+           RowBox[{"[", "1", "]"}], "]"}], "\[Rule]", "\n", "\t\t\t\t\t", 
+          RowBox[{"Append", "[", 
+           RowBox[{
+            RowBox[{"#", "[", 
+             RowBox[{"[", "2", "]"}], "]"}], ",", " ", "\n", "\t\t\t\t\t\t", 
+            RowBox[{"\"\<BuildURL\>\"", "\[Rule]", "\n", "\t\t\t\t\t\t\t", 
+             RowBox[{"$SiteURL", "<>", 
+              RowBox[{"ToLowerCase", "[", 
+               RowBox[{"#", "[", 
+                RowBox[{"[", "1", "]"}], "]"}], "]"}], "<>", 
+              "\"\<.html\>\""}]}]}], "\n", "\t\t\t\t\t\t", "]"}]}], "&"}], 
+        ",", "\n", "\t\t\t\t", 
+        RowBox[{"KeySelect", "[", 
+         RowBox[{"mergedInfo", ",", " ", "StringQ"}], "]"}]}], "\n", 
+       "\t\t\t\t", "]"}]}], ";", "\n", "\t\t", 
+     RowBox[{"preppedInfo", "=", "\n", "\t\t\t", 
+      RowBox[{"ReplaceAll", "[", "\n", "\t\t\t\t", 
+       RowBox[{
+        RowBox[{"Nest", "[", 
+         RowBox[{"Normal", ",", " ", "mergedInfo", ",", " ", "10"}], "]"}], 
+        ",", "\n", "\t\t\t\t", 
+        RowBox[{
+         RowBox[{"s", ":", 
+          RowBox[{"Except", "[", 
+           RowBox[{
+            RowBox[{"List", "|", "Rule", "|", "Association"}], ",", " ", 
+            "_Symbol"}], "]"}]}], "\[RuleDelayed]", "\n", "\t\t\t\t\t", 
+         RowBox[{"SymbolName", "[", "s", "]"}]}]}], "\n", "\t\t\t\t", "]"}]}],
+      ";", "\n", "\t\t", 
+     RowBox[{"Export", "[", "\n", "\t\t\t", 
+      RowBox[{
+       RowBox[{"FileNameJoin", "@", 
+        RowBox[{"{", 
+         RowBox[{
+         "dir", ",", " ", "\"\<content\>\"", ",", " ", 
+          "\"\<site_data.json\>\""}], "}"}]}], ",", "\n", "\t\t\t", 
+       "preppedInfo"}], "\n", "\t\t\t", "]"}]}]}], "\n", "\t\t", 
+   "]"}]}]], \
+"CodeInput",ExpressionUUID->"473b5cea-5525-467d-8feb-e74cfba499dd"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
 Cell["\[LeftCeiling]BuildPacletSite\[RightFloor]", "CodeSubsubsection",
  Evaluatable->True,ExpressionUUID->"76293947-568b-4c6d-bf07-cdf5992fb904"],
 
@@ -1220,7 +1389,7 @@ Cell[BoxData[
    "]"}]}]], \
 "CodeInput",ExpressionUUID->"8f1ca9c7-e88f-427f-9d04-c1608156607a"]
 }, Open  ]]
-}, Open  ]],
+}, Closed]],
 
 Cell[CellGroupData[{
 
@@ -1439,7 +1608,7 @@ Cell[BoxData[{
          "]"}]}]}], "\n", "\t\t\t", "]"}]}]}], "\n", "\t\t", 
    "]"}]}]}], \
 "CodeInput",ExpressionUUID->"80513858-7c87-4552-9a62-a873b15c7c55"]
-}, Open  ]],
+}, Closed]],
 
 Cell[CellGroupData[{
 
@@ -1506,7 +1675,7 @@ Cell[BoxData[
     RowBox[{"$Clone", ",", " ", "$Paclets"}], 
     "}"}]}]}]], \
 "CodeInput",ExpressionUUID->"3697c639-a185-4d99-b1a1-03d208f3b45d"]
-}, Open  ]]
+}, Closed]]
 }, Open  ]],
 
 Cell[BoxData[
@@ -1520,13 +1689,16 @@ Cell["", "SectionSeparator",ExpressionUUID->"7ae8f3ea-0d98-4fe8-b7be-\
 8fc9c5b0f030"]
 },
 WindowSize->{808, 755},
-WindowMargins->{{309, Automatic}, {Automatic, 37}},
+WindowMargins->{{Automatic, 235}, {46, Automatic}},
 TaggingRules->{
  "UUIDButtons" -> {
    "Active" -> {
      "Button-b8297203-6b28-48f9-8ba3-edbd5eb431d2" -> False, 
       "Button-8c92aebb-2725-4f7c-a6a8-f90e3a4dce9c" -> False, 
-      "Button-ede3a027-3279-40a0-8aa4-1fcc5f60357d" -> False}}},
+      "Button-ede3a027-3279-40a0-8aa4-1fcc5f60357d" -> False, 
+      "Button-89ffd2c3-ec41-4179-a9b1-8e28670bca2c" -> False, 
+      "Button-ca46e5e0-4fd1-47e8-8cf6-72998922b757" -> False, 
+      "Button-a6d68254-3684-4d32-83fc-e5ef6f443930" -> False}}},
 FrontEndVersion->"11.3 for Mac OS X x86 (32-bit, 64-bit Kernel) (March 5, \
 2018)",
 StyleDefinitions->FrontEnd`FileName[{"BTools"}, "CodePackage.nb", 

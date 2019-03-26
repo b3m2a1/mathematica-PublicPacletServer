@@ -52,7 +52,7 @@ Cell[BoxData[
    RowBox[{
    "\"\<UpdateQueue\>\"", "|", "\"\<Log\>\"", "|", "\"\<Add\>\"", "|", 
     "\"\<Build\>\"", "|", "\"\<Push\>\"", "|", "\"\<Analytics\>\"", "|", 
-    "\"\<Test\>\""}]}], 
+    "\"\<Test\>\"", "|", "\"\<JSON\>\""}]}], 
   ";"}]], "CodeInput",ExpressionUUID->"69801bec-f6d7-47b1-8614-33375850c080"],
 
 Cell[BoxData[{
@@ -140,6 +140,26 @@ Cell[BoxData[{
               "\t\t\t\t\t\t\t", "]"}]}], ",", "\n", "\t\t\t\t\t", 
             RowBox[{
             "Internal`LoadingPanel", "[", "\"\<Building server log...\>\"", 
+             "]"}]}], "\n", "\t\t\t\t\t", "]"}]}], "\n", "\t\t\t\t", "]"}], 
+        ";", "\n", "\t\t\t", 
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{"MemberQ", "[", 
+           RowBox[{"do", ",", " ", "\"\<JSON\>\""}], "]"}], ",", "\n", "\t", 
+          "\t\t\t", 
+          RowBox[{"Monitor", "[", "\n", "\t", "\t\t\t\t", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"res", "[", "\"\<JSON\>\"", "]"}], "=", "\n", 
+             "\t\t\t\t\t\t", 
+             RowBox[{"BuildSiteJSON", "[", "\n", "\t\t\t\t\t\t\t", 
+              RowBox[{"FilterRules", "[", 
+               RowBox[{
+                RowBox[{"{", "ops", "}"}], ",", " ", 
+                RowBox[{"Options", "[", "BuildSiteJSON", "]"}]}], "]"}], "\n",
+               "\t\t\t\t\t\t\t", "]"}]}], ",", "\n", "\t\t\t\t\t", 
+            RowBox[{
+            "Internal`LoadingPanel", "[", "\"\<Building site json...\>\"", 
              "]"}]}], "\n", "\t\t\t\t\t", "]"}]}], "\n", "\t\t\t\t", "]"}], 
         ";", "\n", "\t\t\t", 
         RowBox[{"If", "[", 
@@ -236,6 +256,12 @@ Cell["", "SectionSeparator",ExpressionUUID->"7ae8f3ea-0d98-4fe8-b7be-\
 },
 WindowSize->{808, 755},
 WindowMargins->{{47, Automatic}, {Automatic, 0}},
+TaggingRules->{
+ "UUIDButtons" -> {
+   "Active" -> {
+     "Button-b8297203-6b28-48f9-8ba3-edbd5eb431d2" -> False, 
+      "Button-8c92aebb-2725-4f7c-a6a8-f90e3a4dce9c" -> False, 
+      "Button-ede3a027-3279-40a0-8aa4-1fcc5f60357d" -> False}}},
 FrontEndVersion->"11.3 for Mac OS X x86 (32-bit, 64-bit Kernel) (March 5, \
 2018)",
 StyleDefinitions->FrontEnd`FileName[{"BTools"}, "CodePackage.nb", 

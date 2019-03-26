@@ -287,7 +287,7 @@ makeDateListPlot[dateRef_, ops:OptionsPattern[]]:=
 
 
 (* ::Subsubsection::Closed:: *)
-(*createAnalyticsImages*)
+(*CreateAnalyticsImages*)
 
 
 

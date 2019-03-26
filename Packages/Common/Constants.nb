@@ -39,6 +39,12 @@ Cell[BoxData[
 Cell[BoxData[
  RowBox[{
   RowBox[{
+   RowBox[{"$SiteURL", "::", "usage"}], "=", "\"\<\>\""}], 
+  ";"}]], "CodeInput",ExpressionUUID->"2415d3bf-5ea1-42fa-9df2-dd3132811dfa"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
    RowBox[{"$AnalyticsID", "::", "usage"}], "=", "\n", "\t", 
    "\"\<The ID for Google Analytics\>\""}], 
   ";"}]], "CodeInput",ExpressionUUID->"4a631404-5813-4722-9bde-5458d1c8d2d9"],
@@ -175,7 +181,19 @@ Cell[BoxData[
  RowBox[{
   RowBox[{"$AnalyticsID", "=", "174406285"}], 
   ";"}]], "CodeInput",ExpressionUUID->"9310f72c-7e77-41a1-a3b3-70726671c9e7"]
-}, Closed]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["\[LeftCeiling]$SiteURL\[RightFloor]", "CodeSubsubsubsection",
+ Evaluatable->True,ExpressionUUID->"18be3505-9de1-48b9-90ec-e23ec77c33e1"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+  "$SiteURL", "=", "\"\<https://paclets.github.io/PacletServer/\>\""}], 
+  ";"}]], "CodeInput",ExpressionUUID->"ab3424b1-aa92-411e-9d61-2a9022ddd31b"]
+}, Open  ]]
 }, Open  ]],
 
 Cell[BoxData[

@@ -907,7 +907,7 @@ AppRegenerateContextLoadFiles[app_]:=
 
 $DefaultDepRemove=
   <|
-    "RemovePaths"->{"Documentation"},
+    "RemovePaths"->{"Documentation", "PacletInfo.m"},
     "RemovePatterns"->{}
     |>
 
@@ -1139,7 +1139,7 @@ AppGet[appName_,pkgName_String]:=
     cont=$Context
     },
     Replace[
-      Names[app<>"`*`PackageAppGet"],{
+      SortBy[StringLength]@Names[app<>"`*`PackageAppGet"],{
         {n_, ___}:>
           Replace[
             FileNames[pkgName~~".wl"|".m",

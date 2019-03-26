@@ -18,6 +18,9 @@ $Birthday::usage=
   "The paclet server creation date";
 
 
+$SiteURL::usage="";
+
+
 $AnalyticsID::usage=
   "The ID for Google Analytics";
 
@@ -92,6 +95,14 @@ $Birthday=DateObject[{2018, 4, 29}];
 
 
 $AnalyticsID=174406285;
+
+
+(* ::Subsubsubsection::Closed:: *)
+(*$SiteURL*)
+
+
+
+$SiteURL="https://paclets.github.io/PacletServer/";
 
 
 End[];
