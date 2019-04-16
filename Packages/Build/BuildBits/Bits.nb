@@ -261,15 +261,14 @@ Cell[BoxData[
     RowBox[{"newVersion", "!=", "currVersion"}], "&&", "\n", "\t\t", 
     RowBox[{"newVersion", "==", "\n", "\t\t\t", 
      RowBox[{"Last", "@", 
-      RowBox[{"Echo", "@", 
-       RowBox[{"SortBy", "[", "\n", "\t\t\t\t\t", 
-        RowBox[{
-         RowBox[{"Flatten", "[", 
-          RowBox[{
-           RowBox[{"{", 
-            RowBox[{"newVersion", ",", " ", "currVersion"}], "}"}], ",", " ", 
-           "1"}], "]"}], ",", "\n", "\t\t\t\t\t", "getSemVerList"}], "\n", 
-        "\t\t\t\t\t", "]"}]}]}]}]}]}], 
+      RowBox[{"SortBy", "[", "\n", "\t\t\t\t\t", 
+       RowBox[{
+        RowBox[{"Flatten", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"newVersion", ",", " ", "currVersion"}], "}"}], ",", " ", 
+          "1"}], "]"}], ",", "\n", "\t\t\t\t\t", "getSemVerList"}], "\n", 
+       "\t\t\t\t\t", "]"}]}]}]}]}], 
   ";"}]], "CodeInput",ExpressionUUID->"ecf8c550-480d-4331-8b0b-0b729661c53f"]
 }, Open  ]],
 
@@ -389,7 +388,7 @@ Cell[BoxData[{
                "\n", "\t", "\t", "\t\t\t\t\t\t", "True", ",", "\n", "\t", 
                "\t", "\t\t\t\t\t\t\t", 
                RowBox[{"paclet", "=", "$Failed"}]}], "\n", "\t", 
-              "\t\t\t\t\t\t\t", "]"}], ";"}], ",", "\n", "\t", "\t\t\t\t\t", 
+              "\t\t\t\t\t\t\t", "]"}], ";"}], ",", "\n", "\t\t\t\t\t\t", 
             "Automatic", ",", "\n", "\t\t\t\t\t\t\t", 
             RowBox[{"Which", "[", "\n", "\t\t\t\t\t\t\t\t", 
              RowBox[{
@@ -441,11 +440,13 @@ Cell[BoxData[{
                     RowBox[{"e", "[", "\"\<Site\>\"", "]"}]}], "&"}]}], "\n", 
                   "\t\t\t\t\t\t\t\t\t\t\t\t", "]"}]}]}], ";", "\n", 
                "\t\t\t\t\t\t\t\t\t", 
-               RowBox[{"Echo", "@", 
-                RowBox[{"{", 
-                 RowBox[{"currVersion", ",", " ", 
-                  RowBox[{"e", "[", "\"\<Name\>\"", "]"}]}], "}"}]}], ";", 
-               "\n", "\t\t\t\t\t\t\t\t\t", 
+               RowBox[{"(*", 
+                RowBox[{
+                 RowBox[{"Echo", "@", 
+                  RowBox[{"{", 
+                   RowBox[{"currVersion", ",", " ", 
+                    RowBox[{"e", "[", "\"\<Name\>\"", "]"}]}], "}"}]}], ";"}],
+                 "*)"}], "\n", "\t\t\t\t\t\t\t\t\t", 
                RowBox[{"If", "[", 
                 RowBox[{
                  RowBox[{"TrueQ", "@", 

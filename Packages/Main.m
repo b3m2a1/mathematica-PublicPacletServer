@@ -25,6 +25,8 @@ Clear[PublicPacletServer];
 
 $ServerCommands=
   {
+    "Install",
+    "Update",
     "RegisterPaclet",
     "RequestPacletUpdate",
     "Repository",
@@ -295,6 +297,8 @@ PublicPacletServer["UpdateAnalytics", ops:OptionsPattern[]]:=
 
 
 PublicPacletServer["Install", name_, ops:OptionsPattern[]]:=
+  PublicPacletInstall[name, ops];
+PublicPacletServer["Update", name_, ops:OptionsPattern[]]:=
   PublicPacletInstall[name, ops]
 
 

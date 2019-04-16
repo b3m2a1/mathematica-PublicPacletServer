@@ -17,6 +17,8 @@ CloneReviewQueue::usage=
 
 PublicPacletInstall::usage=
   "Installs a paclet from the public paclet server";
+PublicPacletUpdate::usage=
+  "Updates a paclet from the public paclet server";
 
 
 Begin["`Private`"];
@@ -251,6 +253,42 @@ PublicPacletInstall[name_, ops:OptionsPattern[]]:=
         If[
           Extract[#[[2]], "MessageTemplate", Hold]===
             Hold[PacletManager`PacletInstall::instl]&&
+            FileExistsQ[#[[2, "MessageParameters", 1]]],
+          Throw[PacletManager`CreatePaclet@#[[2, "MessageParameters", 1]], "Paclet"],
+          Throw[#, "Exception"]
+          ]&
+        ],
+      "Exception",
+      (GeneralUtilities`ReissueMessage[#];#)&
+      ],
+   "Paclet",
+   #&
+   ]
+
+
+(* ::Subsubsection::Closed:: *)
+(*Update*)
+
+
+
+PublicPacletUpdate[name_, ops:OptionsPattern[]]:=
+  Catch[
+    Catch[
+      GeneralUtilities`WithMessageHandler[
+        Block[
+          {
+            PacletManager`Package`setLocation=setNonRemoteLocation,
+            PacletManager`Package`downloadPaclet=downloadRawPacletsToo
+            },
+          PacletManager`PacletUpdate[
+            name,
+            ops,
+            "Site"->"http://paclets.github.io/PacletServer"
+            ]
+          ],
+        If[
+          Extract[#[[2]], "MessageTemplate", Hold]===
+            Hold[PacletManager`PacletUpdate::instl]&&
             FileExistsQ[#[[2, "MessageParameters", 1]]],
           Throw[PacletManager`CreatePaclet@#[[2, "MessageParameters", 1]], "Paclet"],
           Throw[#, "Exception"]

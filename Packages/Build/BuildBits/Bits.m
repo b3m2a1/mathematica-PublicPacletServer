@@ -154,7 +154,7 @@ getSemVerList[version_]:=
 getPacletNewerQ[currVersion_, newVersion_]:=
   newVersion!=currVersion&&
     newVersion==
-      Last@Echo@SortBy[
+      Last@SortBy[
           Flatten[{newVersion, currVersion}, 1],
           getSemVerList
           ];
@@ -230,7 +230,7 @@ loadPacletBlah[extras_, logMerge_, log_, dir_, pacDir_]:=
                           PacletManager`PacletFindRemote[e["Name"]],
                         Lookup[#, "Location"]==e["Site"]&
                         ];
-                  Echo@{currVersion, e["Name"]};
+                  (*Echo@{currVersion, e["Name"]};*)
                   If[TrueQ@getPacletNewerQ[currVersion, newVersion],
                     paclet=
                       PacletExecute["Download", e["Name"]],
