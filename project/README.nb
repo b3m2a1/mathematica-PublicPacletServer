@@ -26,9 +26,25 @@ Notebook[{Cell[BoxData[RowBox[{"<|", "\[IndentingNewLine]",
         3.712938432754331*^9}, 3.7129389313072557*^9, {3.7129406941654243*^9, 
         3.7129407586081657*^9}, {3.712940795481729*^9, 
         3.7129407992712727*^9}, {3.734233284414138*^9, 
-        3.734233316120805*^9}}]}, Open]]}, WindowSize -> {808, 755}, 
- WindowMargins -> {{188, Automatic}, {11, Automatic}}, 
- FrontEndVersion -> 
+        3.734233316120805*^9}}]}, Open]], Cell["", "PageBreak"], 
+  Cell[CellGroupData[{Cell["Installation", "Subsection", 
+      CellChangeTimes -> {{3.7644282735209227*^9, 3.764428275432616*^9}}], 
+     Cell[TextData[{"The easiest way to install is off the ", 
+        ButtonBox["paclet server itself", BaseStyle -> "Hyperlink", 
+         ButtonData -> 
+          {URL[
+            "https://paclets.github.io/PacletServer/publicpacletserver.html"]\
+, None}, ButtonNote -> 
+          "https://paclets.github.io/PacletServer/publicpacletserver.html"], 
+        ":"}], "Text", CellChangeTimes -> {{3.76442827712108*^9, 
+       3.764428303148144*^9}}], 
+     Cell[BoxData[{RowBox[{"<<", 
+          "https://paclets.github.io/PacletServer/Install.wl"}], "\n", 
+        RowBox[{"PublicPacletInstall", "[", "\"PublicPacletServer\"", 
+          "]"}]}], "MathematicaLanguageCode", CellChangeTimes -> 
+       {{3.764428319180973*^9, 3.764428325120661*^9}}]}, Open]]}, 
+ WindowSize -> {808, 755}, WindowMargins -> {{188, Automatic}, 
+   {11, Automatic}}, FrontEndVersion -> 
   "11.3 for Mac OS X x86 (32-bit, 64-bit Kernel) (March 5, 2018)", 
  StyleDefinitions -> Notebook[
    {Cell[StyleData[StyleDefinitions -> FrontEnd`FileName[{"BTools"}, 
